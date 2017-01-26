@@ -1,8 +1,8 @@
 <?php
 //DB connection info
-$host = "localhost";
-$user = "user name";
-$pwd = "password";
+$host = "eu-cdbr-azure-west-a.cloudapp.net";
+$user = "bd38b99b177044";
+$pwd = "5e59f1c8";
 $db = "blogster";
 try {
     $conn = new PDO( "mysql:host=$host;dbname=$db", $user, $pwd);
