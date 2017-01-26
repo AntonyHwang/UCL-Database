@@ -1,13 +1,18 @@
 <?php
 //DB connection info
 $host = "localhost";
-$user = "user name";
-$pwd = "password";
-$db = "db name";
+$user = "ucldb";
+$pwd = "Ucldb1234";
+$db = "blogster";
 try {
     $conn = new PDO( "mysql:host=$host;dbname=$db", $user, $pwd);
     $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-    $sql = "sql_to_create_table";
+    $sql = "CREATE TABLE registration_tbl(
+        id INT NOT NULL AUTO_INCREMENT, 
+        PRIMARY KEY(id),
+        name VARCHAR(30),
+        email VARCHAR(30),
+        date DATE)";
     $conn->query($sql);
 }
 catch(Exception $e){
