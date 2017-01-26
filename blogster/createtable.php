@@ -52,14 +52,14 @@ try {
         
     $sql = "CREATE TABLE messages(
 	    id_message INT NOT NULL AUTO_INCREMENT,
-	    timestamp TIMESTAMP,
+	    date_time TIMESTAMP,
 	    body VARCHAR(150),
         ADD FOREIGN KEY (id_circle) REFERENCES circles(id_circle))";
     $conn->query($sql);
 
     $sql = "CREATE TABLE photos(   
         id_photo INT NOT NULL AUTO_INCREMENT,
-        timestamp TIMESTAMP,
+        date_time TIMESTAMP,
         body VARCHAR(150),
         privacy_setting INT,
         ADD FOREIGN KEY (id_user) REFERENCES users(id_user))";
@@ -67,7 +67,7 @@ try {
 
     $sql = "CREATE TABLE comments(
 	Id_comment INT NOT NULL AUTO_INCREMENT,
-	timestamp TIMESTAMP,
+	date_time TIMESTAMP,
 	body VARCHAR(150),
     ADD FOREIGN KEY (id_photo) REFERENCES photos(id_photo))";
     $conn->query($sql);
@@ -84,5 +84,5 @@ try {
 catch(Exception $e){
     die(print_r($e));
 }
-echo "<h3>Table created.</h3>";
+echo "<h3>Tables created.</h3>";
 ?>
