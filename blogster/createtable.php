@@ -18,34 +18,49 @@ try {
     $conn->query($sql);
         
     $sql = "CREATE TABLE friendships( 
-	    id_friendship INT NOT NULL AUTO_INCREMENT),
+	    id_friendship INT NOT NULL AUTO_INCREMENT);
+    $conn->query($sql);
+
+    $sql = "ALTER TABLE friendships( 
         ADD FOREIGN KEY (id_user1) REFERENCES users(id_user),
         ADD FOREIGN KEY (id_user2) REFERENCES users(id_user))";
     $conn->query($sql);
         
     $sql = "CREATE TABLE friend_request(
    	    id _request INT NOT NULL AUTO_INCREMENT,
-	    PRIMARY KEY(id_request),
+	    PRIMARY KEY(id_request))";
+    $conn->query($sql);
+
+    $sql = "ALTER TABLE friend_request(
         ADD FOREIGN KEY (id_from_user) REFERENCES users(id_user),
         ADD FOREIGN KEY (id_to_user) REFERENCES users(id_user))";
     $conn->query($sql);
     
     $sql = "CREATE TABLE posts(
 	    id_post INT NOT NULL AUTO_INCREMENT,
-	    timestamp TIMESTAMP,
+	    date_time TIMESTAMP,
         body VARCHAR(150),
-	    privacy_setting INT,
+	    privacy_setting INT)";
+    $conn->query($sql);
+
+    $sql = "ALTER TABLE posts(
         ADD FOREIGN KEY (id_user) REFERENCES users(id_user))";
     $conn->query($sql);
         
     $sql = "CREATE TABLE circles(
 	    id_circle INT NOT NULL AUTO_INCREMENT,
-	    name  VARCHAR(30),
+	    name VARCHAR(30))";
+    $conn->query($sql);
+
+    $sql = "ALTER TABLE circles(
         ADD FOREIGN KEY (id_owner) REFERENCES users(id_user))";
     $conn->query($sql);
     
     $sql = "CREATE TABLE members(
-	    id_member INT NOT NULL AUTO_INCREMENT),
+	    id_member INT NOT NULL AUTO_INCREMENT))";
+    $conn->query($sql);
+
+    $sql = "ALTER TABLE members(
         ADD FOREIGN KEY (id_circle) REFERENCES circles(id_circle),
         ADD FOREIGN KEY (id_user) REFERENCES users(id_user))";
     $conn->query($sql);
@@ -53,7 +68,10 @@ try {
     $sql = "CREATE TABLE messages(
 	    id_message INT NOT NULL AUTO_INCREMENT,
 	    date_time TIMESTAMP,
-	    body VARCHAR(150),
+	    body VARCHAR(150))";
+    $conn->query($sql);
+
+    $sql = "ALTER TABLE messages(
         ADD FOREIGN KEY (id_circle) REFERENCES circles(id_circle))";
     $conn->query($sql);
 
@@ -61,15 +79,21 @@ try {
         id_photo INT NOT NULL AUTO_INCREMENT,
         date_time TIMESTAMP,
         body VARCHAR(150),
-        privacy_setting INT,
+        privacy_setting INT)";
+    $conn->query($sql);
+
+    $sql = "ALTER TABLE photos(   
         ADD FOREIGN KEY (id_user) REFERENCES users(id_user))";
     $conn->query($sql);
 
     $sql = "CREATE TABLE comments(
-	Id_comment INT NOT NULL AUTO_INCREMENT,
-	date_time TIMESTAMP,
-	body VARCHAR(150),
-    ADD FOREIGN KEY (id_photo) REFERENCES photos(id_photo))";
+	    id_comment INT NOT NULL AUTO_INCREMENT,
+	    date_time TIMESTAMP,
+	    body VARCHAR(150))";
+    $conn->query($sql);
+
+    $sql = "ALTER TABLE comments(
+        ADD FOREIGN KEY (id_photo) REFERENCES photos(id_photo))";
     $conn->query($sql);
 
     $sql = "CREATE TABLE Admins(
