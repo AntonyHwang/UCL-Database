@@ -19,6 +19,29 @@
         </div>
     </fieldset>
 </form>
+<?php
+    // DB connection info
+    //TODO: Update the values for $host, $user, $pwd, and $db
+    //using the values you retrieved earlier from the Azure Portal.
+    $host = "eu-cdbr-azure-west-a.cloudapp.net";
+    $user = "bd38b99b177044";
+    $pwd = "5e59f1c8";
+    $db = "blogster";
+    // Connect to database.
+    try {
+        $conn = new PDO( "mysql:host=$host;dbname=$db", $user, $pwd);
+        $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+    }
+    catch(Exception $e){
+        die(var_dump($e));
+    }
+    //Insert registration info
+    if(!empty($_POST)) {
+        try {
+            
+        }
+    }
+?>
 <div>
     or <a href="register.php">register</a> for an account
 </div>
