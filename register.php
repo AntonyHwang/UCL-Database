@@ -1,5 +1,5 @@
 <html>
-    <form action="register_form.php" method="post" align="center">
+    <form action="register.php" method="post" align="center">
     <fieldset>
         <div class="form-group">
             <input autofocus class="form-control" name="first_name" id="first_name" placeholder="First Name" type="text" size="30"/>
@@ -26,6 +26,8 @@
     </fieldset>
 </form>
 <?php
+session_start();
+echo "sas".$_SESSION["id"];
     // DB connection info
     //TODO: Update the values for $host, $user, $pwd, and $db
     //using the values you retrieved earlier from the Azure Portal.
