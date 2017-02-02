@@ -1,3 +1,4 @@
+
 <form action="login.php" method="post" align="center">
     <fieldset>
         <div class="form-group">
@@ -15,6 +16,7 @@
     </fieldset>
 </form>
 <?php
+    require("../includes/config.php");
     // DB connection info
     //TODO: Update the values for $host, $user, $pwd, and $db
     //using the values you retrieved earlier from the Azure Portal.
@@ -36,7 +38,7 @@
             // Retrieve data
             $email = $_POST['email'];
             $password = $_POST['password'];
-            $sql_select = "SELECT * FROM user WHERE (email = '".$email."' AND password = '".$password."')";
+            $sql_select = "SELECT xuser_id FROM user WHERE (email = '".$email."' AND password = '".$password."')";
             $stmt = $conn->query($sql_select);
             $registrants = $stmt->fetchAll();
             if(!test_input($email)) {
@@ -47,8 +49,12 @@
             }
             else if(count($registrants) == 0) {
                 echo "<h2>The email address or password is incorrect</h2>";
-            } else {
-                
+            } 
+            //Otherwise, render index/homepage. Set seesion to be logged in
+            else {
+                $_SESSION['logged_in'] = 'YES';
+                $_SESSION['id'] = $stmt['user_id'];
+                redirect("/index.php");
             }
         }
         catch(Exception $e) {
