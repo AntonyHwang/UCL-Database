@@ -35,6 +35,7 @@
     //Insert registration info
     if(!empty($_POST)) {
         try {
+            echo "we tryin";
             // Retrieve data
             $email = $_POST['email'];
             $password = $_POST['password'];
