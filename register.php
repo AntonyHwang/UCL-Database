@@ -1,5 +1,5 @@
 <html>
-    <form action="register.php" method="post" align="center">
+    <form action="register_form.php" method="post" align="center">
     <fieldset>
         <div class="form-group">
             <input autofocus class="form-control" name="first_name" id="first_name" placeholder="First Name" type="text" size="30"/>
@@ -96,6 +96,6 @@
     }
 ?>
 <div>
-    or <a href="login_form.php">log in</a> for an account
+    or <a href="login.php">log in</a> for an account
 </div>
 </html>

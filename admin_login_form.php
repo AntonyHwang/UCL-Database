@@ -1,4 +1,4 @@
-<form action="login.php" method="post" align="center">
+<form action="admin_login_form.php" method="post" align="center">
     <fieldset>
         <div class="form-group">
             <input autocomplete="off" autofocus class="form-control" name="email" placeholder="Email" type="text"/>
@@ -36,7 +36,7 @@
             // Retrieve data
             $email = $_POST['email'];
             $password = $_POST['password'];
-            $sql_select = "SELECT * FROM user WHERE (email = '".$email."' AND password = '".$password."')";
+            $sql_select = "SELECT * FROM admin WHERE (email = '".$email."' AND password = '".$password."')";
             $stmt = $conn->query($sql_select);
             $registrants = $stmt->fetchAll();
             if(!test_input($email)) {
@@ -65,6 +65,3 @@
         }
     }
 ?>
-<div>
-    or <a href="register_form.php">register</a> for an account
-</div>
