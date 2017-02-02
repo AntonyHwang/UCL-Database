@@ -67,6 +67,10 @@
             else {
                 //$_SESSION["logged_in"] = "YES";
                 //$_SESSION["id"] = $stmt["user_id"];
+                //$row = $stmt->fetch_assoc();
+                session_start();
+                $_SESSION["id"] = "user_id";
+                //$_SESSION["id"]=$row[user_id];
                 header('Location:register.php');
             }
         }
