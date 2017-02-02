@@ -16,7 +16,8 @@
     </fieldset>
 </form>
 <?php
-    require("../includes/config.php");
+
+    // require("../includes/config.php");
     // DB connection info
     //TODO: Update the values for $host, $user, $pwd, and $db
     //using the values you retrieved earlier from the Azure Portal.
@@ -35,11 +36,10 @@
     //Insert registration info
     if(!empty($_POST)) {
         try {
-            echo "we tryin";
             // Retrieve data
             $email = $_POST['email'];
             $password = $_POST['password'];
-            $sql_select = "SELECT * FROM user WHERE (email = '".$email."' AND password = '".$password."')";
+            $sql_select = "SELECT * FROM user WHERE (email = 'lol@lol.com' AND password = 'asdf')";
             $stmt = $conn->query($sql_select);
             $registrants = $stmt->fetchAll();
             if(!test_input($email)) {
@@ -48,14 +48,15 @@
             else if(!test_input($password)) {
                 echo "<h2>You must enter your password</h2>";
             }
-            else if(true) {
+            else if(count($registrants) == 0) {
                 echo "<h2>The email address or password is incorrect</h2>";
             }
             //Otherwise, render index/homepage. Set seesion to be logged in
             else {
-                $_SESSION['logged_in'] = 'YES';
-                $_SESSION['id'] = $stmt['user_id'];
-                redirect("/index.php");
+                $_SESSION["logged_in"] = "YES";
+                $_SESSION["id"] = $stmt["user_id"];
+                flush();
+                header("Location:'http://google.com'");
             }
         }
         catch(Exception $e) {
@@ -71,7 +72,13 @@
             return true;
         }
     }
+
+    function redirect($location)
+    {
+        header("Location: {".$location."}");
+        exit;
+    }
 ?>
 <div>
-    or <a href="register_form.php">register</a> for an account
+    or <a href="register.php">register</a> for an account
 </div>

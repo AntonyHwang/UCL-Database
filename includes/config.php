@@ -1,8 +1,10 @@
 <?php
 session_start();
-if(empty($_SESSION['logged_in']))
-{
-    header('Location: http://' . $_SERVER['HTTP_HOST'] . '/login.php');
-    exit;
+if (!in_array($_SERVER["PHP_SELF"], ["/login.php", "/register.php"])) {
+	if(empty($_SESSION["logged_in"]))
+	{
+	    redirect("login.php");
+	    exit;
+	}
 }
 ?>
