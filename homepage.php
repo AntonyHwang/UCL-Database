@@ -38,14 +38,15 @@
                     // Retrieve data
                     $first_name = $_POST['first_name'];
                     $surname = $_POST['surname'];
-                    $sql_select = "SELECT * FROM user WHERE first_name = '".$first_name."'";
+                    $sql_select = "SELECT * FROM user WHERE first_name = '".$first_name."' AND surname = '".$surname."'";
                     $stmt = $conn->query($sql_select);
                     if (!$stmt){
                         die('No data');
                     }
                     else {
-                        while($row = $stmt->fetch())
-                        echo $row["first_name"];
+                        while($row = $stmt->fetch()){
+                            echo "First Name: ".$row["first_name"]." Surname: ".$row["surname"];
+                        }
                     }
                 }
                 catch(Exception $e) {
