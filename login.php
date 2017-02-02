@@ -38,7 +38,7 @@
             // Retrieve data
             $email = $_POST['email'];
             $password = $_POST['password'];
-            $sql_select = "SELECT xuser_id FROM user WHERE (email = '".$email."' AND password = '".$password."')";
+            $sql_select = "SELECT user_id FROM user WHERE (email = '".$email."' AND password = '".$password."')";
             $stmt = $conn->query($sql_select);
             $registrants = $stmt->fetchAll();
             if(!test_input($email)) {
