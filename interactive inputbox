@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    $("input").keydown(function(){
+        $("input").css("background-color", "yellow");
+    });
+    $("input").keyup(function(){
+        $("input").css("background-color", "pink");
+        document.getElementById("demo").innerHTML = document.getElementById("searchTxt").value;
+       
+    });
+});
+</script>
+</head>
+<body>
+
+Enter your name: <input type="text" id ="searchTxt">
+<p id="demo"></p>
+<p>Enter your name in the input field above. It will change background color on keydown and keyup.</p>
+<p id='input'>
+
+<p>
+</body>
+</html>
