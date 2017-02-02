@@ -38,7 +38,7 @@
             // Retrieve data
             $email = $_POST['email'];
             $password = $_POST['password'];
-            $sql_select = "SELECT user_id FROM user WHERE (email = '".$email."' AND password = '".$password."')";
+            $sql_select = "SELECT * FROM user WHERE (email = '".$email."' AND password = '".$password."')";
             $stmt = $conn->query($sql_select);
             $registrants = $stmt->fetchAll();
             if(!test_input($email)) {
@@ -49,7 +49,7 @@
             }
             else if(count($registrants) == 0) {
                 echo "<h2>The email address or password is incorrect</h2>";
-            } 
+            }
             //Otherwise, render index/homepage. Set seesion to be logged in
             else {
                 $_SESSION['logged_in'] = 'YES';
