@@ -34,8 +34,8 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
-
-$sql = "SELECT id_user, id_friend FROM friendship";
+$thisid = 123;
+$sql = "SELECT * FROM `friendship` WHERE `id_user` =".$thisid;
 $result = $conn->query($sql);
 ?>
 
