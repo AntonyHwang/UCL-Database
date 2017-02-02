@@ -1,4 +1,5 @@
-<form action="login_form.php" method="post" align="center">
+<?php ob_start(); ?>
+<form action="login.php" method="post" align="center">
     <fieldset>
         <div class="form-group">
             <input autocomplete="off" autofocus class="form-control" name="email" placeholder="Email" type="text"/>
@@ -14,7 +15,14 @@
         </div>
     </fieldset>
 </form>
+<div>
+    or <a href="register.php">register</a> for an account
+</div>
+
 <?php
+    // configuration
+    //require("includes/config.php"); 
+
     // DB connection info
     //TODO: Update the values for $host, $user, $pwd, and $db
     //using the values you retrieved earlier from the Azure Portal.
@@ -30,25 +38,36 @@
     catch(Exception $e){
         die(var_dump($e));
     }
+
+
+    // if user reached page via GET (as by clicking a link or via redirect)
+    //if ($_SERVER["REQUEST_METHOD"] == "GET"){
+        // else render form
+      //  header('Location:login.php');
+    //}
     //Insert registration info
     if(!empty($_POST)) {
         try {
             // Retrieve data
             $email = $_POST['email'];
             $password = $_POST['password'];
-            $sql_select = "SELECT * FROM user WHERE (email = '".$email."' AND password = '".$password."')";
+            $sql_select = "SELECT * FROM user WHERE email = '".$email."' AND password = '".$password."'";
             $stmt = $conn->query($sql_select);
             $registrants = $stmt->fetchAll();
             if(!test_input($email)) {
-                echo "<h2>You must enter your email</h2>";
+                echo "<h1>You must enter your email</h1>";
             }
             else if(!test_input($password)) {
-                echo "<h2>You must enter your password</h2>";
+                echo "<h1>You must enter your password</h1>";
             }
             else if(count($registrants) == 0) {
-                echo "<h2>The email address or password is incorrect</h2>";
-            } else {
-                
+                echo "<h1>The email address or password is incorrect</h1>";
+            }
+            //Otherwise, render index/homepage. Set seesion to be logged in
+            else {
+                //$_SESSION["logged_in"] = "YES";
+                //$_SESSION["id"] = $stmt["user_id"];
+                header('Location:register.php');
             }
         }
         catch(Exception $e) {
@@ -65,6 +84,3 @@
         }
     }
 ?>
-<div>
-    or <a href="register_form.php">register</a> for an account
-</div>
