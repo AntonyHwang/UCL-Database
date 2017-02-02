@@ -1,12 +1,20 @@
 <html>
     <body>
-        <form action="#" method="post">
-            FirstName: <input type="text" name="first_name"><br>
-            LastName: <input type="text" name="surname"><br>
-            <button class="btn btn-default" type="submit">
-                <span aria-hidden="true" class="glyphicon glyphicon-log-in"></span>
-                Find
-            </button>
+        <form action="homepage.php" method="post" align="center">
+            <fieldset>
+                <div class="form-group">
+                    <input autocomplete="off" autofocus class="form-control" name="first_name" placeholder="First Name" type="text"/>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" name="surname" placeholder="Surname" type="text"/>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-default" type="submit">
+                        <span aria-hidden="true" class="glyphicon glyphicon-log-in"></span>
+                        Log In
+                    </button>
+                </div>
+            </fieldset>
         </form>
         <?php
             // DB connection info
@@ -35,8 +43,9 @@
                     if (!$stmt){
                         die('No data');
                     }
-                    while($row = fetch_assoc($stmt)){
-                        echo $row[first_name];
+                    else {
+                        while($row = $stmt->fetch())
+                        echo $row["first_name"];
                     }
                 }
                 catch(Exception $e) {
