@@ -47,7 +47,7 @@
             else if(!test_input($password)) {
                 echo "<h2>You must enter your password</h2>";
             }
-            else if(count($registrants) == 0) {
+            else if(true) {
                 echo "<h2>The email address or password is incorrect</h2>";
             }
             //Otherwise, render index/homepage. Set seesion to be logged in
