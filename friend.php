@@ -71,8 +71,6 @@ div {
 
 
 <?php
-
-
 //echo "num of result".count($array);
 //echo "1st".$array[1]['id_user'];
 if ($result->num_rows > 0) {
@@ -97,31 +95,83 @@ if ($result->num_rows > 0) {
 } else {
     echo "0 results";
 }
-$conn->close();
-//print_r($array);
 
+//print_r($array);
+$friends = [];
 foreach ($array as $value) {
     echo 'id is '.$value[1].'</br>';
+	array_push($friends,$value[1]);
+	
+	
 }
-//print_r($list);
+echo count($friends).'friends</br>';
+$ff = [];
+//each my friend
+foreach ($friends as $member) {
+    
+	
+	$sql = "SELECT * FROM `friendship` WHERE `id_user` =".$member;
+	$result = $conn->query($sql);
+	echo 'user '.$member.' got '.$result->num_rows.'  friends</br>';
+	if ($result->num_rows > 0) {
+	$fri2 = $result->fetch_all();
+	//add their all friends
+	foreach ($fri2 as $row) {
+    echo 'adding '.$row[1].'</br>';
+	array_push($ff,$row[1]);
+	//ff is friends s friends
+	}
+	}
+	
+}
+//print_r($ff);
+echo '</br>';
+$ff=array_unique($ff);
+$me =1;
+//print_r($ff);
+echo '</br>';
+if (in_array($me, $ff)) 
+{
+	echo 'delete';
+    unset($ff[array_search('124',$array)]);
+}
+else echo 'no';
 
+//print_r($ff);
+echo '</br>';
+//print_r($list);
+$remm = array_diff($ff, $friends);
+
+$conn->close();
 
 ?>
 <p id="res">here is the matching</p>
-<script>
-</script>
-
-
 
 </div>
 <div class = 'recm'>
 <h1>recommendation</h1>
 <?php 
+//print_r($remm);
+$start = 0;
+$end = count($remm)-1;
+$ranlist=[];
+sort($remm);
+//print_r($remm);
+for($i = 0;$i <20;$i++){
+	if($i==$end+1)break;
+	$num  = rand($start, $end);	
+	while(in_array($remm[$num], $ranlist) ){
+	$tmp  = rand($start, $end);
+	$num = $tmp;
+	}
+	array_push($ranlist,$remm[$num]);
+}
+print_r($ranlist);
 for ($x = 0; $x <= 10; $x++) {?>
 	<div class = 'friend'>
-	 
-	 <p>friend<p>
-	 <p></p>
+
+	<p>friend<p>
+	<p></p>
 	</div>
 
 <?php } 
