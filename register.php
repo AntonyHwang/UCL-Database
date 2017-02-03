@@ -27,7 +27,7 @@
 </form>
 <?php
 session_start();
-echo "sas".$_SESSION["id"];
+echo "User_ID: ".$_SESSION["id"]." User_Email: ".$_SESSION["email"]." Password: ".$_SESSION["password"];
     // DB connection info
     //TODO: Update the values for $host, $user, $pwd, and $db
     //using the values you retrieved earlier from the Azure Portal.

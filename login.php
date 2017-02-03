@@ -53,23 +53,25 @@
             $password = $_POST['password'];
             $sql_select = "SELECT * FROM user WHERE email = '".$email."' AND password = '".$password."'";
             $stmt = $conn->query($sql_select);
-            $registrants = $stmt->fetchAll();
             if(!test_input($email)) {
                 echo "<h1>You must enter your email</h1>";
             }
             else if(!test_input($password)) {
                 echo "<h1>You must enter your password</h1>";
             }
-            else if(count($registrants) == 0) {
+            else if(!$stmt) {
                 echo "<h1>The email address or password is incorrect</h1>";
             }
             //Otherwise, render index/homepage. Set seesion to be logged in
             else {
                 //$_SESSION["logged_in"] = "YES";
                 //$_SESSION["id"] = $stmt["user_id"];
-                //$row = $stmt->fetch_assoc();
+                //$row = $stmt->fetch_assoc()
+                $row = $stmt->fetch();
                 session_start();
-                $_SESSION["id"] = "user_id";
+                $_SESSION["id"] = $row["id_user"];
+                $_SESSION["email"] = $email;
+                $_SESSION["password"] = $password;
                 //$_SESSION["id"]=$row[user_id];
                 header('Location:register.php');
             }
