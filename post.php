@@ -10,12 +10,11 @@ div {
 <body>
 <div>
 <h1>posts</h1>
-<input></input>
-<button>post</button>
-<?php
-//echo "Hello World!";
+<form action="#" method="get">
+<input name='body'></input>
+<button type="submit">post</button>
+</form>
 
-?>
 <?php
 $servername = "localhost";
 $username = "root";
@@ -28,10 +27,28 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
+$userid = 12;
 
-$sql = "SELECT id_post, id_user, body FROM post";
+if (isset($_GET['body']) and $_GET['body']!=null){
+	//echo $_GET['body'];
+	$table = 'post';
+	$body = $_GET['body'];
+	echo $_GET['body'].'</br>';
+	$sql = "INSERT INTO ".$table."(id_post, id_user,body,privacy_setting)
+	VALUES (null, '$userid','$body',1)";
+	if ($conn->query($sql) === TRUE) {
+		echo"New post created successfully<br>";
+		unset($_GET['body']);
+	} else {
+		echo"Error:". $sql ."<br>". $conn->error;
+	}
+	
+}
+
+
+$sql = "SELECT id_post, id_user, body FROM post WHERE id_user = ".$userid.' ORDER BY timestamp DESC';
 $result = $conn->query($sql);
-
+echo '</br>';
 if ($result->num_rows > 0) {
     // output data of each row
     while($row = $result->fetch_assoc()) {
@@ -44,25 +61,10 @@ if ($result->num_rows > 0) {
 }
 $conn->close();
 ?>
-<?php 
-for ($x = 0; $x <= 10; $x++) {?>
-	<div class = 'post'>
-	 
-	 <p>body<p>
-	 <p>comment</p>
-	</div>
 
-<?php } 
-?>
 <div></div>
 </body>
 </html>
 <?php
-/* CREATE TABLE `post` (
-  `id_post` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL,
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `body` varchar(150) NOT NULL,
-  `privacy_setting` int(3) NOT NULL
-) */
+
 ?>
