@@ -25,8 +25,23 @@
             $stmt = $conn->prepare($sql_select);
             $stmt->execute();
             $results = $stmt->fetchAll();
-            echo $_SESSION['id']. " " . $_SESSION['email']."\n";
-            //Otherwise, render index/homepage. Set seesion to be logged in
+            echo $_SESSION['id']. " " . $_SESSION['email'].count($results);
+            ?>
+            <div>
+            <?php
+            foreach($results as $row) {
+					?>
+  						<a href="<?php echo $row["file_path"]?>">
+    						<figure>
+      							<img src="<?php echo $row["file_path"]?>">
+      							<figcaption><?php $row["body"]?></figcaption>
+    						</figure>
+  						</a>
+            	<?php
+			}
+			?>
+		</div>
+		<?php
             print_r($results);
         }
         catch(Exception $e) {
