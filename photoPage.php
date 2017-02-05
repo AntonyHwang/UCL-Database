@@ -34,7 +34,7 @@
   						<a href="<?php echo $row["file_path"]?>">
     						<figure>
       							<img src="<?php echo $row["file_path"]?>">
-      							<figcaption><?php $row["body"]?></figcaption>
+      							<figcaption><?php echo $row["body"]?></figcaption>
     						</figure>
   						</a>
             	<?php
