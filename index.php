@@ -1,7 +1,6 @@
 <html>
-<p>This is going to be ignored by PHP and displayed by the browser.</p>
+<p>Our temporary Index page</p>
 <?php echo "<script type='text/javascript'>alert('Welcome!')</script>"; ?>
-<p>This will also be ignored by PHP and displayed by the browser.</p>
 <body>
     <form action="login.php" method="post">
     <fieldset>
@@ -34,12 +33,6 @@
     }
     catch(Exception $e){
         die(var_dump($e));
-    }
-    //Insert registration info
-    if(!empty($_POST)) {
-        try {
-            
-        }
     }
 ?>
 <div>

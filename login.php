@@ -72,8 +72,9 @@
                 $_SESSION["id"] = $row["id_user"];
                 $_SESSION["email"] = $email;
                 $_SESSION["password"] = $password;
+                $_SESSION["logged_in"] = "YES";
                 //$_SESSION["id"]=$row[user_id];
-                header('Location:register.php');
+                header('Location:index.php');
             }
         }
         catch(Exception $e) {
