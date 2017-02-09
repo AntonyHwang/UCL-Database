@@ -16,17 +16,31 @@ div {
 </form>
 
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "blogster";
+            $host = "eu-cdbr-azure-west-a.cloudapp.net";
+            $user = "bd38b99b177044";
+            $pwd = "5e59f1c8";
+            $db = "blogster";
+// $servername = "localhost";
+// $username = "root";
+// $password = "";
+// $dbname = "blogster";
 
 // Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+            try {
+                $conn = new PDO( "mysql:host=$host;dbname=$db", $user, $pwd);
+                $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+				echo 'ok';
+            }
+            catch(Exception $e){
+                die(var_dump($e));
+            }
+			
+//$conn = new mysqli($servername, $username, $password, $dbname);
 // Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-} 
+// if ($conn->connect_error) {
+// 	echo 'problem in con';
+//     die("Connection vvvv: " . $conn->connect_error);
+// } 
 $userid = 12;
 
 if (isset($_GET['body']) and $_GET['body']!=null){
@@ -36,11 +50,18 @@ if (isset($_GET['body']) and $_GET['body']!=null){
 	echo $_GET['body'].'</br>';
 	$sql = "INSERT INTO ".$table."(id_post, id_user,body,privacy_setting)
 	VALUES (null, '$userid','$body',1)";
-	if ($conn->query($sql) === TRUE) {
-		echo"New post created successfully<br>";
-		unset($_GET['body']);
-	} else {
-		echo"Error:". $sql ."<br>". $conn->error;
+	// if ($conn->query($sql) === TRUE) {
+	// 	echo"New post created successfully<br>";
+	// 	unset($_GET['body']);
+	// } else {
+	// 	echo"Error:". $sql ."<br>". $conn->error;
+	// }
+	 $stmt = $conn->query($sql);  
+	if (!$stmt){
+		die('post failed');
+		}
+	else {
+	echo"New post created successfully<br>";
 	}
 	
 }
@@ -48,18 +69,15 @@ if (isset($_GET['body']) and $_GET['body']!=null){
 
 $sql = "SELECT id_post, id_user, body FROM post WHERE id_user = ".$userid.' ORDER BY timestamp DESC';
 $result = $conn->query($sql);
-echo '</br>';
-if ($result->num_rows > 0) {
-    // output data of each row
-    while($row = $result->fetch_assoc()) {
+echo 'get post';//.$result->num_rows;
+
+    while($row = $result->fetch()) {
         echo "id_post:" . $row["id_post"]. "</br> userid: " . $row["id_user"]. "</br>body " . $row["body"]. "<br>";
 		echo "comment";
 		echo "</br></br>";
     }
-} else {
-    echo "0 results";
-}
-$conn->close();
+
+//$conn->close();
 ?>
 
 <div></div>
