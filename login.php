@@ -70,11 +70,13 @@
                 $row = $stmt->fetch();
                 session_start();
                 $_SESSION["id"] = $row["id_user"];
+                $_SESSION["user_firstname"] = $row["first_name"];
+                $_SESSION["user_surname"] = $row["surname"];
                 $_SESSION["email"] = $email;
                 $_SESSION["password"] = $password;
                 $_SESSION["logged_in"] = "YES";
                 //$_SESSION["id"]=$row[user_id];
-                header('Location:index.php');
+                header('Location:myProfilePage.php');
             }
         }
         catch(Exception $e) {
