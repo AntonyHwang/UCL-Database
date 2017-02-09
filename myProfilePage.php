@@ -14,16 +14,15 @@
         
             <nav>
             <ul>
-                <li><a href="#">Profile</a></li>
-                <li><a href="#">Paris</a></li>
-                <li><a href="#">Tokyo</a></li>
+                <img src="<?php echo './uploads/'.$_SESSION["id"].$_SESSION["password"].'/profile.jpg'; ?>" alt="Profile Pic" style="width:120px;height 120px;">
             </ul>
             </nav>
 
             <article>
                 <h1>Profile</h1>
-                <p>London is the capital city of England. It is the most populous city in the  United Kingdom, with a metropolitan area of over 13 million inhabitants.</p>
-                <p>Standing on the River Thames, London has been a major settlement for two millennia, its history going back to its founding by the Romans, who named it Londinium.</p>
+                <h4>Gender:</h4>
+                <h4>Email:</h4>
+                <h4>Birthday:</h4>
             </article>
         </div>
     </body>
