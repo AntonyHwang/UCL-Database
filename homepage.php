@@ -3,15 +3,14 @@
         <form action="homepage.php" method="post" align="center">
             <fieldset>
                 <div class="form-group">
-                    <input autocomplete="off" autofocus class="form-control" name="first_name" placeholder="First Name" type="text"/>
+                    <input autocomplete="off" autofocus class="form-control" name="Name" placeholder="Name" type="text"/>
                 </div>
-                <div class="form-group">
-                    <input class="form-control" name="surname" placeholder="Surname" type="text"/>
-                </div>
+                <br>
                 <div class="form-group">
                     <button class="btn btn-default" type="submit">
                         <span aria-hidden="true" class="glyphicon glyphicon-log-in"></span>
-                        Log In
+
+                        Search
                     </button>
                 </div>
             </fieldset>
@@ -36,10 +35,10 @@
             if(!empty($_POST)) {
                 try {
                     // Retrieve data
-                    $first_name = $_POST['first_name'];
-                    $surname = $_POST['surname'];
-                    $sql_select = "SELECT * FROM user WHERE first_name = '".$first_name."' AND surname = '".$surname."'";
-                    $stmt = $conn->query($sql_select);
+                    $fullname = $_POST['Name'];
+                    $sql_select = "SELECT first_name, surname FROM (SELECT first_name,surname,CONCAT(first_name,' ',surname) AS 'Con_Name' FROM user) AS x WHERE Con_Name LIKE '%".$fullname."%'";
+
+                    $stmt = $conn->query($sql_select);  
                     if (!$stmt){
                         die('No data');
                     }
