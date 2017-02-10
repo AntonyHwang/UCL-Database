@@ -1,4 +1,10 @@
+<?php ob_start(); 
+    session_start();
+?>
 <html>
+    <head>
+        <link rel="stylesheet" type="css" href="./css/register.css">
+    </head>
     <form action="register.php" method="post" align="center">
     <fieldset>
         <div class="form-group">
@@ -15,19 +21,34 @@
         </div>
         <div class="form-group">
             <input class="form-control" name="confirmation" id="confirmation" placeholder="Confirm Password" type="password" size="30"/>
-        </div>  
-        <br><br>
+        </div><br>
+        <div class="form-group" align="left">
+            <label style="font-size: 12px;">
+            <input type="radio" name="gender" value="male" checked> Male
+            <input type="radio" name="gender" value="female"> Female
+            <input type="radio" name="gender" value="other"> Other
+        </div><br>
+        <div class="form-group" align="left">
+            <label style="font-size: 12px;">
+            Birthday
+            <input type="date" name="bday" placeholder="dd/mm/yyyy">
+        </div><br>
         <div class="form-group">
-            <button class="btn btn-default" type="submit">
+            <button class="btn btn-default" type="submit" style="vertical-align:left; float: center">
                 <span aria-hidden="true" class="glyphicon glyphicon-log-in"></span>
                 Register
             </button>
+            <button class="btn btn-default" type="reset" style="vertical-align:left; float: center">
+                <span aria-hidden="true" class="glyphicon glyphicon-log-in"></span>
+                Reset
+            </button>
+        </div><br>
+        <div>
+            or <a href="login.php">log in</a> for an account
         </div>
     </fieldset>
 </form>
 <?php
-session_start();
-echo "User_ID: ".$_SESSION["id"]." User_Email: ".$_SESSION["email"]." Password: ".$_SESSION["password"];
     // DB connection info
     //TODO: Update the values for $host, $user, $pwd, and $db
     //using the values you retrieved earlier from the Azure Portal.
@@ -52,6 +73,8 @@ echo "User_ID: ".$_SESSION["id"]." User_Email: ".$_SESSION["email"]." Password: 
             $email = $_POST['email'];
             $password = $_POST['password'];
             $password_confirm = $_POST['confirmation'];
+            $gender = $_POST['gender'];
+            $dob = $_POST['bday'];
             $sql_select = "SELECT * FROM user WHERE email = '".$email."'";
             $stmt = $conn->query($sql_select);
             $registrants = $stmt->fetchAll();
@@ -73,12 +96,14 @@ echo "User_ID: ".$_SESSION["id"]." User_Email: ".$_SESSION["email"]." Password: 
             else if(count($registrants) != 0) {
                 echo "<h2>Email already registered</h2>";
             } else {
-                $sql_insert = "INSERT INTO user (first_name, surname, email, password)VALUES (?,?,?,?)";
+                $sql_insert = "INSERT INTO user (first_name, surname, email, password, gender, dob)VALUES (?,?,?,?,?,?)";
                 $stmt = $conn->prepare($sql_insert);
                 $stmt->bindValue(1, $first_name);
                 $stmt->bindValue(2, $surname);
                 $stmt->bindValue(3, $email);
                 $stmt->bindValue(4, $password);
+                $stmt->bindValue(5, $gender);
+                $stmt->bindValue(6, $dob);
                 $stmt->execute();
                 echo "<h3>Your're registered!</h3>";
             }
@@ -97,7 +122,4 @@ echo "User_ID: ".$_SESSION["id"]." User_Email: ".$_SESSION["email"]." Password: 
         }
     }
 ?>
-<div>
-    or <a href="login.php">log in</a> for an account
-</div>
 </html>
