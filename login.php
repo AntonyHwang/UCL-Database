@@ -1,4 +1,6 @@
-<?php ob_start(); ?>
+<?php 
+    require 'includes/config.php'; 
+?>
 <form action="login.php" method="post" align="center">
     <fieldset>
         <div class="form-group">
@@ -20,26 +22,6 @@
 </div>
 
 <?php
-    // configuration
-    //require("includes/config.php"); 
-
-    // DB connection info
-    //TODO: Update the values for $host, $user, $pwd, and $db
-    //using the values you retrieved earlier from the Azure Portal.
-    $host = "eu-cdbr-azure-west-a.cloudapp.net";
-    $user = "bd38b99b177044";
-    $pwd = "5e59f1c8";
-    $db = "blogster";
-    // Connect to database.
-    try {
-        $conn = new PDO( "mysql:host=$host;dbname=$db", $user, $pwd);
-        $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-    }
-    catch(Exception $e){
-        die(var_dump($e));
-    }
-
-
     // if user reached page via GET (as by clicking a link or via redirect)
     //if ($_SERVER["REQUEST_METHOD"] == "GET"){
         // else render form
@@ -59,24 +41,15 @@
             else if(!test_input($password)) {
                 echo "<h1>You must enter your password</h1>";
             }
-            else if(!$stmt) {
-                echo "<h1>The email address or password is incorrect</h1>";
+            else if($row = $stmt->fetch()) {
+                $_SESSION["id"] = $row["id_user"];
+                $_SESSION["password"] = $password;
+                $_SESSION["logged_in"] = "YES";
+                header('Location:myProfilePage.php');
             }
             //Otherwise, render index/homepage. Set seesion to be logged in
             else {
-                //$_SESSION["logged_in"] = "YES";
-                //$_SESSION["id"] = $stmt["user_id"];
-                //$row = $stmt->fetch_assoc()
-                $row = $stmt->fetch();
-                session_start();
-                $_SESSION["id"] = $row["id_user"];
-                $_SESSION["user_firstname"] = $row["first_name"];
-                $_SESSION["user_surname"] = $row["surname"];
-                $_SESSION["email"] = $email;
-                $_SESSION["password"] = $password;
-                $_SESSION["logged_in"] = "YES";
-                //$_SESSION["id"]=$row[user_id];
-                header('Location:myProfilePage.php');
+                echo "<h1>The email address or password is incorrect</h1>";
             }
         }
         catch(Exception $e) {

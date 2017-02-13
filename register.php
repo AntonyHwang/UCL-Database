@@ -103,7 +103,7 @@
                 $stmt->bindValue(3, $email);
                 $stmt->bindValue(4, $password);
                 $stmt->bindValue(5, $gender);
-                $stmt->bindValue(6, $dob);
+                $stmt->bindValue(6, date("Y-m-d H:i:s",$dob));
                 $stmt->execute();
                 echo "<h3>Your're registered!</h3>";
             }

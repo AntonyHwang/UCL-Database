@@ -1,3 +1,3 @@
-<?php ob_start(); 
+<?php
     header('Location:login.php');
 ?>

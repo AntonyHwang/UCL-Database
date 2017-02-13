@@ -1,16 +1,17 @@
-<?php ob_start(); 
-    session_start();
+<?php 
+    require 'includes/config.php'; 
+    include_once('header.php');
+
+    $sql_select = "SELECT * FROM user WHERE id_user = '".$_SESSION["id"]."'";
+    $stmt = $conn->query($sql_select);
+    $row = $stmt->fetch();
+    $email = $row["email"];
+    $gender = $row["gender"];
+    $dob = $row["dob"];
 ?>
 <html>
-    <head>
-        <link rel="stylesheet" type="css" href="./css/profile.css">
-    </head>
     <body>
         <div class="container">
-
-            <header>
-            <h1><?php echo $_SESSION["user_firstname"]; ?> <?php echo $_SESSION["user_firstname"];?></h1>
-            </header>
         
             <nav>
             <ul>
@@ -20,31 +21,10 @@
 
             <article>
                 <h1>Profile</h1>
-                <h4>Gender:</h4>
-                <h4>Email:</h4>
-                <h4>Birthday:</h4>
+                <h4>Gender: <?php echo $gender;?></h4>
+                <h4>Email: <?php echo $email;?></h4>
+                <h4>Birthday:  <?php echo date('d-m-Y', $dob);?></h4>
             </article>
         </div>
     </body>
-
-    <?php
-        // configuration
-        //require("includes/config.php"); 
-
-        // DB connection info
-        //TODO: Update the values for $host, $user, $pwd, and $db
-        //using the values you retrieved earlier from the Azure Portal.
-        $host = "eu-cdbr-azure-west-a.cloudapp.net";
-        $user = "bd38b99b177044";
-        $pwd = "5e59f1c8";
-        $db = "blogster";
-        // Connect to database.
-        try {
-            $conn = new PDO( "mysql:host=$host;dbname=$db", $user, $pwd);
-            $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-        }
-        catch(Exception $e){
-            die(var_dump($e));
-        }
-    ?>
 </html>
