@@ -1,28 +1,39 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "blogster";
+            $host = "eu-cdbr-azure-west-a.cloudapp.net";
+            $user = "bd38b99b177044";
+            $pwd = "5e59f1c8";
+            $db = "blogster";
 // Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-} 
-$thisid = 1;
-$sql = "SELECT * FROM `friendship` WHERE `id_user` =".$thisid;
+            try {
+                $conn = new PDO( "mysql:host=$host;dbname=$db", $user, $pwd);
+                $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+				echo 'ok';
+            }
+            catch(Exception $e){
+                die(var_dump($e));
+            }
+
+$thisid = 21;
+$sql = "SELECT * FROM `friendship` WHERE `id_friend1` =".$thisid. " OR `id_friend2` =".$thisid;
 $result = $conn->query($sql);
 $list = [];
 //get all friends
-$array = $result->fetch_all();
+$array = $result->fetchAll();
 ?>
 
 <!DOCTYPE html>
 <html>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
 <script>
 
 $(document).ready(function(){
+    $(".user").click(function(){
+        
+		id = $(this);
+		//alert(id.html());
+		window.location.href = "profile.php"+'?profile='+id.html();//$("#test").val();
+    });	
 	//var list = <?php $array?>;
     $("input").keydown(function(){
         $("input").css("background-color", "yellow");
@@ -82,10 +93,10 @@ div {
 
 <?php
 //echo "num of result".count($array);
-//echo "1st".$array[1]['id_user'];
-if ($result->num_rows > 0) {
+//echo "1st".$array[1]['id_friend1'];
+if ($row_count = $result->rowCount()> 0) {
     // output data of each row
-    while($row = $result->fetch_assoc()) {
+    while($row = $result->fetch()) {
 		?>
 		<div class = 'friend'>
 
@@ -93,7 +104,7 @@ if ($result->num_rows > 0) {
 		<?php
 		array_push($list,$row);
 		
-        echo "id:" . $row["id_user"]. "</br> friend: " . $row["id_friend"]. "<br>";
+        echo "id:" . $row["id_friend1"]. "</br> friend: " . $row["id_friend2"]. "<br>";
 		echo "time";
 		echo "</br></br>";		
 		?>
@@ -120,10 +131,10 @@ if (isset($_GET['name']) and $_GET['name']!=null){
 		if ($value[1] ==$searchID ){
 			echo 'id: '.$value[1].' ';
 			
-			$sql = "SELECT * FROM `user` WHERE `id_user` =".$value[1];
+			$sql = "SELECT * FROM `user` WHERE `id_friend1` =".$value[1];
 			$result = $conn->query($sql);
 			
-			if ($result->num_rows > 0) {
+			if ($result->rowCount() > 0) {
 			// output data of each row
 			
 				while($row = $result->fetch_assoc()) {
@@ -139,17 +150,22 @@ if (isset($_GET['name']) and $_GET['name']!=null){
 	}	
 }else{
 	foreach ($array as $value) {
-    echo 'id: '.$value[1].' ';	
+	if($value[1]==$thisid){
+		$friend = $value[0];
+	}else{
+		$friend = $value[1];
+	}
+    echo 'id: '.$friend.' ';	
 	$sql = "SELECT * FROM `user` WHERE `id_user` =".$value[1];
 	$result = $conn->query($sql);	
-	if ($result->num_rows > 0) {
+	if ($result->rowCount() > 0) {
     // output data of each row	
-		while($row = $result->fetch_assoc()) {
-			echo $row['first_name'].' '.$row['last_name'];
+		while($row = $result->fetch(PDO::FETCH_ASSOC)) {
+			echo $row['first_name'].' '.$row['surname'];
 		}
 	}
 	echo '</br>';
-	array_push($friends,$value[1]);		
+	array_push($friends,$friend);		
 	}
 	
 }
@@ -157,18 +173,18 @@ if (isset($_GET['name']) and $_GET['name']!=null){
 
 
 $list = [];
-$array = $result->fetch_all();
+$array = $result->fetchAll();
 
 
 echo count($friends).'friends</br>';
 $ff = [];
 //each my friend ,member,member f 's friends 
 foreach ($friends as $member) {   	
-	$sql = "SELECT * FROM `friendship` WHERE `id_user` =".$member;
+	$sql = "SELECT * FROM `friendship` WHERE `id_friend1` =".$member;
 	$result = $conn->query($sql);
 	//echo 'user '.$member.' got '.$result->num_rows.'  friends</br>';
-	if ($result->num_rows > 0) {
-	$fri2 = $result->fetch_all();
+	if ($result->rowCount() > 0) {
+	$fri2 = $result->fetchAll();
 	//add their all friends
 		foreach ($fri2 as $row) {
 			//echo 'adding '.$row[1].'</br>';
@@ -225,21 +241,21 @@ for($i = 0;$i <20;$i++){
 }
 //print_r($ranlist);
 foreach ($ranlist as $user){
-	echo $user; 
+	echo '<span class=\'user\'>'.$user.'</span>'; 
 	echo '  ';
-	$sql = "SELECT * FROM `user` WHERE `id_user` =".$user;
+	$sql = "SELECT * FROM `user` WHERE `id_user` =".$user ;
 	$result = $conn->query($sql);
 	
-	if ($result->num_rows > 0) {
+	if ($result->rowCount() > 0) {
     // output data of each row
 	
-		while($row = $result->fetch_assoc()) {
-			echo $row['first_name'].' '.$row['last_name'];
+		while($row = $result->fetch(PDO::FETCH_ASSOC)) {
+			echo $row['first_name'].' '.$row['surname'];
 		}
 	}
 	echo '</br>';
 }
-$conn->close();
+//$conn->close();
 ?>
 
 </div>
