@@ -74,7 +74,7 @@
 // 	echo 'problem in con';
 //     die("Connection vvvv: " . $conn->connect_error);
 // } 
-$_SESSION["id"]=2;
+$_SESSION["id"]=61;
 $userid = $_SESSION["id"];
 //handle post 
 if (isset($_GET['body']) and $_GET['body']!=null){
@@ -145,42 +145,42 @@ echo 'get post';//.$result->num_rows;
 	<div class="clearfix"></div>
 	<hr>
 	
-	<p>comment
-		<?php
+	
+				<?php
        //echo "id_post:" . $row["id_post"]. "</br> userid: " . $row["id_user"]. "</br>body " . $row["body"]. "<br>";
 		$com = "SELECT id_post, id_user,id_comment, body,timestamp FROM post_comment WHERE id_post = ". $row["id_post"].' ORDER BY timestamp DESC';
 
 		$res_com = $conn->query($com);
 		while($row = $res_com->fetch()){
-			echo " userid/name: " . $row["id_user"]. "body " . $row["body"]. "at".$row["timestamp"];
+			echo "userid/name: " . $row["id_user"]. "body " . $row["body"]. " at ".$row["timestamp"]."</br>";
 		}
 		echo "</br>";
-    }
+    
 
-//$conn->close();
+
 ?>	
+
 	
-	</p>
 	
 	<hr>
 	
 	<form  action = '#' method="get">
 	<div class="input-group">
 	  <div class="input-group-btn">
-	  <button class="btn btn-default">+1</button><button class="btn btn-default"><i class="glyphicon glyphicon-share"></i></button>
+	  <button class="btn btn-default"><i class="glyphicon glyphicon-share"></i></button>
 	  </div>
-	  <input type="hidden" name="postid" value="<?php echo $row["id_post"]; ?>" />
+	  <input type="hidden" name="postid" value="<?php echo $row["id_post"]; ?>" >
 	  <input type="text" name = 'comment' class="form-control" placeholder="Add a comment..">
 	</div>
 	</form>
 	
+
 	
-</div>
+	</div>
+	<?php
+	}
+	?>
 
 
-<div></div>
 </body>
 </html>
-<?php
-
-?>
