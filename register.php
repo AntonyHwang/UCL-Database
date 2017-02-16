@@ -1,5 +1,6 @@
-<?php ob_start(); 
-    session_start();
+<?php 
+    require 'includes/config.php'; 
+    include_once('header.php');
 ?>
 <html>
     <head>
@@ -31,7 +32,11 @@
         <div class="form-group" align="left">
             <label style="font-size: 12px;">
             Birthday
-            <input type="date" name="bday" placeholder="dd/mm/yyyy">
+            <input type="text" class="form-control" name="birthday" placeholder="DD/MM/YYYY"
+                data-fv-date="true"
+                data-fv-date-format="DD/MM/YYYY"
+                data-fv-date-message="The value is not a valid date" 
+            />
         </div><br>
         <div class="form-group">
             <button class="btn btn-default" type="submit" style="vertical-align:left; float: center">
@@ -49,21 +54,6 @@
     </fieldset>
 </form>
 <?php
-    // DB connection info
-    //TODO: Update the values for $host, $user, $pwd, and $db
-    //using the values you retrieved earlier from the Azure Portal.
-    $host = "eu-cdbr-azure-west-a.cloudapp.net";
-    $user = "bd38b99b177044";
-    $pwd = "5e59f1c8";
-    $db = "blogster";
-    // Connect to database.
-    try {
-        $conn = new PDO( "mysql:host=$host;dbname=$db", $user, $pwd);
-        $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-    }
-    catch(Exception $e){
-        die(var_dump($e));
-    }
     //Insert registration info
     if(!empty($_POST)) {
         try {
@@ -103,7 +93,7 @@
                 $stmt->bindValue(3, $email);
                 $stmt->bindValue(4, $password);
                 $stmt->bindValue(5, $gender);
-                $stmt->bindValue(6, date("Y-m-d H:i:s",$dob));
+                $stmt->bindValue(6, date("Y-m-d",$dob));
                 $stmt->execute();
                 echo "<h3>Your're registered!</h3>";
             }
