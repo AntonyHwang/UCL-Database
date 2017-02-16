@@ -1,4 +1,9 @@
-<?php 
+<?php
+    session_start();         
+    $_SESSION["logged_in"]="NO";
+    $_SESSION["id"] = "";
+    $_SESSION["password"] = "";
+
     require 'includes/config.php'; 
 ?>
  <html>
@@ -43,6 +48,7 @@
         if(!empty($_POST)) {
             try {
                 // Retrieve data
+                $_SESSION["logged_in"]="NO";
                 $email = $_POST['email'];
                 $password = $_POST['password'];
                 $sql_select = "SELECT * FROM user WHERE email = '".$email."' AND password = '".$password."'";

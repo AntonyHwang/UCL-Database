@@ -1,3 +1,7 @@
+<?php 
+    include_once( 'includes/config.php'); 
+    include_once('header.php');
+?>
 <html>
     <body>
         <form action="homepage.php" method="post" align="center">

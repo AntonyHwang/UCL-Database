@@ -32,11 +32,12 @@
             <div class="container-fluid">
                 <!-- logo -->
                 <div class="navbar-header">
-                    <a href="homepage.php" class="navbar-brand">BLOGSTER</a>
+                    <a href="#" class="navbar-brand">BLOGSTER</a>
                 </div>
                 <!-- menu items -->
                 <div>
                     <ul class="nav navbar-nav">
+                    <?php if ($_SESSION["logged_in"] == "YES"): ?>
                         <li class="active"><a href="homepage.php">Home</a></li>
                         <li><a href="myProfilePage.php">Profile</a></li>
                         <!-- drop down menu -->
@@ -50,10 +51,21 @@
                         <li><a href="postPage.php">Post</a></li>
                         <li><a href="photoPage.php">Photo</a></li>
                         <li><a href="friendPage.php">Friend</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Account<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="editPassword.php">Change Password</a></li>
+                                <li><a href="editPassword.php">Deactivate Account</a></li>
+                                <li><a href="login.php">Log out</a></li>
+                            </ul>
+                        </li>
+                        <?php else:
+                            header('Location:login.php');
+                        endif; ?>
                     </ul>
                 </div>
                 <div>
-                    <form align="right">
+                    <form align="center">
                         <input type="text" size="30" onkeyup="showResult(this.value)" placeholder=" Search.." style="margin-top:15px;">
                         <div id="livesearch"></div>
                     </form>
