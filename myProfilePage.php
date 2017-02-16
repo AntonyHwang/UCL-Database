@@ -1,5 +1,5 @@
 <?php 
-    require 'includes/config.php'; 
+    include_once( 'includes/config.php'); 
     include_once('header.php');
 
     $sql_select = "SELECT * FROM user WHERE id_user = '".$_SESSION["id"]."'";
@@ -15,7 +15,7 @@
         
             <nav>
             <ul>
-                <img src="<?php echo './uploads/'.$_SESSION["id"].$_SESSION["password"].'/profile.jpg'; ?>" alt="Profile Pic" style="width:120px;height 120px;">
+                <img src="<?php echo './uploads/'.$_SESSION["id"].'/profile.jpg'; ?>" alt="Profile Pic" style="width:120px;height 120px;">
             </ul>
             </nav>
 
