@@ -1,6 +1,6 @@
 <?php 
     require 'includes/config.php'; 
-    require 'livesearch.php';
+    //require 'livesearch.php';
 ?>
 <style type="text/css">
     /* Formatting search box */
@@ -99,6 +99,7 @@
                             <div class="result"></div>
                         </div>
                     </ul>
+                </div>
         </nav>
     </body>
 </html>
