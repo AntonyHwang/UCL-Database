@@ -1,5 +1,6 @@
-<?php 
-    include_once( 'includes/config.php'); 
+
+<?php
+    require'includes/config.php';
     include_once('header.php');
 ?>
 <html>
@@ -21,28 +22,13 @@
         </form>
 
         <?php
-            // DB connection info
-            //TODO: Update the values for $host, $user, $pwd, and $db
-            //using the values you retrieved earlier from the Azure Portal.
-            $host = "eu-cdbr-azure-west-a.cloudapp.net";
-            $user = "bd38b99b177044";
-            $pwd = "5e59f1c8";
-            $db = "blogster";
-            // Connect to database.
-            try {
-                $conn = new PDO( "mysql:host=$host;dbname=$db", $user, $pwd);
-                $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-            }
-            catch(Exception $e){
-                die(var_dump($e));
-            }
-            //Insert registration info
+                       //Insert registration info
             $matchedFirstName=array();  
             $matchedSurname=array();
             $matchedId=array();
             $matchedPassword=array();
             $counter=0;
-
+        
             if(!empty($_POST)) {
                 try {
                     // Retrieve data
