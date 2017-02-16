@@ -64,9 +64,9 @@
     if(!empty($_POST)) {
         try {
             // Retrieve data
-            $first_name = $_POST['first_name'];
-            $surname = $_POST['surname'];
-            $email = $_POST['email'];
+            $first_name = strtolower($_POST['first_name']);
+            $surname = strtolower($_POST['surname']);
+            $email = strtolower($_POST['email']);
             $password = $_POST['password'];
             $password_confirm = $_POST['confirmation'];
             $gender = $_POST['gender'];
@@ -92,7 +92,7 @@
             else if(count($registrants) != 0) {
                 echo "<h2>Email already registered</h2>";
             } else {
-                $sql_insert = "INSERT INTO user (first_name, surname, email, password, gender, dob)VALUES ('".$first_name."','".$surname."','".$email."','".$password."','".$gender."','".date('Y-m-d', $dob)."');";
+                $sql_insert = "INSERT INTO user (first_name, surname, email, password, gender, dob)VALUES ('".$first_name."','".$surname."','".$email."','".$password."','".$gender."','".$dob."');";
                 $sql_get_id = "SELECT id_user FROM user WHERE email = '".$email."';";
                 $stmt = $conn->prepare($sql_insert);
                 $stmt->execute();

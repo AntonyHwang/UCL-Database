@@ -12,8 +12,8 @@
             // execute the prepared statement
             $stmt->execute();
             if($stmt->rowCount() > 0){
-                while($rows = $stmt->fetch()){
-                    echo "<img src= \"./uploads/".$rows[id_user]."/profile.jpg\" alt=\"Profile Pic\" style=\"width:75px; height 75px;\">"." ".$rows['first_name']." ".$rows['surname']."<br>";
+                while($row = $stmt->fetch()){
+                    echo "<img src= \"./uploads/".$row[id_user]."/profile.jpg\" alt=\"Profile Pic\" style=\"width:75px; height 75px;\">"." ".ucfirst($row['first_name'])." ".ucfirst($row['surname'])."<br>";
                 }
             } else{
                 echo "<p>No matches found";
