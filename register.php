@@ -98,16 +98,14 @@
             else if(count($registrants) != 0) {
                 echo "<h2>Email already registered</h2>";
             } else {
-                $sql_insert = "INSERT INTO user (first_name, surname, email, password, gender, dob)VALUES (?,?,?,?,?,?)";
+                $sql_insert = "INSERT INTO user (first_name, surname, email, password, gender, dob)VALUES ('".$first_name."','".$surname."','".$email."','".$password."','".$gender."','".date('Y-m-d', $dob)."');";
+                $sql_get_id = "SELECT id_user FROM user WHERE email = '".$email."';";
                 $stmt = $conn->prepare($sql_insert);
-                $stmt->bindValue(1, $first_name);
-                $stmt->bindValue(2, $surname);
-                $stmt->bindValue(3, $email);
-                $stmt->bindValue(4, $password);
-                $stmt->bindValue(5, $gender);
-                $stmt->bindValue(6, date("Y-m-d",$dob));
                 $stmt->execute();
-                echo "<h3>Your're registered!</h3>";
+                $stmt = $conn->prepare($sql_get_id);
+                $stmt->execute();
+                $rows = $stmt->fetch();
+                mkdir("./uploads/".$rows["id_user"]);
             }
         }
         catch(Exception $e) {
