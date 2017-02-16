@@ -39,19 +39,13 @@
             <input class="form-control" name="confirmation" id="confirmation" placeholder="Confirm Password" type="password" size="30"/>
         </div><br>
         <div class="form-group" align="left">
-            <label style="font-size: 12px;">
             <input type="radio" name="gender" value="male" checked> Male
             <input type="radio" name="gender" value="female"> Female
             <input type="radio" name="gender" value="other"> Other
         </div><br>
         <div class="form-group" align="left">
-            <label style="font-size: 12px;">
             Birthday
-            <input type="text" class="form-control" name="birthday" placeholder="DD/MM/YYYY"
-                data-fv-date="true"
-                data-fv-date-format="DD/MM/YYYY"
-                data-fv-date-message="The value is not a valid date" 
-            />
+            <input type="date" class="form-control" name="birthday" placeholder="YYYY-MM-DD">
         </div><br>
         <div class="form-group">
             <button class="btn btn-default" type="submit" style="vertical-align:left; float: center">
@@ -70,13 +64,13 @@
     if(!empty($_POST)) {
         try {
             // Retrieve data
-            $first_name = $_POST['first_name'];
-            $surname = $_POST['surname'];
-            $email = $_POST['email'];
+            $first_name = strtolower($_POST['first_name']);
+            $surname = strtolower($_POST['surname']);
+            $email = strtolower($_POST['email']);
             $password = $_POST['password'];
             $password_confirm = $_POST['confirmation'];
             $gender = $_POST['gender'];
-            $dob = $_POST['bday'];
+            $dob = $_POST['birthday'];
             $sql_select = "SELECT * FROM user WHERE email = '".$email."'";
             $stmt = $conn->query($sql_select);
             $registrants = $stmt->fetchAll();
@@ -98,16 +92,14 @@
             else if(count($registrants) != 0) {
                 echo "<h2>Email already registered</h2>";
             } else {
-                $sql_insert = "INSERT INTO user (first_name, surname, email, password, gender, dob)VALUES (?,?,?,?,?,?)";
+                $sql_insert = "INSERT INTO user (first_name, surname, email, password, gender, dob)VALUES ('".$first_name."','".$surname."','".$email."','".$password."','".$gender."','".$dob."');";
+                $sql_get_id = "SELECT id_user FROM user WHERE email = '".$email."';";
                 $stmt = $conn->prepare($sql_insert);
-                $stmt->bindValue(1, $first_name);
-                $stmt->bindValue(2, $surname);
-                $stmt->bindValue(3, $email);
-                $stmt->bindValue(4, $password);
-                $stmt->bindValue(5, $gender);
-                $stmt->bindValue(6, date("Y-m-d",$dob));
                 $stmt->execute();
-                echo "<h3>Your're registered!</h3>";
+                $stmt = $conn->prepare($sql_get_id);
+                $stmt->execute();
+                $rows = $stmt->fetch();
+                mkdir("./uploads/".$rows["id_user"]);
             }
         }
         catch(Exception $e) {
