@@ -74,7 +74,7 @@
 // 	echo 'problem in con';
 //     die("Connection vvvv: " . $conn->connect_error);
 // } 
-$_SESSION["id"]=61;
+$_SESSION["id"]=91;
 $userid = $_SESSION["id"];
 //handle post 
 if (isset($_GET['body']) and $_GET['body']!=null){
@@ -138,8 +138,10 @@ $result = $conn->query($sql);
 echo 'get post';//.$result->num_rows;
 
     while($row = $result->fetch()) {
+		$postid = $row["id_post"];
 		
 		?>
+		</br>
 		<div class="panel-body">
 	<?php echo $row['body'];?>
 	<div class="clearfix"></div>
@@ -169,7 +171,7 @@ echo 'get post';//.$result->num_rows;
 	  <div class="input-group-btn">
 	  <button class="btn btn-default"><i class="glyphicon glyphicon-share"></i></button>
 	  </div>
-	  <input type="hidden" name="postid" value="<?php echo $row["id_post"]; ?>" >
+	  <input type="hidden" name="postid" value="<?php echo $postid; ?>" />
 	  <input type="text" name = 'comment' class="form-control" placeholder="Add a comment..">
 	</div>
 	</form>
