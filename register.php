@@ -1,11 +1,26 @@
 <?php 
     require 'includes/config.php'; 
-    include_once('header.php');
 ?>
 <html>
     <head>
         <link rel="stylesheet" type="css" href="./css/register.css">
     </head>
+    <body>
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <!-- logo -->
+                <div class="navbar-header">
+                    <a href="#" class="navbar-brand">BLOGSTER</a>
+                </div>
+                <!-- menu items -->
+                <div>
+                    <ul class="nav navbar-nav">
+                        <li><a href="login.php">Login</a></li>
+                        <li class="active"><a href="register.php">Register</a></li>
+                    </ul>
+                </div>
+        </nav>
+    </body>
     <form action="register.php" method="post" align="center">
     <fieldset>
         <div class="form-group">
@@ -48,9 +63,6 @@
                 Reset
             </button>
         </div><br>
-        <div>
-            or <a href="login.php">log in</a> for an account
-        </div>
     </fieldset>
 </form>
 <?php
