@@ -1,12 +1,6 @@
 <?php
 	ob_start();
 	session_start();
-    if ($_SERVER["PHP_SELF"] != "/login.php" && $_SERVER["PHP_SELF"] !=  "/register.php") {
-        if ($_SESSION["id"] = "")
-        {
-            header('Location:login.php');
-        }
-    }
     // DB connection info
     //TODO: Update the values for $host, $user, $pwd, and $db
     //using the values you retrieved earlier from the Azure Portal.

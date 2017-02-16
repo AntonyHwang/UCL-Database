@@ -1,9 +1,5 @@
 <?php
     session_start();         
-    $_SESSION["logged_in"]="NO";
-    $_SESSION["id"] = "";
-    $_SESSION["password"] = "";
-
     require 'includes/config.php'; 
 ?>
  <html>
@@ -44,11 +40,12 @@
     </form>
 
     <?php
+        $_SESSION["logged_in"]="NO";
+        $_SESSION["id"] = "";
         //Insert registration info
         if(!empty($_POST)) {
             try {
                 // Retrieve data
-                $_SESSION["logged_in"]="NO";
                 $email = $_POST['email'];
                 $password = $_POST['password'];
                 $sql_select = "SELECT * FROM user WHERE email = '".$email."' AND password = '".$password."'";
@@ -60,8 +57,7 @@
                     echo "<h1>You must enter your password</h1>";
                 }
                 else if($row = $stmt->fetch()) {
-                    $_SESSION["id"] = $row["id_user"];
-                    $_SESSION["password"] = $password;
+                    $_SESSION["id"] = $row["id_user"];;
                     $_SESSION["logged_in"] = "YES";
                     header('Location:myProfilePage.php');
                 }

@@ -22,7 +22,7 @@
         </form>
 
         <?php
-                       //Insert registration info
+            //Insert registration info
             $matchedFirstName=array();  
             $matchedSurname=array();
             $matchedId=array();

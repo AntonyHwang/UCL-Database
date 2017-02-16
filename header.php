@@ -44,6 +44,7 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Circle<span class="caret"></span></a>
                             <ul class="dropdown-menu">
+                                <li><a href="createCircle.php">Create Circle</a></li>
                                 <li><a href="circlePage.php">View Circles</a></li>
                                 <li><a href="circleMessengerPage.php">Circle Messenger</a></li>
                             </ul>
