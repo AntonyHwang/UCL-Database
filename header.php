@@ -49,9 +49,9 @@
                                 <li><a href="circleMessengerPage.php">Circle Messenger</a></li>
                             </ul>
                         </li>
-                        <li><a href="postPage.php">Post</a></li>
-                        <li><a href="photoPage.php">Photo</a></li>
-                        <li><a href="friendPage.php">Friend</a></li>
+                        <li><a href="postPage.php?id=<?php echo $_SESSION['id']?>">Post</a></li>
+                        <li><a href="photoPage.php?id=<?php echo $_SESSION['id']?>">Photo</a></li>
+                        <li><a href="friend.php">Friend</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Account<span class="caret"></span></a>
                             <ul class="dropdown-menu">
