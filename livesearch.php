@@ -1,45 +1,28 @@
 <?php
-    $xmlDoc=new DOMDocument();
-    $xmlDoc->load("links.xml");
-
-    $x=$xmlDoc->getElementsByTagName('link');
-
-    //get the q parameter from URL
-    $q=$_GET["q"];
-
-    //lookup all links from the xml file if length of q>0
-    if (strlen($q)>0) {
-    $hint="";
-    for($i=0; $i<($x->length); $i++) {
-        $y=$x->item($i)->getElementsByTagName('title');
-        $z=$x->item($i)->getElementsByTagName('url');
-        if ($y->item(0)->nodeType==1) {
-        //find a link matching the search text
-        if (stristr($y->item(0)->childNodes->item(0)->nodeValue,$q)) {
-            if ($hint=="") {
-            $hint="<a href='" . 
-            $z->item(0)->childNodes->item(0)->nodeValue . 
-            "' target='_blank'>" . 
-            $y->item(0)->childNodes->item(0)->nodeValue . "</a>";
-            } else {
-            $hint=$hint . "<br /><a href='" . 
-            $z->item(0)->childNodes->item(0)->nodeValue . 
-            "' target='_blank'>" . 
-            $y->item(0)->childNodes->item(0)->nodeValue . "</a>";
+    require('includes/config.php');     
+    // Attempt search query execution
+    try{
+        if(isset($_REQUEST['term'])){
+            // create prepared statement
+            $sql = "SELECT id_user, first_name, surname FROM (SELECT first_name, surname, id_user, password, CONCAT(first_name,' ',surname) AS 'Con_Name' FROM user) AS x WHERE Con_Name LIKE :term";
+            $stmt = $conn->prepare($sql);
+            $term = $_REQUEST['term'] . '%';
+            // bind parameters to statement
+            $stmt->bindParam(':term', $term);
+            // execute the prepared statement
+            $stmt->execute();
+            if($stmt->rowCount() > 0){
+                while($rows = $stmt->fetch()){
+                    echo "<img src= \"./uploads/".$rows[id_user]."/profile.jpg\" alt=\"Profile Pic\" style=\"width:75px; height 75px;\">"." ".$rows['first_name']." ".$rows['surname']."<br>";
+                }
+            } else{
+                echo "<p>No matches found";
             }
-        }
-        }
+        }  
+    } catch(PDOException $error){
+        die("ERROR: Could not able to execute $sql. " . $error->getMessage());
     }
-    }
-
-    // Set output to "no suggestion" if no hint was found
-    // or to the correct values
-    if ($hint=="") {
-    $response="no suggestion";
-    } else {
-    $response=$hint;
-    }
-
-    //output the response
-    echo $response;
+    
+    // Close connection
+    unset($pdo)
 ?>

@@ -39,19 +39,13 @@
             <input class="form-control" name="confirmation" id="confirmation" placeholder="Confirm Password" type="password" size="30"/>
         </div><br>
         <div class="form-group" align="left">
-            <label style="font-size: 12px;">
             <input type="radio" name="gender" value="male" checked> Male
             <input type="radio" name="gender" value="female"> Female
             <input type="radio" name="gender" value="other"> Other
         </div><br>
         <div class="form-group" align="left">
-            <label style="font-size: 12px;">
             Birthday
-            <input type="text" class="form-control" name="birthday" placeholder="DD/MM/YYYY"
-                data-fv-date="true"
-                data-fv-date-format="DD/MM/YYYY"
-                data-fv-date-message="The value is not a valid date" 
-            />
+            <input type="date" class="form-control" name="birthday" placeholder="YYYY-MM-DD">
         </div><br>
         <div class="form-group">
             <button class="btn btn-default" type="submit" style="vertical-align:left; float: center">
@@ -76,7 +70,7 @@
             $password = $_POST['password'];
             $password_confirm = $_POST['confirmation'];
             $gender = $_POST['gender'];
-            $dob = $_POST['bday'];
+            $dob = $_POST['birthday'];
             $sql_select = "SELECT * FROM user WHERE email = '".$email."'";
             $stmt = $conn->query($sql_select);
             $registrants = $stmt->fetchAll();
