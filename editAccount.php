@@ -18,7 +18,7 @@
     <head>
         <link rel="stylesheet" type="css" href="./css/register.css">
     </head>
-    <form action="register.php" method="post" align="center">
+    <form action="editAccount.php" method="post" align="center">
         <fieldset>
             <div class="form-group" align="left">
                 First name: <input autofocus class="form-control" name="first_name" id="first_name" value="<?php echo ucfirst($row["first_name"]) ?>" type="text" size="30"/>
@@ -95,7 +95,7 @@
                 echo "<h2>Password does not match</h2>";
             }
             else {
-                $sql_select = "SELECT * FROM user WHERE id_user NOT EQUAL TO '".$_SESSION["id"]."' AND email = '".$email."'";
+                $sql_select = "SELECT * FROM user WHERE id_user != '".$_SESSION["id"]."' AND email = '".$email."'";
                 $stmt = $conn->prepare($sql_select);
                 $stmt->execute();
                 $registrants = $stmt->fetchAll();
@@ -103,7 +103,7 @@
                     echo "<h2>Email already registered</h2>";
                 }
                 else {
-                    $sql_update = "UPDATE user SET first_name = ".$first_name.", surname = ".$surname.", email = ".$email.", password = ".$password.", gender = ".$gender.", dob = ".$dob."WHERE id_user = ".$_SESSION["id"];
+                    $sql_update = "UPDATE user SET first_name = '".$first_name."', surname = '".$surname."', email = '".$email."', password = '".$password."', gender = '".$gender."', dob = '".$dob."' WHERE id_user = '".$_SESSION["id"]."'";
                     $stmt = $conn->prepare($sql_update);
                     $stmt->execute();
                     echo "<h2>Account detail updated</h2>";
