@@ -9,12 +9,12 @@
     $gender = $row["gender"];
     $dob = $row["dob"];
 	if (isset($_GET['profile']) and $_GET['profile']!=null){
-		    $sql_select = "SELECT * FROM user WHERE id_user = '".$_GET['profile']."'";
-			$stmt = $conn->query($sql_select);
-			$row = $stmt->fetch();
-			$email = $row["email"];
-			$gender = $row["gender"];
-			$dob = $row["dob"];
+        $sql_select = "SELECT * FROM user WHERE id_user = '".$_GET['profile']."'";
+        $stmt = $conn->query($sql_select);
+        $row = $stmt->fetch();
+        $email = $row["email"];
+        $gender = $row["gender"];
+        $dob = $row["dob"];
 	}
 	//$date->format('Y-m-d H:i:s')
 ?>
