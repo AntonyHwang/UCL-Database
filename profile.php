@@ -39,7 +39,7 @@ $(document).ready(function(){
             </nav>
 
             <article>
-                <h1>Profile</h1>
+                <h1><?php echo ucfirst($row["first_name"])." ".ucfirst($row["surname"]);?></h1>
                 <h4>Gender: <?php echo $gender;?></h4>
                 <h4>Email: <?php echo $email;?></h4>
                 <h4>Birthday:  <?php echo $dob;?></h4>
