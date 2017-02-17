@@ -86,13 +86,13 @@
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Account<span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="editPassword.php">Change Password</a></li>
-                                    <li><a href="editPassword.php">Deactivate Account</a></li>
+                                    <li><a href="editAccount.php">Edit Account</a></li>
+                                    <li><a href="deactivateAccount.php">Deactivate Account</a></li>
                                     <li><a href="login.php">Log out</a></li>
                                 </ul>
                             </li>
-                            <?php else:
-                                header('Location:login.php');
+                        <?php else:
+                            header('Location:login.php');
                         endif; ?>
                         <div class="search-box">
                             <input type="text" autocomplete="off" placeholder="Search for People.." />
