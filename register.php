@@ -39,9 +39,9 @@
             <input class="form-control" name="confirmation" id="confirmation" placeholder="Confirm Password" type="password" size="30"/>
         </div><br>
         <div class="form-group" align="left">
-            <input type="radio" name="gender" value="male" checked> Male
-            <input type="radio" name="gender" value="female"> Female
-            <input type="radio" name="gender" value="other"> Other
+            <input type="radio" name="gender" value="Male" checked> Male
+            <input type="radio" name="gender" value="Female"> Female
+            <input type="radio" name="gender" value="Other"> Other
         </div><br>
         <div class="form-group" align="left">
             Birthday
@@ -92,7 +92,7 @@
             else if(count($registrants) != 0) {
                 echo "<h2>Email already registered</h2>";
             } else {
-                $sql_insert = "INSERT INTO user (first_name, surname, email, password, gender, dob)VALUES ('".$first_name."','".$surname."','".$email."','".$password."','".$gender."','".$dob."');";
+                $sql_insert = "INSERT INTO user (first_name, surname, email, password, gender, dob, privacy_setting)VALUES ('".$first_name."','".$surname."','".$email."','".$password."','".$gender."','".$dob."', 0);";
                 $sql_get_id = "SELECT id_user FROM user WHERE email = '".$email."';";
                 $stmt = $conn->prepare($sql_insert);
                 $stmt->execute();

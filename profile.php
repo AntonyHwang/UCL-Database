@@ -15,6 +15,8 @@
         $email = $row["email"];
         $gender = $row["gender"];
         $dob = $row["dob"];
+        $privacy_setting = $row["privacy_setting"];
+        echo "<title>".ucfirst($row["first_name"])." ".ucfirst($row["surname"])."</title>";
 	}
 	//$date->format('Y-m-d H:i:s')
 ?>
@@ -34,7 +36,7 @@ $(document).ready(function(){
         
             <nav>
             <ul>
-                <img src="<?php echo './uploads/'.$_SESSION["id"].$_SESSION["password"].'/profile.jpg'; ?>" alt="Profile Pic" style="width:120px;height 120px;">
+                <img src="<?php echo './uploads/'.$_GET['profile'].'/profile.jpg'; ?>" alt="Profile Pic" style="width:120px;height 120px;">
             </ul>
             </nav>
 

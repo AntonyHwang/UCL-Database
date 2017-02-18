@@ -2,6 +2,8 @@
     require 'includes/config.php'; 
     include_once('header.php');
 
+    echo "<title> Account Settings</title>";
+
     //Insert registration info
     try {
         // Retrieve data
@@ -66,6 +68,15 @@
             </div><br>
             <div class="form-group" align="left">
                 Birthday: <input type="date" class="form-control" name="birthday" value="<?php echo $row["dob"] ?>" placeholder="YYYY-MM-DD">
+            </div>
+            <div class="form-group" align="left">
+                Privacy Setting:
+                <select name="privacy">
+                    <option value=0>Only me</option>
+                    <option value=1>Friends</option>
+                    <option value=2>Friends of friends</option>
+                    <option value=3>Everyone</option>
+                </select>
             </div><br>
             <div class="form-group">
                 <button class="btn btn-default" type="submit" style="vertical-align:left; float: center">
@@ -87,6 +98,7 @@
             $password_confirm = $_POST['confirmation'];
             $gender = $_POST['gender'];
             $dob = $_POST['birthday'];
+            $privacy_setting = $_POST['privacy'];
             if(!test_input($first_name)) {
                 echo "<h2>You must enter your first name</h2>";
             }
@@ -111,7 +123,7 @@
                     echo "<h2>Email already registered</h2>";
                 }
                 else {
-                    $sql_update = "UPDATE user SET first_name = '".$first_name."', surname = '".$surname."', email = '".$email."', password = '".$password."', gender = '".$gender."', dob = '".$dob."' WHERE id_user = '".$_SESSION["id"]."'";
+                    $sql_update = "UPDATE user SET first_name = '".$first_name."', surname = '".$surname."', email = '".$email."', password = '".$password."', gender = '".$gender."', dob = '".$dob."', privacy_setting = ".$privacy_setting." WHERE id_user = '".$_SESSION["id"]."'";
                     $stmt = $conn->prepare($sql_update);
                     $stmt->execute();
 
