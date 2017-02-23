@@ -180,7 +180,8 @@ echo count($friends).'friends</br>';
 $ff = [];
 //each my friend ,member,member f 's friends 
 foreach ($friends as $member) {   	
-	$sql = "SELECT * FROM `friendship` WHERE `id_friend1` =".$member;
+	$sql = "SELECT * FROM `friendship` WHERE `id_friend1` =".$member.' or id_friend2='.$member ;
+
 	$result = $conn->query($sql);
 	//echo 'user '.$member.' got '.$result->num_rows.'  friends</br>';
 	if ($result->rowCount() > 0) {
@@ -188,7 +189,9 @@ foreach ($friends as $member) {
 	//add their all friends
 		foreach ($fri2 as $row) {
 			//echo 'adding '.$row[1].'</br>';
+			if($row[0]==$member)
 			array_push($ff,$row[1]);
+			else array_push($ff,$row[0]);
 			//ff is friends s friends
 		}
 	}
