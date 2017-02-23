@@ -1,9 +1,15 @@
 <?php
 	ob_start();
-    	$user_id = $_GET['user_id'];
-    	$photo_id = $_GET['photo_id'];
-    	$comment = $_GET['comment'];
-    	$prevLink = $_GET['prevLink'];
+    if (!empty($_POST)) {
+    	$user_id = $_POST['user_id'];
+    	$photo_id = $_POST['photo_id'];
+    	$comment = $_POST['comment'];
+    	$prevLink = $_POST['prevLink'];
+
+        echo $user_id;
+        echo $photo_id;
+        echo $comment;
+        echo $prevLink;
 
     	$host = "eu-cdbr-azure-west-a.cloudapp.net";
         $user = "bd38b99b177044";
@@ -25,6 +31,7 @@
         $stmt->bindValue(5, $_SESSION['id'];
         $stmt = $conn->prepare($sql_insert);
         $stmt->execute();
+    }
         
     
 ?>
