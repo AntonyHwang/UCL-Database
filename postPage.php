@@ -56,7 +56,7 @@ while($row2 = $result2->fetch()) {
         <div class="panel-body">
         <h2>    
         <?php
-        echo $username;
+        echo "Author: ".$username;
         ?>
         </h2>
         <paragraph>
@@ -70,9 +70,19 @@ while($row2 = $result2->fetch()) {
     <?php
         //echo "id_post:" . $row["id_post"]. "</br> userid: " . $row["id_user"]. "</br>body " . $row["body"]. "<br>";
         $com = "SELECT id_post, id_user,id_comment, body,timestamp FROM post_comment WHERE id_post = ". $row["id_post"].' ORDER BY timestamp DESC';
+       
         $res_com = $conn->query($com);
-        while($row = $res_com->fetch()){
-        echo "userid/name: " . $row["id_user"]. " " . $row["body"]. " at ".$row["timestamp"]."</br>";
+    ?>
+    <h3>Comments:</h3>
+    <?php    
+        while($sqlcomment = $res_com->fetch()){
+        $commentUsername = "SELECT first_name,surname FROM user WHERE id_user = ".$sqlcomment["id_user"].' ';
+        $res_commentUsername = $conn->query($commentUsername);
+        while($sqlcommentUsername = $res_commentUsername->fetch()){
+               $commentusername= $sqlcommentUsername["first_name"]." ".$sqlcommentUsername["surname"];
+        }
+
+        echo $sqlcomment["body"]." Posted By: ".$commentusername."</br>";
         }
         echo "</br>";
     ?>
@@ -149,7 +159,7 @@ while($row2 = $result2->fetch()) {
         <div class="panel-body">
         <h2>    
         <?php
-        echo $username;
+        echo "Author: ". $username;
         ?>
         </h2>
         <paragraph>
@@ -163,8 +173,18 @@ while($row2 = $result2->fetch()) {
         //echo "id_post:" . $row["id_post"]. "</br> userid: " . $row["id_user"]. "</br>body " . $row["body"]. "<br>";
         $com = "SELECT id_post, id_user,id_comment, body,timestamp FROM post_comment WHERE id_post = ". $row["id_post"].' ORDER BY timestamp DESC';
         $res_com = $conn->query($com);
-        while($row = $res_com->fetch()){
-        echo "userid/name: " . $row["id_user"]. " " . $row["body"]. " at ".$row["timestamp"]."</br>";
+       
+        ?>
+         <h3>Comments:</h3>
+    <?php    
+        while($sqlcomment = $res_com->fetch()){
+        $commentUsername = "SELECT first_name,surname FROM user WHERE id_user = ".$sqlcomment["id_user"].' ';
+        $res_commentUsername = $conn->query($commentUsername);
+        while($sqlcommentUsername = $res_commentUsername->fetch()){
+               $commentusername= $sqlcommentUsername["first_name"]." ".$sqlcommentUsername["surname"];
+        }
+
+        echo $sqlcomment["body"]." Posted By: ".$commentusername."</br>";
         }
         echo "</br>";
     ?>
@@ -193,6 +213,28 @@ while($row2 = $result2->fetch()) {
 
 <br>
 <h1>Friend of Friend's Post </h1>
+<?php 
+$ff = [];
+//each my friend ,member,member f 's friends 
+foreach ($friends as $member) {     
+    $sql = "SELECT * FROM `friendship` WHERE `id_friend1` =".$member;
+    $result = $conn->query($sql);
+    //echo 'user '.$member.' got '.$result->num_rows.'  friends</br>';
+    if ($result->rowCount() > 0) {
+    $fri2 = $result->fetchAll();
+    //add their all friends
+        foreach ($fri2 as $row) {
+            //echo 'adding '.$row[1].'</br>';
+            array_push($ff,$row[1]);
+            
+        }
+    }
+    
+}
+
+print_r($ff);
+
+    ?>
 <br>
 <h1>Circle's Post </h1>
 <br>
