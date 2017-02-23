@@ -1,7 +1,9 @@
 <?php
 
-    require 'includes/config.php'; 
-    include_once('header.php');
+require 'includes/config.php'; 
+include_once('header.php');
+
+	
 ?>
 <!DOCTYPE html>
 <html>
@@ -48,15 +50,6 @@
 
 
 <?php
-
-/*             $host = "eu-cdbr-azure-west-a.cloudapp.net";
-            $user = "bd38b99b177044";
-            $pwd = "5e59f1c8";
-            $db = "blogster"; */
-// $servername = "localhost";
-// $username = "root";
-// $password = "";
-// $dbname = "blogster";
 
 // Create connection
             try {
@@ -133,6 +126,27 @@ if (isset($_GET['comment']) and $_GET['comment']!=null and isset($_GET['postid']
 	}
 	
 }
+
+if (isset($_GET['id_del']) and $_GET['id_del']!=null ){
+	//echo $_GET['body'];
+	$table = 'post';
+
+	$post_del = $_GET['id_del'];
+	
+	$del = "DELETE FROM post WHERE id_post= ".$post_del;
+	 $stmt = $conn->query($del);  
+	if (!$stmt){
+		die('deleting failed');
+		}
+	else {
+	echo " deleted successfully<br>";
+	$_GET['id_del']=null;
+	unset($_GET['id_del']);
+	}
+	
+}
+$id_del = 0;
+
 $sql = "SELECT id_post, id_user, body FROM post WHERE id_user = ".$userid.' ORDER BY timestamp DESC';
 $result = $conn->query($sql);
 echo 'get post';//.$result->num_rows;
@@ -144,6 +158,11 @@ echo 'get post';//.$result->num_rows;
 		</br>
 		<div class="panel-body">
 	<?php echo $row['body'];?>
+	<form>
+	<input type="hidden" name="id_del" value="<?php echo $postid; ?>" />
+	<button class="btn btn-primary pull-right" type="submit">delete</button>
+	</form>
+	
 	<div class="clearfix"></div>
 	<hr>
 	
@@ -154,7 +173,7 @@ echo 'get post';//.$result->num_rows;
 
 		$res_com = $conn->query($com);
 		while($row = $res_com->fetch()){
-			echo "userid/name: " . $row["id_user"]. "body " . $row["body"]. " at ".$row["timestamp"]."</br>";
+			echo "userid/name: " . $row["id_user"]. " " . $row["body"]. " at ".$row["timestamp"]."</br>";
 		}
 		echo "</br>";
     
@@ -171,6 +190,7 @@ echo 'get post';//.$result->num_rows;
 	  <div class="input-group-btn">
 	  <button class="btn btn-default"><i class="glyphicon glyphicon-share"></i></button>
 	  </div>
+	  
 	  <input type="hidden" name="postid" value="<?php echo $postid; ?>" />
 	  <input type="text" name = 'comment' class="form-control" placeholder="Add a comment..">
 	</div>
