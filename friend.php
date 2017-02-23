@@ -7,11 +7,12 @@ try {
 	$conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 	//echo 'ok';
 }
-	catch(Exception $e){
+catch(Exception $e){
 	die(var_dump($e));
 }
 
-$thisid = 21;
+$thisid = $_SESSION['id'];
+echo $thisid;
 $sql = "SELECT * FROM `friendship` WHERE `id_friend1` =".$thisid. " OR `id_friend2` =".$thisid;
 $result = $conn->query($sql);
 $list = [];
@@ -70,12 +71,7 @@ div {
 
 </style>
 <body>
-<?php 
-//I only use form at this moment
-//sent the get name to current page 
-//if isset the variable 
-//run these code
-?>
+
 <div class = 'left'>
 <h1>Friends</h1>
 
@@ -85,7 +81,31 @@ div {
 <p id="demo"></p>
 <p id="demo2"></p>
 
+<?php 
+//I only use form at this moment
+//sent the get name to current page 
+//if isset the variable 
+//run these code
 
+//check the friend request
+//INSERT INTO friend_request (id_from_user, id_to_user)
+$friendRequest = "SELECT id_from_user, id_to_user FROM `friend_request` WHERE `id_to_user` =$thisid" ;
+
+$result = $conn->query($friendRequest);
+
+$array = $result->fetchAll();
+foreach($array as $row){
+	echo '<form>';
+	echo $row[0].'want to be your friend';
+	echo '<input type="hidden" name="p_friend" value="'.  $row[0].'" />';
+	echo '<button class="btn btn-primary pull-right" type="submit">accept</button>';
+	echo '<button class="btn btn-primary pull-right" type="submit">delete</button>';
+	
+	echo '</form>';
+	
+}
+
+?>
 <?php
 //echo "num of result".count($array);
 //echo "1st".$array[1]['id_friend1'];
@@ -111,7 +131,13 @@ if ($row_count = $result->rowCount()> 0) {
 } else {
     echo "0 results";
 }
-
+if (isset($_GET['p_friend']) and $_GET['p_friend']!=null){
+	$f = $_GET['p_friend'];
+	$me = $_SESSION['id'];
+	$addfriend = "INSERT INTO friendship (id_friend1, id_friend2)VALUES ($me, $f)";
+	$stmt = $conn->query($addfriend);  
+	header("location:friend.php");
+}
 //print_r($array) 
 //print all friends or search result
 $friends = [];
@@ -163,7 +189,7 @@ if (isset($_GET['name']) and $_GET['name']!=null){
 	echo '</div>';
 	echo '</div>';
 
-	$sql = "SELECT * FROM `user` WHERE `id_user` =".$value[1];
+	$sql = "SELECT * FROM `user` WHERE `id_user` =".$friend;
 	$result = $conn->query($sql);	
 	if ($result->rowCount() > 0) {
     // output data of each row	
