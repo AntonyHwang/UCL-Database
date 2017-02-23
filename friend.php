@@ -10,7 +10,7 @@ try {
 catch(Exception $e){
 	die(var_dump($e));
 }
-
+$_SESSION['id']=11;
 $thisid = $_SESSION['id'];
 echo $thisid;
 $sql = "SELECT * FROM `friendship` WHERE `id_friend1` =".$thisid. " OR `id_friend2` =".$thisid;
@@ -60,13 +60,14 @@ div {
 }
 .left{
 	float: left;
+	width:500px;
 	margin: auto;
-    border: 1px solid black;
+    border: 1px solid blue;
 }
 .recm{
 	float: right;
 	margin: auto;
-    border: 1px solid black;
+    border: 1px solid blue;
 }
 
 </style>
@@ -135,7 +136,8 @@ if (isset($_GET['p_friend']) and $_GET['p_friend']!=null){
 	$f = $_GET['p_friend'];
 	$me = $_SESSION['id'];
 	$addfriend = "INSERT INTO friendship (id_friend1, id_friend2)VALUES ($me, $f)";
-	$stmt = $conn->query($addfriend);  
+	$stmt = $conn->query($addfriend); 
+	$_GET['p_friend']=null; 
 	header("location:friend.php");
 }
 //print_r($array) 
@@ -176,29 +178,36 @@ if (isset($_GET['name']) and $_GET['name']!=null){
 	}else{
 		$friend = $value[1];
 	}
-    echo 'id: '.$friend.' ';
+
+
+	$sql = "SELECT * FROM `user` WHERE `id_user` =".$friend;
+	$result = $conn->query($sql);	
+	
+	echo 'id: '.$friend.' ';
 	echo '<div class="container-fluid">';
 	echo '<div class="row">';
 
 	echo '<div class="col-md-6">';
-	echo "<a href= \" ./profile.php?profile=".$friend."\">click</a> <img src= \"./uploads/".$friend."/profile.jpg\" alt=\"Profile Pic\" style=\"width:75px; height 75px;\"/>";
+	echo "<img src= \"./uploads/".$friend."/profile.jpg\" alt=\"Profile Pic\" style=\"width:75px; height 75px;\">";
     
+		if ($result->rowCount() > 0) {
+    // output data of each row	
+
+		while($row = $result->fetch(PDO::FETCH_ASSOC)) {
+			$name = $row['first_name'].' '.$row['surname'];
+			if ($row['first_name']==null or $row['surname']==null)
+			echo "<a href=\"./profile.php?profile=".$user."\"> <b>undefined</b></a>";
+			else 
+			
+			echo "<a href=\"./profile.php?profile=".$user."\"> <b>".$name."</b></a>";
+			//echo $row['first_name'].' '.$row['surname'];
+		}
+	}
 	echo '</div>';
 	echo '<div class="col-md-6">';
 	echo 'column on right</div>';
 	echo '</div>';
 	echo '</div>';
-
-	$sql = "SELECT * FROM `user` WHERE `id_user` =".$friend;
-	$result = $conn->query($sql);	
-	if ($result->rowCount() > 0) {
-    // output data of each row	
-
-		while($row = $result->fetch(PDO::FETCH_ASSOC)) {
-			
-			echo $row['first_name'].' '.$row['surname'];
-		}
-	}
 	?>
 
 	
@@ -300,6 +309,8 @@ foreach ($ranlist as $user){
 		while($row = $result->fetch(PDO::FETCH_ASSOC)) {
 			$name = $row['first_name'].' '.$row['surname'];
 			if ($row['first_name']==null or $row['surname']==null)
+			echo "<a href=\"./profile.php?profile=".$user."\"> <b>undefined</b></a>";
+			else 
 			
 			echo "<a href=\"./profile.php?profile=".$user."\"> <b>".$name."</b></a>";
 		}
