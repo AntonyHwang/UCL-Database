@@ -1,20 +1,18 @@
 <?php
-            $host = "eu-cdbr-azure-west-a.cloudapp.net";
-            $user = "bd38b99b177044";
-            $pwd = "5e59f1c8";
-            $db = "blogster";
+    require'includes/config.php';
+    include_once('header.php');
 // Create connection
-            try {
-                $conn = new PDO( "mysql:host=$host;dbname=$db", $user, $pwd);
-                $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-				echo 'ok';
-            }
-            catch(Exception $e){
-                die(var_dump($e));
-            }
+try {
+	$conn = new PDO( "mysql:host=$host;dbname=$db", $user, $pwd);
+	$conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+	//echo 'ok';
+}
+	catch(Exception $e){
+	die(var_dump($e));
+}
 
 $thisid = 21;
-$sql = "SELECT * FROM `friendship` WHERE `id_friend1` =".$thisid;
+$sql = "SELECT * FROM `friendship` WHERE `id_friend1` =".$thisid. " OR `id_friend2` =".$thisid;
 $result = $conn->query($sql);
 $list = [];
 //get all friends
@@ -80,10 +78,7 @@ div {
 ?>
 <div class = 'left'>
 <h1>Friends</h1>
-<form action="#" method="get">
-<input name='name'></input>
-<button type="submit">refresh</button>
-</form>
+
 
 <input id ="searchTxt"></input>
 <button>search</button>
@@ -150,17 +145,44 @@ if (isset($_GET['name']) and $_GET['name']!=null){
 	}	
 }else{
 	foreach ($array as $value) {
-    echo 'id: '.$value[1].' ';	
+	if($value[1]==$thisid){
+		$friend = $value[0];
+	}else{
+		$friend = $value[1];
+	}
+    echo 'id: '.$friend.' ';
+	echo '<div class="container-fluid">';
+	echo '<div class="row">';
+
+	echo '<div class="col-md-6">';
+	echo "<a href= \" ./profile.php?profile=".$friend."\">click</a> <img src= \"./uploads/".$friend."/profile.jpg\" alt=\"Profile Pic\" style=\"width:75px; height 75px;\"/>";
+    
+	echo '</div>';
+	echo '<div class="col-md-6">';
+	echo 'column on right</div>';
+	echo '</div>';
+	echo '</div>';
+
 	$sql = "SELECT * FROM `user` WHERE `id_user` =".$value[1];
 	$result = $conn->query($sql);	
 	if ($result->rowCount() > 0) {
     // output data of each row	
+
 		while($row = $result->fetch(PDO::FETCH_ASSOC)) {
+			
 			echo $row['first_name'].' '.$row['surname'];
 		}
 	}
-	echo '</br>';
-	array_push($friends,$value[1]);		
+	?>
+
+	
+		
+		
+		
+		
+
+<?php
+	array_push($friends,$friend);		
 	}
 	
 }
@@ -175,7 +197,8 @@ echo count($friends).'friends</br>';
 $ff = [];
 //each my friend ,member,member f 's friends 
 foreach ($friends as $member) {   	
-	$sql = "SELECT * FROM `friendship` WHERE `id_friend1` =".$member;
+	$sql = "SELECT * FROM `friendship` WHERE `id_friend1` =".$member.' or id_friend2='.$member ;
+
 	$result = $conn->query($sql);
 	//echo 'user '.$member.' got '.$result->num_rows.'  friends</br>';
 	if ($result->rowCount() > 0) {
@@ -183,7 +206,9 @@ foreach ($friends as $member) {
 	//add their all friends
 		foreach ($fri2 as $row) {
 			//echo 'adding '.$row[1].'</br>';
+			if($row[0]==$member)
 			array_push($ff,$row[1]);
+			else array_push($ff,$row[0]);
 			//ff is friends s friends
 		}
 	}
@@ -217,7 +242,7 @@ $remm = array_diff($ff, $friends);
 
 </div>
 <div class = 'recm'>
-<h1>recommendation</h1>
+<h1>people you may know</h1>
 <?php 
 //print_r($remm);
 $start = 0;
@@ -226,7 +251,7 @@ $ranlist=[];
 sort($remm);
 //print_r($remm);
 for($i = 0;$i <20;$i++){
-	if($i==$end+1)break;
+	if($i==$end+1) break;
 	$num  = rand($start, $end);	
 	while(in_array($remm[$num], $ranlist) ){
 		$tmp  = rand($start, $end);
@@ -236,17 +261,24 @@ for($i = 0;$i <20;$i++){
 }
 //print_r($ranlist);
 foreach ($ranlist as $user){
+	//echo $_SESSION['id'];
 	echo '<span class=\'user\'>'.$user.'</span>'; 
 	echo '  ';
-	$sql = "SELECT * FROM `user` WHERE `id_user` =".$user;
+	$sql = "SELECT * FROM `user` WHERE `id_user` =".$user ;
 	$result = $conn->query($sql);
 	
+	echo "<img src= \"./uploads/".$user."/profile.jpg\" alt=\"Profile Pic\" style=\"width:75px; height 75px;\">";
+    //echo "<a href=\"./profile.php?profile=".$user."\"> click</a>";            
 	if ($result->rowCount() > 0) {
-    // output data of each row
-	
+    // output data of each row	    
 		while($row = $result->fetch(PDO::FETCH_ASSOC)) {
-			echo $row['first_name'].' '.$row['surname'];
+			$name = $row['first_name'].' '.$row['surname'];
+			if ($row['first_name']==null or $row['surname']==null)
+			
+			echo "<a href=\"./profile.php?profile=".$user."\"> <b>".$name."</b></a>";
 		}
+	}else{
+		echo "<a href=\"./profile.php?profile=".$user."\"> <b>undefined</b></a>";		
 	}
 	echo '</br>';
 }
