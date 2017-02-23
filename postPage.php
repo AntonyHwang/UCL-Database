@@ -1,240 +1,83 @@
 <?php
-    require'includes/config.php';
-    include_once('header.php');
-    if (isset($_GET['comment']) and $_GET['comment']!=null and isset($_GET['postid'])){
-        $userid = $_SESSION['id'];
- //echo $_GET['body'];
- $table = 'post_comment';
- $body = $_GET['comment'];
- $postid = $_GET['postid'];
- $sql = "INSERT INTO ".$table."(id_comment,id_post, id_user,body)
- VALUES (null, '$postid','$userid','$body')";
- // if ($conn->query($sql) === TRUE) {
- //  echo"New post created successfully<br>";
- //  unset($_GET['body']);
- // } else {
- //  echo"Error:". $sql ."<br>". $conn->error;
- // }
-  $stmt = $conn->query($sql);  
- if (!$stmt){
-  die('post failed');
-  }
- else {
- echo"New post created successfully<br>";
- $_GET['body']=null;
- unset($_GET['body']);
- }
-}
+require 'includes/config.php'; 
+include_once('header.php');
+    
 ?>
-
-
+<!DOCTYPE html>
 <html>
 <style>
-
+.posts {
+    width: 500px;
+    margin: auto;
+    
+}
+.wrapper{
+    background-color:
+}
+#grad {
+  background: blue; /* For browsers that do not support gradients */
+  background: -webkit-linear-gradient(left top, red, yellow); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(bottom right, red, yellow); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(bottom right, red, yellow); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(to bottom right, blue, yellow); /* Standard syntax */
+}
 .panel-body {
- background-color:white;
+    background-color:white;
 }
-
 </style>
-</html>
-
-<h1>Your Own Posts</h1>
-
- <?php 
-$sql = "SELECT id_post, id_user, body FROM post WHERE id_user = ".$_SESSION["id"].' ORDER BY timestamp DESC';
-$sql2= "SELECT first_name,surname FROM user WHERE id_user = ".$_SESSION["id"].' ';
-$result = $conn->query($sql);
-$result2= $conn->query($sql2);
-while($row2 = $result2->fetch()) {
-    $username= $row2["first_name"]." ".$row2["surname"];
-}
-    while($row = $result->fetch()) {
-        $postid = $row["id_post"];
-
-        ?>
- 
-        <div class="panel-body">
-        <h2>    
-        <?php
-        echo "Author: ".$username;
-        ?>
-        </h2>
-        <paragraph>
-        <?php
-        echo $row["body"];
-        ?>
-        </paragraph>
-        <br>
-        <div class="clearfix"></div>
-        <hr>
-    <?php
-        //echo "id_post:" . $row["id_post"]. "</br> userid: " . $row["id_user"]. "</br>body " . $row["body"]. "<br>";
-        $com = "SELECT id_post, id_user,id_comment, body,timestamp FROM post_comment WHERE id_post = ". $row["id_post"].' ORDER BY timestamp DESC';
-       
-        $res_com = $conn->query($com);
-    ?>
-    <h3>Comments:</h3>
-    <?php    
-        while($sqlcomment = $res_com->fetch()){
-        $commentUsername = "SELECT first_name,surname FROM user WHERE id_user = ".$sqlcomment["id_user"].' ';
-        $res_commentUsername = $conn->query($commentUsername);
-        while($sqlcommentUsername = $res_commentUsername->fetch()){
-               $commentusername= $sqlcommentUsername["first_name"]." ".$sqlcommentUsername["surname"];
-        }
-
-        echo $sqlcomment["body"]." Posted By: ".$commentusername."</br>";
-        }
-        echo "</br>";
-    ?>
-    <form  action = '#' method="get">
-    <div class="input-group">
-    <div class="input-group-btn">
-    <button class="btn btn-default"><i class="glyphicon glyphicon-share"></i></button>
+<body>
+<div class = 'posts'>
+<div class="well"> 
+   <form class="form-horizontal" role="form" action="#" method="get">
+    <h4>What's New</h4>
+     <div class="form-group" style="padding:14px;">
+      <textarea class="form-control" placeholder="Update your status" name='body'></textarea>
+    </br>Privacy: </br>
+<input class = "checkbox-inline" type="radio" name='privacy' value="0">friend
+<input class = "checkbox-inline" type="radio" name='privacy' value="1">circles
+<input class = "checkbox-inline" type="radio" name='privacy' value="2">friends of friends     
+      
     </div>
-    <input type="hidden" name="postid" value="<?php echo $postid; ?>" />
-    <input type="text" name = 'comment' class="form-control" placeholder="Add a comment..">
-    </div>
-    </form>
-    </div>
-    <hr>
-    <?php
-    echo "</br></br>";
-    }
-    ?>
-   
- 
 
 
-<br>
-<br>
-
-<h1>Friend's Post </h1>
-<?php 
-    $friends=array();
-    $thisid = $_SESSION["id"];
-    $sql = "SELECT * FROM `friendship` WHERE `id_friend1` =".$thisid. " OR `id_friend2` =".$thisid;
-    $result = $conn->query($sql);
-    $list = [];
-    //get all friends
-    $array = $result->fetchAll();
-
-    foreach ($array as $value) {
-    if($value[1]==$value[0]){
-    countinue;
-    }
-    if($value[1]==$thisid){
-        $friend = $value[0];
-    }
-    else{
-        $friend = $value[1];
-        }
-     
-    $sql = "SELECT * FROM `user` WHERE `id_user` =".$value[1];
-    $result = $conn->query($sql);   
-        if ($result->rowCount() > 0) {
-        // output data of each row  
-    while($row = $result->fetch(PDO::FETCH_ASSOC)) {
-
-        // echo $row['first_name'].' '.$row['surname'];
-        }
-    }
-   
-    array_push($friends,$friend);       
-    }
-?>
-<?php 
-foreach ($friends as $current_id)
-{
-$sql = "SELECT id_post, id_user, body FROM post WHERE id_user = ".$current_id.' ORDER BY timestamp DESC';
-$result = $conn->query($sql);
-$sql2= "SELECT first_name,surname FROM user WHERE id_user = ".$current_id.' ';
-$result2= $conn->query($sql2);
-while($row2 = $result2->fetch()) {
-    $username= $row2["first_name"]." ".$row2["surname"];
-}
-    while($row = $result->fetch()) {
-        $postid = $row["id_post"];
-
-        ?>
-        <div class="panel-body">
-        <h2>    
-        <?php
-        echo "Author: ". $username;
-        ?>
-        </h2>
-        <paragraph>
-        <?php
-        echo $row["body"];
-        ?>
-        </paragraph>
-        <div class="clearfix"></div>
-        <hr>
-    <?php
-        //echo "id_post:" . $row["id_post"]. "</br> userid: " . $row["id_user"]. "</br>body " . $row["body"]. "<br>";
-        $com = "SELECT id_post, id_user,id_comment, body,timestamp FROM post_comment WHERE id_post = ". $row["id_post"].' ORDER BY timestamp DESC';
-        $res_com = $conn->query($com);
-       
-        ?>
-         <h3>Comments:</h3>
-    <?php    
-        while($sqlcomment = $res_com->fetch()){
-        $commentUsername = "SELECT first_name,surname FROM user WHERE id_user = ".$sqlcomment["id_user"].' ';
-        $res_commentUsername = $conn->query($commentUsername);
-        while($sqlcommentUsername = $res_commentUsername->fetch()){
-               $commentusername= $sqlcommentUsername["first_name"]." ".$sqlcommentUsername["surname"];
-        }
-
-        echo $sqlcomment["body"]." Posted By: ".$commentusername."</br>";
-        }
-        echo "</br>";
-    ?>
-
-        <form  action = '#' method="get">
- <div class="input-group">
-   <div class="input-group-btn">
-   <button class="btn btn-default"><i class="glyphicon glyphicon-share"></i></button>
-   </div>
-   <input type="hidden" name="postid" value="<?php echo $postid; ?>" />
-   <input type="text" name = 'comment' class="form-control" placeholder="Add a comment..">
- </div>
- </form>
-
-        </div>
-        <hr>
-        <?php
-    }
-
-}
-
-?>
-
- 
+    <button class="btn btn-primary pull-right" type="submit">Post</button><ul class="list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
+  </form>
+</div>
 
 
-<br>
-<h1>Friend of Friend's Post </h1>
-<?php 
-$ff = [];
-//each my friend ,member,member f 's friends 
-foreach ($friends as $member) {     
-    $sql = "SELECT * FROM `friendship` WHERE `id_friend1` =".$member;
-    $result = $conn->query($sql);
-    //echo 'user '.$member.' got '.$result->num_rows.'  friends</br>';
-    if ($result->rowCount() > 0) {
-    $fri2 = $result->fetchAll();
-    //add their all friends
-        foreach ($fri2 as $row) {
-            //echo 'adding '.$row[1].'</br>';
-            array_push($ff,$row[1]);
+<?php
+// Create connection
+            try {
+                $conn = new PDO( "mysql:host=$host;dbname=$db", $user, $pwd);
+                $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+          
+            }
+            catch(Exception $e){
+                die(var_dump($e));
+            }
             
+ 
+//$_SESSION["id"]=91;
+$userid = $_SESSION["id"];
+//handle post 
+if (isset($_GET['body']) and $_GET['body']!=null){
+    //echo $_GET['body'];
+    $table = 'post';
+    $body = $_GET['body'];
+    if(isset($_GET['privacy']))
+    $privacy = $_GET['privacy'];
+    else $privacy = 0;
+    $sql = "INSERT INTO ".$table."(id_post, id_user,body,privacy_setting)
+    VALUES (null, '$userid','$body','$privacy')";
+    
+     $stmt = $conn->query($sql);  
+    if (!$stmt){
+        die('post failed');
         }
+    else {
+    echo"New post created successfully<br>";
+    $_GET['body']=null;
+    unset($_GET['body']);
     }
     
 }
-
-print_r($ff);
-
-    ?>
-<br>
-<h1>Circle's Post </h1>
-<br>

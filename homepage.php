@@ -3,69 +3,114 @@
     include_once('header.php');
     if (isset($_GET['comment']) and $_GET['comment']!=null and isset($_GET['postid'])){
         $userid = $_SESSION['id'];
-        //echo $_GET['body'];
-        $table = 'post_comment';
-        $body = $_GET['comment'];
-        $postid = $_GET['postid'];
-        $sql = "INSERT INTO ".$table."(id_comment,id_post, id_user,body) VALUES (null, '$postid','$userid','$body')";
-        // if ($conn->query($sql) === TRUE) {
-        //  echo"New post created successfully<br>";
-        //  unset($_GET['body']);
-        // } else {
-        //  echo"Error:". $sql ."<br>". $conn->error;
-        // }
-        $stmt = $conn->query($sql);  
-        if (!$stmt){
-        die('post failed');
-        }
-        else {
-            echo"New post created successfully<br>";
-            $_GET['body']=null;
-            unset($_GET['body']);
-        }
-    }
+ //echo $_GET['body'];
+ $table = 'post_comment';
+ $body = $_GET['comment'];
+ $postid = $_GET['postid'];
+ $sql = "INSERT INTO ".$table."(id_comment,id_post, id_user,body)
+ VALUES (null, '$postid','$userid','$body')";
+
+  $stmt = $conn->query($sql);  
+ if (!$stmt){
+  die('post failed');
+  }
+ else {
+ echo"New post created successfully<br>";
+ $_GET['body']=null;
+ unset($_GET['body']);
+ header("location:homepage.php");
+ }
+}
 ?>
+
+
 <html>
-    <style>
+<style>
 
-    .panel-body {
-    background-color:white;
-    }
+.panel-body {
+ background-color:white;
+}
 
-    </style>
+</style>
 </html>
 
-<h1>Your Own Posts</h1>
 
+
+
+<html>
+    <body>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-3">
+                    
+                </div>
+                <div class="col-md-6">
+                    
+                </div>
+                <div class="col-md-1">       
+                </div>
+                <div class="col-md-1">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-10">
+<h1>Your Own Posts</h1>
+</div>
+                <div class="col-md-1">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-10">
 <?php 
-    $sql = "SELECT id_post, id_user, body FROM post WHERE id_user = ".$_SESSION["id"].' ORDER BY timestamp DESC';
-    $sql2= "SELECT first_name,surname FROM user WHERE id_user = ".$_SESSION["id"].' ';
-    $result = $conn->query($sql);
-    $result2= $conn->query($sql2);
-    while($row2 = $result2->fetch()) {
-        $username= $row2["first_name"]." ".$row2["surname"];
-    }
+$sql = "SELECT id_post, id_user, body FROM post WHERE id_user = ".$_SESSION["id"].' ORDER BY timestamp DESC';
+$sql2= "SELECT first_name,surname FROM user WHERE id_user = ".$_SESSION["id"].' ';
+$result = $conn->query($sql);
+$result2= $conn->query($sql2);
+while($row2 = $result2->fetch()) {
+    $username= ucfirst($row2["first_name"])." ".ucfirst($row2["surname"]);
+}
     while($row = $result->fetch()) {
         $postid = $row["id_post"];
-    ?>
 
-<html> 
-    <div class="panel-body">
-    <h2><?php echo $username; ?>
-    </h2>
-    <paragraph>
-    <?php echo $row["body"];?>
-    </paragraph>
-    <br>
-    <div class="clearfix"></div>
-    <hr>
-</html>
+        ?>
+ 
+        <div class="panel-body">
+        <h2>    
+        <?php
+        echo "Author: ".$username;
+        ?>
+        </h2>
+        <paragraph>
+        <?php
+        echo $row["body"];
+        ?>
+        </paragraph>
+        <br>
+        <div class="clearfix"></div>
+        <hr>
     <?php
         //echo "id_post:" . $row["id_post"]. "</br> userid: " . $row["id_user"]. "</br>body " . $row["body"]. "<br>";
         $com = "SELECT id_post, id_user,id_comment, body,timestamp FROM post_comment WHERE id_post = ". $row["id_post"].' ORDER BY timestamp DESC';
+       
         $res_com = $conn->query($com);
-        while($row = $res_com->fetch()){
-        echo "userid/name: " . $row["id_user"]. " " . $row["body"]. " at ".$row["timestamp"]."</br>";
+    ?>
+    <h3>Comments:</h3>
+    <?php    
+        while($sqlcomment = $res_com->fetch()){
+        $commentUsername = "SELECT first_name,surname FROM user WHERE id_user = ".$sqlcomment["id_user"].' ';
+        $res_commentUsername = $conn->query($commentUsername);
+        while($sqlcommentUsername = $res_commentUsername->fetch()){
+               $commentusername= ucfirst($sqlcommentUsername["first_name"])." ".ucfirst($sqlcommentUsername["surname"]);
+        }
+        
+    
+        echo $sqlcomment["body"]. '<strong>'." Posted By: ".'</strong>'.$commentusername.'<strong>'." AT : ".'</strong>'.$sqlcomment["timestamp"]."</br>";
         }
         echo "</br>";
     ?>
@@ -81,17 +126,57 @@
     </div>
     <hr>
     <?php
-    echo "</br></br>";
+    
     }
     ?>
    
- 
+                <br>
+                <br>
+                </div>
+                <div class="col-md-1">
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
 
 
-<br>
-<br>
 
+
+
+
+
+
+<html>
+    <body>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-3">
+                    
+                </div>
+                <div class="col-md-6">
+                    
+                </div>
+                <div class="col-md-1">       
+                </div>
+                <div class="col-md-1">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-10">
 <h1>Friend's Post </h1>
+</div>
+                <div class="col-md-1">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-10">
 <?php 
     $friends=array();
     $thisid = $_SESSION["id"];
@@ -128,12 +213,12 @@
 <?php 
 foreach ($friends as $current_id)
 {
-$sql = "SELECT id_post, id_user, body FROM post WHERE id_user = ".$current_id.' ORDER BY timestamp DESC';
+$sql = "SELECT id_post, id_user, body FROM post WHERE privacy_setting  = '0' AND id_user = ".$current_id.' ORDER BY timestamp DESC';
 $result = $conn->query($sql);
 $sql2= "SELECT first_name,surname FROM user WHERE id_user = ".$current_id.' ';
 $result2= $conn->query($sql2);
 while($row2 = $result2->fetch()) {
-    $username= $row2["first_name"]." ".$row2["surname"];
+    $username= ucfirst($row2["first_name"])." ".ucfirst($row2["surname"]);
 }
     while($row = $result->fetch()) {
         $postid = $row["id_post"];
@@ -142,7 +227,7 @@ while($row2 = $result2->fetch()) {
         <div class="panel-body">
         <h2>    
         <?php
-        echo $username;
+        echo "Author: ". $username;
         ?>
         </h2>
         <paragraph>
@@ -156,8 +241,171 @@ while($row2 = $result2->fetch()) {
         //echo "id_post:" . $row["id_post"]. "</br> userid: " . $row["id_user"]. "</br>body " . $row["body"]. "<br>";
         $com = "SELECT id_post, id_user,id_comment, body,timestamp FROM post_comment WHERE id_post = ". $row["id_post"].' ORDER BY timestamp DESC';
         $res_com = $conn->query($com);
-        while($row = $res_com->fetch()){
-        echo "userid/name: " . $row["id_user"]. " " . $row["body"]. " at ".$row["timestamp"]."</br>";
+       
+        ?>
+         <h3>Comments:</h3>
+    <?php    
+        while($sqlcomment = $res_com->fetch()){
+        $commentUsername = "SELECT first_name,surname FROM user WHERE id_user = ".$sqlcomment["id_user"].' ';
+        $res_commentUsername = $conn->query($commentUsername);
+        while($sqlcommentUsername = $res_commentUsername->fetch()){
+               $commentusername= ucfirst($sqlcommentUsername["first_name"])." ".ucfirst($sqlcommentUsername["surname"]);
+        }
+
+        echo $sqlcomment["body"]. '<strong>'." Posted By: ".'</strong>'.$commentusername.'<strong>'." AT : ".'</strong>'.$sqlcomment["timestamp"]."</br>";
+        
+        }
+        echo "</br>";
+    ?>
+
+<form  action = '#' method="get">
+ <div class="input-group">
+   <div class="input-group-btn">
+   <button class="btn btn-default"><i class="glyphicon glyphicon-share"></i></button>
+   </div>
+   <input type="hidden" name="postid" value="<?php echo $postid; ?>" />
+   <input type="text" name = 'comment' class="form-control" placeholder="Add a comment..">
+ </div>
+ </form>
+
+        </div>
+        <hr>
+        <?php
+    }
+
+}
+
+?>
+<br>
+                <br>
+                </div>
+                <div class="col-md-1">
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+
+
+ 
+
+
+
+<html>
+    <body>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-3">
+                    
+                </div>
+                <div class="col-md-6">
+                    
+                </div>
+                <div class="col-md-1">       
+                </div>
+                <div class="col-md-1">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-10">
+<h1>Friend of Friend's Post </h1>
+</div>
+                <div class="col-md-1">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-10">
+<?php 
+$ff = [];
+//each my friend ,member,member f 's friends 
+foreach ($friends as $member) {     
+    $sql = "SELECT * FROM `friendship` WHERE `id_friend1` =".$member.' or id_friend2='.$member ;
+    $result = $conn->query($sql);
+    //echo 'user '.$member.' got '.$result->num_rows.'  friends</br>';
+    if ($result->rowCount() > 0) {
+    $fri2 = $result->fetchAll();
+    //add their all friends
+        foreach ($fri2 as $row) {
+            //echo 'adding '.$row[1].'</br>';
+            if($row[0]==$member)
+            array_push($ff,$row[1]);
+            else array_push($ff,$row[0]);
+            //ff is friends s friends
+        }
+    }
+    
+}
+$ff=array_unique($ff);
+//remove depulicate
+$me =$_SESSION['id'];
+//remove this user from the list
+echo '</br>';
+if (in_array($me, $ff)) 
+{
+    
+    unset($ff[array_search($me,$array)]);
+}
+//remove my friend from  all friends of friends
+$remm = array_diff($ff, $friends);
+
+?>
+
+<?php 
+
+foreach ($remm as $current_id)
+{
+$sql = "SELECT id_post, id_user, body FROM post WHERE privacy_setting  = '2' and  id_user = ".$current_id.'  ORDER BY timestamp DESC';
+$result = $conn->query($sql);
+
+$sql2= "SELECT first_name,surname FROM user WHERE id_user = ".$current_id.' ';
+$result2= $conn->query($sql2);
+while($row2 = $result2->fetch()) {
+    $username= ucfirst($row2["first_name"])." ".ucfirst($row2["surname"]);
+}
+    while($row = $result->fetch()) {
+
+
+
+        $postid = $row["id_post"];
+
+        ?>
+        <div class="panel-body">
+        <h2>    
+        <?php
+        echo "Author: ". $username;
+
+        ?>
+        </h2>
+        <paragraph>
+        <?php
+        echo $row["body"];
+        ?>
+        </paragraph>
+        <div class="clearfix"></div>
+        <hr>
+    <?php
+        //echo "id_post:" . $row["id_post"]. "</br> userid: " . $row["id_user"]. "</br>body " . $row["body"]. "<br>";
+        $com = "SELECT id_post, id_user,id_comment, body,timestamp FROM post_comment WHERE id_post = ". $row["id_post"].' ORDER BY timestamp DESC';
+        $res_com = $conn->query($com);
+       
+        ?>
+         <h3>Comments:</h3>
+    <?php    
+        while($sqlcomment = $res_com->fetch()){
+        $commentUsername = "SELECT first_name,surname FROM user WHERE id_user = ".$sqlcomment["id_user"].' ';
+        $res_commentUsername = $conn->query($commentUsername);
+        while($sqlcommentUsername = $res_commentUsername->fetch()){
+               $commentusername= ucfirst($sqlcommentUsername["first_name"])." ".ucfirst($sqlcommentUsername["surname"]);
+        }
+
+        echo $sqlcomment["body"]. '<strong>'." Posted By: ".'</strong>'.$commentusername.'<strong>'." AT : ".'</strong>'.$sqlcomment["timestamp"]."</br>";
+        
         }
         echo "</br>";
     ?>
@@ -180,12 +428,17 @@ while($row2 = $result2->fetch()) {
 }
 
 ?>
-
- 
-
-
 <br>
-<h1>Friend of Friend's Post </h1>
-<br>
+                <br>
+                </div>
+                <div class="col-md-1">
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+
+
+
 <h1>Circle's Post </h1>
 <br>
