@@ -9,7 +9,7 @@
         width: 420px;
     }
     figcaption {
-        height: 100px;
+        height: auto;
         border: 5px solid yellow;
     }
 </style>
@@ -52,7 +52,7 @@
             <div class="photoList">
             <?php
             foreach($results as $row) {
-                    $photoViewLink = "photoViewer.php?id=".$user_id."&photoPath=".$row["file_path"]."&caption=".$row["body"];
+                    $photoViewLink = "photoViewer.php?id=".$user_id."&photoPath=".$row["file_path"]."&caption=".$row["body"]."&photo_id=".$row['id_photo'];
                     ?>
                         <a href="<?php echo $photoViewLink ?>">
                             <figure>
