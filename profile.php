@@ -18,7 +18,40 @@
         $privacy_setting = $row["privacy_setting"];
         echo "<title>".ucfirst($row["first_name"])." ".ucfirst($row["surname"])."</title>";
 	}
-	//$date->format('Y-m-d H:i:s')
+    //check friendship
+    $sql_get = "SELECT * FROM ((SELECT * FROM friendship WHERE id_friend1 = '".$_SESSION["id"]."' OR id_friend2 = '".$_SESSION["id"]."') AS friends) WHERE  id_friend1 = '".$_GET['profile']."' OR id_friend2 = '".$_GET['profile']."'";
+    $stmt = $conn->prepare($sql_get);
+    $stmt->execute();
+    $row = $stmt->fetchAll();
+    if(count($row) == 0) {
+        $friendship = "NO";
+    }
+    else {
+        $friendship = "YES";
+    }
+    //check request sent
+    $sql_get_request = "SELECT * FROM friend_request WHERE id_from_user = '".$_SESSION["id"]."' AND id_to_user = '".$_GET['profile']."'";
+    $stmt = $conn->prepare($sql_get_request);
+    $stmt->execute();
+    $row = $stmt->fetchAll();
+    if(count($row) == 0) {
+        $friend_request = "NO";
+    }
+    else {
+        $friend_request = "SENT";
+    }
+    
+    //check request received
+    $sql_get_request = "SELECT * FROM friend_request WHERE id_from_user = '".$_GET['profile']."' AND id_to_user = '".$_SESSION["id"]."'";
+    $stmt = $conn->prepare($sql_get_request);
+    $stmt->execute();
+    $row = $stmt->fetchAll();
+    if(count($row) == 0) {
+        $friend_request = "NO";
+    }
+    else {
+        $friend_request = "RECEIVED";
+    }
 ?>
 
 <html>
@@ -43,11 +76,22 @@
                     </article>
                 </div>
                 <div class="col-md-1">    
-                    <form action="register.php" method="post" align="center">
+                <?php 
+                if($friendship == "NO" && $friend_request == "NO") { 
+                ?>
+                    <form action="profile.php" method="post" align="center">
                         <button class="btn btn-default" type="submit" style="vertical-align:left; float: center">
                             Send Friend Request
                         </button>
                     </form>
+
+                <?php
+                 
+                } elseif($friendship == "NO" && $friend_request == "SENT") {
+                    echo "Request Sent";
+                } elseif($friendship == "NO" && $friend_request == "RECEIVED") {
+                    echo "Request Received";
+                }?>  
                 </div>
                 <div class="col-md-1">
                 </div>
