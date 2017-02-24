@@ -9,8 +9,8 @@
         die(var_dump($e));
     }
     
-    $id1=51;
-    $id2=91;
+    $id1=33;
+    $id2=71;
     $sql_insert = "INSERT INTO friend_request (id_from_user, id_to_user)VALUES ('".$id1."','".$id2."')";
     echo $sql_insert;
     $stmt = $conn->prepare($sql_insert);

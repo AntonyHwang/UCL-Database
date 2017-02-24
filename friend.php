@@ -47,7 +47,7 @@ div {
 }
 .left{
 	float: left;
-	width:500px;
+	width:600px;
 	margin: auto;
     border: 1px solid blue;
 }
@@ -77,17 +77,24 @@ div {
 
 //check the friend request
 //INSERT INTO friend_request (id_from_user, id_to_user)
-$friendRequest = "SELECT id_from_user, id_to_user FROM `friend_request` WHERE `id_to_user` =$thisid" ;
+$friendRequest = "SELECT id_from_user, id_to_user,id_request FROM `friend_request` WHERE `id_to_user` =$thisid" ;
 
 $result = $conn->query($friendRequest);
 
 $waitinglist = $result->fetchAll();
 foreach($waitinglist as $row){
-	echo '<form>';
 	echo $row[0].'want to be your friend';
-	
+
+	echo '<form>';	
 	echo '<input type="hidden" name="p_friend" value="'.  $row[0].'" />';
+	echo '<input type="hidden" name="id_request" value="'.  $row[2].'" />';
+	echo '<input type="hidden" name="mod" value="accept" />';
 	echo '<button class="btn btn-primary pull-right" type="submit">accept</button>';
+	echo '</form>';
+
+	echo '<form>';
+	echo '<input type="hidden" name="id_request" value="'.  $row[2].'" />';	
+	echo '<input type="hidden" name="mod" value="delete" />';	
 	echo '<button class="btn btn-primary pull-right" type="submit">delete</button>';
 	
 	echo '</form>';
@@ -120,14 +127,23 @@ if ($row_count = $result->rowCount()> 0) {
 } else {
     echo "0 results";
 }
-if (isset($_GET['p_friend']) and $_GET['p_friend']!=null){
+if (isset($_GET['p_friend']) and $_GET['p_friend']!=null and $_GET['mod']=='accept'){
 	echo 'next friend is '.$_GET['p_friend'];
 	$f = $_GET['p_friend'];
 	$me = $_SESSION['id'];
 	$addfriend = "INSERT INTO friendship (id_friend1, id_friend2)VALUES ($me, $f)";
-	$stmt = $conn->query($addfriend); 
+	$stmt = $conn->query($addfriend);
+	//delete the request
+	//$deleteREQ =  "DELETE FROM friend_request WHERE id_from_user = ".$f.' and id_to_user = '.$me;
+	$deleteREQ =  "DELETE FROM friend_request WHERE id_request = ".$_GET['id_request'];
+	
+	$stmt = $conn->query($deleteREQ);
 	$_GET['p_friend']=null; 
 	//header("location:friend.php");
+}
+if (isset($_GET['mod']) and $_GET['mod']=='delete' and $_GET['id_request']!=null){
+	$deleteREQ =  "DELETE FROM friend_request WHERE id_request = ".$_GET['id_request'];
+	$stmt = $conn->query($deleteREQ);
 }
 //print_r($array) 
 //print all friends or search result
