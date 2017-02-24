@@ -10,11 +10,11 @@ try {
 catch(Exception $e){
 	die(var_dump($e));
 }
-$_SESSION['id']=11;
+$_SESSION['id']=71;
 $thisid = $_SESSION['id'];
-echo $thisid;
-$sql = "SELECT * FROM `friendship` WHERE `id_friend1` =".$thisid. " OR `id_friend2` =".$thisid;
-$result = $conn->query($sql);
+echo $thisid."whattttttt~~";
+$friendlist = "SELECT * FROM `friendship` WHERE `id_friend1` =".$thisid. " OR `id_friend2` =".$thisid;
+$result = $conn->query($friendlist);
 $list = [];
 //get all friends
 $array = $result->fetchAll();
@@ -22,33 +22,20 @@ $array = $result->fetchAll();
 
 <!DOCTYPE html>
 <html>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 <script>
 
 $(document).ready(function(){
-    $(".user").click(function(){
+/*    $(".user").click(function(){
         
 		id = $(this);
 		//alert(id.html());
 		window.location.href = "profile.php"+'?profile='+id.html();//$("#test").val();
-    });	
-	//var list = <?php $array?>;
-    $("input").keydown(function(){
-        $("input").css("background-color", "yellow");
-    });
-    $("input").keyup(function(){
-        $("input").css("background-color", "pink");
-        document.getElementById("demo").innerHTML = document.getElementById("searchTxt").value;
-       
-    });
+    });	*/
+	
 
-	$("button").click(function(){
-		
-		document.getElementById("demo2").innerHTML = 1;//document.getElementById("searchTxt").value;
-		
-		//$(this).hide();
-	});
+
+
 	
 });
 </script>
@@ -94,10 +81,11 @@ $friendRequest = "SELECT id_from_user, id_to_user FROM `friend_request` WHERE `i
 
 $result = $conn->query($friendRequest);
 
-$array = $result->fetchAll();
-foreach($array as $row){
+$waitinglist = $result->fetchAll();
+foreach($waitinglist as $row){
 	echo '<form>';
 	echo $row[0].'want to be your friend';
+	
 	echo '<input type="hidden" name="p_friend" value="'.  $row[0].'" />';
 	echo '<button class="btn btn-primary pull-right" type="submit">accept</button>';
 	echo '<button class="btn btn-primary pull-right" type="submit">delete</button>';
@@ -133,12 +121,13 @@ if ($row_count = $result->rowCount()> 0) {
     echo "0 results";
 }
 if (isset($_GET['p_friend']) and $_GET['p_friend']!=null){
+	echo 'next friend is '.$_GET['p_friend'];
 	$f = $_GET['p_friend'];
 	$me = $_SESSION['id'];
 	$addfriend = "INSERT INTO friendship (id_friend1, id_friend2)VALUES ($me, $f)";
 	$stmt = $conn->query($addfriend); 
 	$_GET['p_friend']=null; 
-	header("location:friend.php");
+	//header("location:friend.php");
 }
 //print_r($array) 
 //print all friends or search result
