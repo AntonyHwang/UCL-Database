@@ -145,6 +145,12 @@ if (isset($_GET['mod']) and $_GET['mod']=='delete' and $_GET['id_request']!=null
 	$deleteREQ =  "DELETE FROM friend_request WHERE id_request = ".$_GET['id_request'];
 	$stmt = $conn->query($deleteREQ);
 }
+if (isset($_GET['id_del_friend']) and $_GET['id_del_friend']!=null){
+	$deletefriend =  "DELETE FROM friendship WHERE id_friend1 = ".$_GET['id_del_friend'].' and id_friend2 = '.$thisid;
+	$stmt = $conn->query($deletefriend);
+	$deletefriend =  "DELETE FROM friendship WHERE id_friend2 = ".$_GET['id_del_friend'].' and id_friend1 = '.$thisid;
+	$stmt = $conn->query($deletefriend);
+}
 //print_r($array) 
 //print all friends or search result
 $friends = [];
@@ -201,18 +207,21 @@ if (isset($_GET['name']) and $_GET['name']!=null){
 		while($row = $result->fetch(PDO::FETCH_ASSOC)) {
 			$name = $row['first_name'].' '.$row['surname'];
 			if ($row['first_name']==null or $row['surname']==null)
-			echo "<a href=\"./profile.php?profile=".$user."\"> <b>undefined</b></a>";
+			echo "<a href=\"./profile.php?profile=".$friend."\"> <b>undefined</b></a>";
 			else 
 			
-			echo "<a href=\"./profile.php?profile=".$user."\"> <b>".$name."</b></a>";
+			echo "<a href=\"./profile.php?profile=".$friend."\"> <b>".$name."</b></a>";
 			//echo $row['first_name'].' '.$row['surname'];
+
 		}
 	}
 	echo '</div>';
 	echo '<div class="col-md-6">';
-	echo 'column on right</div>';
+	echo "<a href=\"./friend.php?id_del_friend=".$friend." \"> unfriend</a>";
+	//echo '<a href = \"friend.php?id_del_friend ='.$friend.' \">unfriend</a></div>';
 	echo '</div>';
 	echo '</div>';
+		echo '</div>';
 	?>
 
 	

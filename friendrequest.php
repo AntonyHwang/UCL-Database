@@ -9,9 +9,11 @@
         die(var_dump($e));
     }
     
-    $id1=33;
+    $id1=32;
     $id2=71;
     $sql_insert = "INSERT INTO friend_request (id_from_user, id_to_user)VALUES ('".$id1."','".$id2."')";
+    $in_friendship = "INSERT INTO friendship (id_friend1, id_friend2)
+VALUES ('$id1', '$id2')";
     echo $sql_insert;
     $stmt = $conn->prepare($sql_insert);
     $stmt->execute();
