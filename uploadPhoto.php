@@ -1,8 +1,7 @@
-<?php ob_start(); ?>
 <?php
-require ("includes/config.php");
-if (!empty($_GET["uploadButton"])) {
-	?>
+	require ("includes/config.php");
+	if (!empty($_GET["uploadButton"])) {
+?>
 	<form action="uploadPhoto.php" method="post" enctype="multipart/form-data">
     Select image to upload: <input type="file" name="fileToUpload" id="fileToUpload">
     Caption: <textarea name ="caption" rows="3" cols="30"></textarea>

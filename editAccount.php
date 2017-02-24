@@ -20,15 +20,15 @@
     <head>
         <link rel="stylesheet" type="css" href="./css/register.css">
     </head>
-    <form action="editAccount.php" method="post" align="center">
+    <form action="editAccount.php" method="post" align="center" enctype="multipart/form-data">
         <fieldset>
             <div>
                 <img src="<?php echo './uploads/'.$_SESSION["id"].'/profile.jpg'; ?>" alt="Profile Pic" style="width:120px;height 120px;">
             </div>
             <br>
-            <form action="editAccount.php" method="post" enctype="multipart/form-data">
-                <input type="file" name="fileToUpload" id="fileToUpload">
-            </form>
+            <div>
+                <input type="file" name="file" id="file">
+            </div>
             <br><br>
             <div class="form-group" align="left">
                 First name: <input autofocus class="form-control" name="first_name" id="first_name" value="<?php echo ucfirst($row["first_name"]) ?>" type="text" size="30"/>
@@ -47,7 +47,7 @@
             </div><br>
             <div class="form-group" align="left">
                 Gender:<br>
-                <?php if($row["gender"] == "male"): ?>
+                <?php if($row["gender"] == "Male"): ?>
                     <input type="radio" name="gender" value="Male" checked> Male
                 <?php else:?>
                     <input type="radio" name="gender" value="Male"> Male
@@ -89,7 +89,6 @@
     <?php
     //Insert registration info
     if(!empty($_POST)) {
-        try {
             // Retrieve data
             $first_name = strtolower($_POST['first_name']);
             $surname = strtolower($_POST['surname']);
@@ -127,50 +126,25 @@
                     $stmt = $conn->prepare($sql_update);
                     $stmt->execute();
 
-                    //need to be fixed
-                    $target_dir = "uploads/".$_SESSION["id"]."/";
-                    $target_file = $target_dir . $_SESSION["email"]. basename($_FILES["fileToUpload"]["name"]);
-                    $uploadOk = 1;
-                    $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
-                    // Check if image file is a actual image or fake image
-                    if(isset($_POST["submit"])) {
-                        $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-                        if($check !== false) {
-                            echo "File is an image - " . $check["mime"] . ".";
-                            $uploadOk = 1;
+                    $validextensions = array("jpeg", "jpg", "png");
+                    $temporary = explode(".", $_FILES["file"]["name"]);
+                    $file_extension = end($temporary);
+                    echo $file_extension;
+
+                    if (in_array($file_extension, $validextensions)) {
+
+                        if ($_FILES["file"]["error"] > 0) {
+                            echo "Return Code: " . $_FILES["file"]["error"] . "<br/><br/>";
                         } else {
-                            echo "File is not an image.";
-                            $uploadOk = 0;
-                        }
-                    }
-                    // Check file size
-                    if ($_FILES["fileToUpload"]["size"] > 1000000) {
-                        echo "Sorry, your file is too large.";
-                        $uploadOk = 0;
-                    }
-                    // Allow certain file formats
-                    if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
-                        echo "Sorry, only JPG, JPEG & PNG files are allowed.";
-                        $uploadOk = 0;
-                    }
-                    // Check if $uploadOk is set to 0 by an error
-                    if ($uploadOk == 0) {
-                        echo "Sorry, your file was not uploaded.";
-                    // if everything is ok, try to upload file
+                            echo "<span>Your File Uploaded Succesfully...!!</span><br/>";
+                            move_uploaded_file($_FILES["file"]["tmp_name"], "./uploads/".$_SESSION["id"]."/profile.jpg");
+                        }   
                     } else {
-                        if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-                            echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
-                        } else {
-                            echo "Sorry, there was an error uploading your file.";
-                        }
+                        echo "<span>Profile Image not Updated<span>";
                     }
                     echo "<h2>Account detail updated</h2>";
                 }
             }
-        }
-        catch(Exception $e) {
-            die(var_dump($e));
-        }
     }
 
     function test_input($data) {
