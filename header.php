@@ -12,8 +12,8 @@
         position: absolute;        
         z-index: 999;
         top: 100%;
-        left: 0;
-        background: #D3D3D3;
+        left: 120px;
+        background: #FFFFFF;
     }
     .search-box input[type="text"], .result{
         width: 100%;
@@ -23,13 +23,13 @@
     .result p{
         margin: 0;
         padding: 7px 10px;
-        border: 1px solid #D3D3D3;
+        border: 1px solid #FFFFFF;
         border-top: none;
-        background: #D3D3D3;
+        background: #FFFFFF;
         cursor: pointer;
     }
     .result p:hover{
-        background: #D3D3D3;
+        background: #FFFFFF;
     }
 </style>
 <html>
@@ -98,6 +98,11 @@
                             <input type="text" autocomplete="off" placeholder="Search for People.." />
                             <div class="result"></div>
                         </div>
+                        <div>
+                            <input type="radio" name="search_type" value="all" checked> <font color="white">All</font>
+                            <input type="radio" name="search_type" value="friends"> <font color="white">Friends</font>
+                        </div>
+                        <div><br></div>
                     </ul>
                 </div>
         </nav>

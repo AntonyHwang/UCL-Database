@@ -75,16 +75,19 @@
                 ?>
 
                 <form method="POST" action=''>
-                    <input type="submit" class="button" name="send" value="Send Friend Request" />
+                    <input type="submit" class="btn btn-primary" name="send" value="Send Friend Request" />
                 </form>
 
                 <?php
                  
                 } elseif($friendship == "NO" && $friend_request == "SENT") { ?>
-                    <input type="submit" class="button" name="status" value="Request Pending" action="#"/>
+                    <input type="submit" class="btn btn-warning" value="Request Pending" action="#"/>
                 <?php
                 } elseif($friendship == "NO" && $friend_request == "RECEIVED") { ?>
-                    <input type="submit" class="button" name="status" value="Request Received" action="#"/>
+                    <input type="submit" class="btn btn-info" name="status" value="Request Received" action="#"/>
+                <?php
+                } else {?>  
+                    <input type="submit" class="btn btn-success" name="status" value="Friend" action="#"/>
                 <?php
                 }?>  
                 </div>
