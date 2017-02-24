@@ -21,70 +21,80 @@
         <link rel="stylesheet" type="css" href="./css/register.css">
     </head>
     <form action="editAccount.php" method="post" align="center" enctype="multipart/form-data">
-        <fieldset>
-            <div>
-                <img src="<?php echo './uploads/'.$_SESSION["id"].'/profile.jpg'; ?>" alt="Profile Pic" style="width:120px;height 120px;">
-            </div>
-            <br>
-            <div>
-                <input type="file" name="file" id="file">
-            </div>
-            <br><br>
-            <div class="form-group" align="left">
-                First name: <input autofocus class="form-control" name="first_name" id="first_name" value="<?php echo ucfirst($row["first_name"]) ?>" type="text" size="30"/>
-            </div>
-            <div class="form-group" align="left">
-                Surname: <input class="form-control" name="surname" id="surname" value="<?php echo ucfirst($row["surname"]) ?>" type="text" size="30"/>
-            </div>
-            <div class="form-group" align="left">
-                Email: <input class="form-control" name="email" id="email" value="<?php echo $row["email"] ?>" type="text" size="30"/>
-            </div>
-            <div class="form-group" align="left">
-                Password: <input class="form-control" name="password" id="password" value="<?php echo $row["password"] ?>" type="password" size="30"/>
-            </div>
-            <div class="form-group" align="left">
-                Retype: <input class="form-control" name="confirmation" id="confirmation" value="<?php echo $row["password"] ?>" type="password" size="30"/>
-            </div><br>
-            <div class="form-group" align="left">
-                Gender:<br>
-                <?php if($row["gender"] == "Male"): ?>
-                    <input type="radio" name="gender" value="Male" checked> Male
-                <?php else:?>
-                    <input type="radio" name="gender" value="Male"> Male
-                <?php endif; ?>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4">
+                </div>
+                <div class="col-md-4">
+                    <fieldset>
+                        <div>
+                            <img src="<?php echo './uploads/'.$_SESSION["id"].'/profile.jpg'; ?>" alt="Profile Pic" style="width:120px;height 120px;">
+                        </div>
+                        <br>
+                        <div align="center">
+                            <input type="file" name="file" id="file">
+                        </div>
+                        <br><br>
+                        <div class="form-group" align="left">
+                            First name: <input class="form-control" name="first_name" id="first_name" value="<?php echo ucfirst($row["first_name"]) ?>" type="text" size="30"/>
+                        </div>
+                        <div class="form-group" align="left">
+                            Surname: <input class="form-control" name="surname" id="surname" value="<?php echo ucfirst($row["surname"]) ?>" type="text" size="30"/>
+                        </div>
+                        <div class="form-group" align="left">
+                            Email: <input class="form-control" name="email" id="email" value="<?php echo $row["email"] ?>" type="text" size="30"/>
+                        </div>
+                        <div class="form-group" align="left">
+                            Password: <input class="form-control" name="password" id="password" value="<?php echo $row["password"] ?>" type="password" size="30"/>
+                        </div>
+                        <div class="form-group" align="left">
+                            Retype: <input class="form-control" name="confirmation" id="confirmation" value="<?php echo $row["password"] ?>" type="password" size="30"/>
+                        </div><br>
+                        <div class="form-group" align="left">
+                            Gender:<br>
+                            <?php if($row["gender"] == "Male"): ?>
+                                <input type="radio" name="gender" value="Male" checked> Male
+                            <?php else:?>
+                                <input type="radio" name="gender" value="Male"> Male
+                            <?php endif; ?>
 
-                <?php if($row["gender"] == "Female"): ?>
-                    <input type="radio" name="gender" value="Female" checked> Female
-                <?php else:?>
-                    <input type="radio" name="gender" value="Female"> Female
-                <?php endif; ?>
+                            <?php if($row["gender"] == "Female"): ?>
+                                <input type="radio" name="gender" value="Female" checked> Female
+                            <?php else:?>
+                                <input type="radio" name="gender" value="Female"> Female
+                            <?php endif; ?>
 
-                <?php if($row["gender"] == "Other"): ?>
-                    <input type="radio" name="gender" value="Other" checked> Other
-                <?php else:?>
-                    <input type="radio" name="gender" value="Other"> Other
-                <?php endif; ?>
+                            <?php if($row["gender"] == "Other"): ?>
+                                <input type="radio" name="gender" value="Other" checked> Other
+                            <?php else:?>
+                                <input type="radio" name="gender" value="Other"> Other
+                            <?php endif; ?>
 
-            </div><br>
-            <div class="form-group" align="left">
-                Birthday: <input type="date" class="form-control" name="birthday" value="<?php echo $row["dob"] ?>" placeholder="YYYY-MM-DD">
+                        </div><br>
+                        <div class="form-group" align="left">
+                            Birthday: <input type="date" class="form-control" name="birthday" value="<?php echo $row["dob"] ?>" placeholder="YYYY-MM-DD">
+                        </div>
+                        <div class="form-group" align="left">
+                            Privacy Setting:
+                            <select name="privacy">
+                                <option value=0>Only me</option>
+                                <option value=1>Friends</option>
+                                <option value=2>Friends of friends</option>
+                                <option value=3>Everyone</option>
+                            </select>
+                        </div><br>
+                        <div class="form-group">
+                            <button class="btn btn-default" type="submit" style="vertical-align:left; float: center">
+                                <span aria-hidden="true" class="glyphicon glyphicon-log-in"></span>
+                                Save
+                            </button>
+                        </div><br>
+                    </fieldset>
+                </div>
+                <div class="col-md-4">
+                </div>
             </div>
-            <div class="form-group" align="left">
-                Privacy Setting:
-                <select name="privacy">
-                    <option value=0>Only me</option>
-                    <option value=1>Friends</option>
-                    <option value=2>Friends of friends</option>
-                    <option value=3>Everyone</option>
-                </select>
-            </div><br>
-            <div class="form-group">
-                <button class="btn btn-default" type="submit" style="vertical-align:left; float: center">
-                    <span aria-hidden="true" class="glyphicon glyphicon-log-in"></span>
-                    Save
-                </button>
-            </div><br>
-        </fieldset>
+        </div>
     </form>
     <?php
     //Insert registration info

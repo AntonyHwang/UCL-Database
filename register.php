@@ -22,43 +22,53 @@
         </nav>
     </body>
     <form action="register.php" method="post" align="center">
-    <fieldset>
-        <div class="form-group">
-            <input autofocus class="form-control" name="first_name" id="first_name" placeholder="First Name" type="text" size="30"/>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4">
+                </div>
+                <div class="col-md-4">
+                    <fieldset>
+                        <div class="form-group">
+                            <input autofocus class="form-control" name="first_name" id="first_name" placeholder="First Name" type="text" size="30"/>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" name="surname" id="surname" placeholder="Surname" type="text" size="30"/>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" name="email" id="email" placeholder="Email" type="text" size="30"/>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" name="password" id="password" placeholder="Password" type="password" size="30"/>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" name="confirmation" id="confirmation" placeholder="Confirm Password" type="password" size="30"/>
+                        </div><br>
+                        <div class="form-group" align="left">
+                            <input type="radio" name="gender" value="Male" checked> Male
+                            <input type="radio" name="gender" value="Female"> Female
+                            <input type="radio" name="gender" value="Other"> Other
+                        </div><br>
+                        <div class="form-group" align="left">
+                            Birthday
+                            <input type="date" class="form-control" name="birthday" placeholder="YYYY-MM-DD">
+                        </div><br>
+                        <div class="form-group">
+                            <button class="btn btn-default" type="submit" style="vertical-align:left; float: center">
+                                <span aria-hidden="true" class="glyphicon glyphicon-log-in"></span>
+                                Register
+                            </button>
+                            <button class="btn btn-default" type="reset" style="vertical-align:left; float: center">
+                                <span aria-hidden="true" class="glyphicon glyphicon-log-in"></span>
+                                Reset
+                            </button>
+                        </div><br>
+                    </fieldset>
+                </div>
+                <div class="col-md-4">
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <input class="form-control" name="surname" id="surname" placeholder="Surname" type="text" size="30"/>
-        </div>
-        <div class="form-group">
-            <input class="form-control" name="email" id="email" placeholder="Email" type="text" size="30"/>
-        </div>
-        <div class="form-group">
-            <input class="form-control" name="password" id="password" placeholder="Password" type="password" size="30"/>
-        </div>
-        <div class="form-group">
-            <input class="form-control" name="confirmation" id="confirmation" placeholder="Confirm Password" type="password" size="30"/>
-        </div><br>
-        <div class="form-group" align="left">
-            <input type="radio" name="gender" value="Male" checked> Male
-            <input type="radio" name="gender" value="Female"> Female
-            <input type="radio" name="gender" value="Other"> Other
-        </div><br>
-        <div class="form-group" align="left">
-            Birthday
-            <input type="date" class="form-control" name="birthday" placeholder="YYYY-MM-DD">
-        </div><br>
-        <div class="form-group">
-            <button class="btn btn-default" type="submit" style="vertical-align:left; float: center">
-                <span aria-hidden="true" class="glyphicon glyphicon-log-in"></span>
-                Register
-            </button>
-            <button class="btn btn-default" type="reset" style="vertical-align:left; float: center">
-                <span aria-hidden="true" class="glyphicon glyphicon-log-in"></span>
-                Reset
-            </button>
-        </div><br>
-    </fieldset>
-</form>
+    </form>
 <?php
     //Insert registration info
     if(!empty($_POST)) {

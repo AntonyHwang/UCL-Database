@@ -23,20 +23,30 @@
         </nav>
     </body>
     <form action="login.php" method="post" align="center">
-        <fieldset>
-            <div class="form-group">
-                <input autocomplete="off" autofocus class="form-control" name="email" placeholder="Email" type="text"/>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4">
+                </div>
+                <div class="col-md-4">
+                    <fieldset>
+                        <div class="form-group">
+                            <input autocomplete="off" autofocus class="form-control" name="email" placeholder="Email" type="text"/>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" name="password" placeholder="Password" type="password"/>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-default" type="submit">
+                                <span aria-hidden="true" class="glyphicon glyphicon-log-in"></span>
+                                Log In
+                            </button>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="col-md-4">
+                </div>
             </div>
-            <div class="form-group">
-                <input class="form-control" name="password" placeholder="Password" type="password"/>
-            </div>
-            <div class="form-group">
-                <button class="btn btn-default" type="submit">
-                    <span aria-hidden="true" class="glyphicon glyphicon-log-in"></span>
-                    Log In
-                </button>
-            </div>
-        </fieldset>
+        </div>
     </form>
 
     <?php
