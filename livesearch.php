@@ -3,8 +3,18 @@
     // Attempt search query execution
     try{
         if(isset($_REQUEST['term'])){
+            $type = $_REQUEST['type'];
             // create prepared statement
-            $sql = "SELECT id_user, first_name, surname FROM (SELECT first_name, surname, id_user, password, CONCAT(first_name,' ',surname) AS 'Con_Name' FROM user) AS x WHERE Con_Name LIKE :term";
+            if ($type == "all") {
+                $sql = "SELECT id_user, first_name, surname FROM 
+                        (SELECT first_name, surname, id_user, password, CONCAT(first_name,' ',surname) AS 'Con_Name' FROM user) AS x 
+                        WHERE Con_Name LIKE :term";
+            }
+            else if ($type == "friends") {
+                $sql = "SELECT id_user, first_name, surname FROM 
+                        (SELECT first_name, surname, id_user, password, CONCAT(first_name,' ',surname) AS 'Con_Name' FROM user) AS x 
+                        WHERE Con_Name LIKE :term AND id_user IN (SELECT id_friend2 FROM friendship WHERE id_friend1 = '".$_SESSION["id"]."' UNION SELECT id_friend1 FROM friendship WHERE id_friend2 = '".$_SESSION["id"]."')";
+            }
             $stmt = $conn->prepare($sql);
             $term = $_REQUEST['term'] . '%';
             // bind parameters to statement

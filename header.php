@@ -34,29 +34,6 @@
 </style>
 <html>
     <head>
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $('.search-box input[type="text"]').on("keyup input", function(){
-                /* Get input value on change */
-                var inputVal = $(this).val();
-                var resultDropdown = $(this).siblings(".result");
-                if(inputVal.length){
-                    $.get("livesearch.php", {term: inputVal}).done(function(data){
-                        // Display the returned data in browser
-                        resultDropdown.html(data);
-                    });
-                } else{
-                    resultDropdown.empty();
-                }
-            });
-            
-            // Set search input value on click of result item
-            $(document).on("click", ".result p", function(){
-                $(this).parents(".search-box").find('input[type="text"]').val($(this).text());
-                $(this).parent(".result").empty();
-            });
-        });
-    </script>
     </head>
     <body>
         <nav class="navbar navbar-inverse">
@@ -107,4 +84,29 @@
                 </div>
         </nav>
     </body>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.search-box input[type="text"]').on("keyup input", function(){
+                /* Get input value on change */
+                var inputVal = $(this).val();
+                var search_type = $('input[name="search_type"]:checked').val();
+                var resultDropdown = $(this).siblings(".result");
+                if(inputVal.length){
+                    $.get("livesearch.php", {term: inputVal, type: search_type}).done(function(data){
+                        // Display the returned data in browser
+                        resultDropdown.html(data);
+                    });
+                } else{
+                    resultDropdown.empty();
+                }
+            });
+            
+            // Set search input value on click of result item
+            $(document).on("click", ".result p", function(){
+                $(this).parents(".search-box").find('input[type="text"]').val($(this).text());
+                $(this).parent(".result").empty();
+            });
+        });
+    </script>
 </html>
+
