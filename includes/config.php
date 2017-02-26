@@ -1,6 +1,6 @@
 <?php
 	ob_start();
-	session_start();
+    if (!isset($_SESSION)) { session_start(); }
     // DB connection info
     //TODO: Update the values for $host, $user, $pwd, and $db
     //using the values you retrieved earlier from the Azure Portal.

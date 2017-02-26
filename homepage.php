@@ -3,7 +3,7 @@
     include_once('header.php');
     if (isset($_GET['comment']) and $_GET['comment']!=null and isset($_GET['postid'])){
         $userid = $_SESSION['id'];
- //echo $_GET['body'];
+ echo $userid;
  $table = 'post_comment';
  $body = $_GET['comment'];
  $postid = $_GET['postid'];

@@ -10,7 +10,7 @@ try {
 catch(Exception $e){
 	die(var_dump($e));
 }
-$_SESSION['id']=71;
+
 $thisid = $_SESSION['id'];
 echo $thisid."whattttttt~~";
 $friendlist = "SELECT * FROM `friendship` WHERE `id_friend1` =".$thisid. " OR `id_friend2` =".$thisid;
@@ -23,22 +23,7 @@ $array = $result->fetchAll();
 <!DOCTYPE html>
 <html>
 
-<script>
 
-$(document).ready(function(){
-/*    $(".user").click(function(){
-        
-		id = $(this);
-		//alert(id.html());
-		window.location.href = "profile.php"+'?profile='+id.html();//$("#test").val();
-    });	*/
-	
-
-
-
-	
-});
-</script>
 </head>
 <style>
 div {
@@ -64,10 +49,7 @@ div {
 <h1>Friends</h1>
 
 
-<input id ="searchTxt"></input>
-<button>search</button>
-<p id="demo"></p>
-<p id="demo2"></p>
+
 
 <?php 
 //I only use form at this moment
@@ -89,13 +71,13 @@ foreach($waitinglist as $row){
 	echo '<input type="hidden" name="p_friend" value="'.  $row[0].'" />';
 	echo '<input type="hidden" name="id_request" value="'.  $row[2].'" />';
 	echo '<input type="hidden" name="mod" value="accept" />';
-	echo '<button class="btn btn-primary pull-right" type="submit">accept</button>';
+	echo '<button type="submit">accept</button>';
 	echo '</form>';
 
 	echo '<form>';
 	echo '<input type="hidden" name="id_request" value="'.  $row[2].'" />';	
 	echo '<input type="hidden" name="mod" value="delete" />';	
-	echo '<button class="btn btn-primary pull-right" type="submit">delete</button>';
+	echo '<button  type="submit">delete</button>';
 	
 	echo '</form>';
 	
@@ -139,7 +121,7 @@ if (isset($_GET['p_friend']) and $_GET['p_friend']!=null and $_GET['mod']=='acce
 	
 	$stmt = $conn->query($deleteREQ);
 	$_GET['p_friend']=null; 
-	//header("location:friend.php");
+	header("location:friend.php");
 }
 if (isset($_GET['mod']) and $_GET['mod']=='delete' and $_GET['id_request']!=null){
 	$deleteREQ =  "DELETE FROM friend_request WHERE id_request = ".$_GET['id_request'];
@@ -150,6 +132,7 @@ if (isset($_GET['id_del_friend']) and $_GET['id_del_friend']!=null){
 	$stmt = $conn->query($deletefriend);
 	$deletefriend =  "DELETE FROM friendship WHERE id_friend2 = ".$_GET['id_del_friend'].' and id_friend1 = '.$thisid;
 	$stmt = $conn->query($deletefriend);
+	header("location:friend.php");
 }
 //print_r($array) 
 //print all friends or search result
@@ -287,7 +270,7 @@ $remm = array_diff($ff, $friends);
 
 
 ?>
-<p id="res">here is the matching</p>
+
 
 </div>
 <div class = 'recm'>
