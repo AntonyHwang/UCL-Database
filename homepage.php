@@ -71,6 +71,27 @@
                 </div>
                 <div class="col-md-10">
 <?php 
+if (isset($_GET['id_del']) and $_GET['id_del']!=null ){
+	//echo $_GET['body'];
+	$table = 'post';
+
+	$post_del = $_GET['id_del'];
+	
+	$del = "DELETE FROM post WHERE id_post= ".$post_del;
+	 $stmt = $conn->query($del);  
+	if (!$stmt){
+		die('deleting failed');
+		}
+	else {
+	echo " deleted successfully<br>";
+	$_GET['id_del']=null;
+	unset($_GET['id_del']);
+    header("location:homepage.php");
+	}
+	
+}
+
+//above is new part
 $sql = "SELECT id_post, id_user, body FROM post WHERE id_user = ".$_SESSION["id"].' ORDER BY timestamp DESC';
 $sql2= "SELECT first_name,surname FROM user WHERE id_user = ".$_SESSION["id"].' ';
 $result = $conn->query($sql);
@@ -86,7 +107,11 @@ while($row2 = $result2->fetch()) {
         <div class="panel-body">
         <h2>    
         <?php
+        
+        echo "<img src= \"./uploads/".$_SESSION["id"]."/profile.jpg\" alt=\"Profile Pic\" style=\"width:50px; height 50px;\">";
         echo "Author: ".$username;
+        echo "&nbsp&nbsp&nbsp&nbsp&nbsp";
+        echo "<a  href=\"./homepage.php?id_del=".$postid." \"><button class=\"btn btn-success\" >delete</button></a>";
         ?>
         </h2>
         <paragraph>
@@ -230,6 +255,8 @@ while($row2 = $result2->fetch()) {
         <div class="panel-body">
         <h2>    
         <?php
+       echo "<img src= \"./uploads/".$current_id."/profile.jpg\" alt=\"Profile Pic\" style=\"width:50px; height 50px;\">";
+
         echo "Author: ". $username;
         ?>
         </h2>
@@ -381,6 +408,8 @@ while($row2 = $result2->fetch()) {
         <div class="panel-body">
         <h2>    
         <?php
+        echo "<img src= \"./uploads/".$current_id."/profile.jpg\" alt=\"Profile Pic\" style=\"width:50px; height 50px;\">";
+       
         echo "Author: ". $username;
 
         ?>
