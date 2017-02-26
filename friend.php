@@ -2,22 +2,22 @@
     require'includes/config.php';
     include_once('header.php');
 // Create connection
-try {
-	$conn = new PDO( "mysql:host=$host;dbname=$db", $user, $pwd);
-	$conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-	//echo 'ok';
-}
-catch(Exception $e){
-	die(var_dump($e));
-}
+	try {
+		$conn = new PDO( "mysql:host=$host;dbname=$db", $user, $pwd);
+		$conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+		//echo 'ok';
+	}
+	catch(Exception $e){
+		die(var_dump($e));
+	}
 
-$thisid = $_SESSION['id'];
-echo $thisid."whattttttt~~";
-$friendlist = "SELECT * FROM `friendship` WHERE `id_friend1` =".$thisid. " OR `id_friend2` =".$thisid;
-$result = $conn->query($friendlist);
-$list = [];
-//get all friends
-$array = $result->fetchAll();
+	$thisid = $_SESSION['id'];
+	echo $thisid."user id is~~";
+	$friendlist = "SELECT * FROM `friendship` WHERE `id_friend1` =".$thisid. " OR `id_friend2` =".$thisid;
+	$result = $conn->query($friendlist);
+	$list = [];
+	//get all friends
+	$array = $result->fetchAll();
 ?>
 
 <!DOCTYPE html>
@@ -59,29 +59,29 @@ div {
 
 //check the friend request
 //INSERT INTO friend_request (id_from_user, id_to_user)
-$friendRequest = "SELECT id_from_user, id_to_user,id_request FROM `friend_request` WHERE `id_to_user` =$thisid" ;
+	$friendRequest = "SELECT id_from_user, id_to_user,id_request FROM `friend_request` WHERE `id_to_user` =$thisid" ;
 
-$result = $conn->query($friendRequest);
+	$result = $conn->query($friendRequest);
 
-$waitinglist = $result->fetchAll();
-foreach($waitinglist as $row){
-	echo $row[0].'want to be your friend';
+	$waitinglist = $result->fetchAll();
+	foreach($waitinglist as $row){
+		echo $row[0].'want to be your friend';
 
-	echo '<form>';	
-	echo '<input type="hidden" name="p_friend" value="'.  $row[0].'" />';
-	echo '<input type="hidden" name="id_request" value="'.  $row[2].'" />';
-	echo '<input type="hidden" name="mod" value="accept" />';
-	echo '<button type="submit">accept</button>';
-	echo '</form>';
+		echo '<form class="btn btn-success" style="display: inline-block;">';	
+		echo '<input type="hidden" name="p_friend" value="'.  $row[0].'" />';
+		echo '<input type="hidden" name="id_request" value="'.  $row[2].'" />';
+		echo '<input type="hidden" name="mod" value="accept" />';
+		echo '<button type="submit">accept</button>';
+		echo '</form>';
 
-	echo '<form>';
-	echo '<input type="hidden" name="id_request" value="'.  $row[2].'" />';	
-	echo '<input type="hidden" name="mod" value="delete" />';	
-	echo '<button  type="submit">delete</button>';
-	
-	echo '</form>';
-	
-}
+		echo '<form class="btn btn-success" style="display: inline-block;">';
+		echo '<input type="hidden" name="id_request" value="'.  $row[2].'" />';	
+		echo '<input type="hidden" name="mod" value="delete" />';	
+		echo '<button  type="submit">delete</button>';
+		
+		echo '</form>';
+		
+	}
 
 ?>
 <?php
@@ -200,7 +200,7 @@ if (isset($_GET['name']) and $_GET['name']!=null){
 	}
 	echo '</div>';
 	echo '<div class="col-md-6">';
-	echo "<a href=\"./friend.php?id_del_friend=".$friend." \"> unfriend</a>";
+	echo "<a href=\"./friend.php?id_del_friend=".$friend." \"><button class=\"btn btn-success\" >unfriend</button></a>";
 	//echo '<a href = \"friend.php?id_del_friend ='.$friend.' \">unfriend</a></div>';
 	echo '</div>';
 	echo '</div>';
@@ -250,7 +250,7 @@ foreach ($friends as $member) {
 echo '</br>';
 $ff=array_unique($ff);
 //remove depulicate
-$me =1;
+$me =$_SESSION['id'];
 //print_r($ff);
 //remove this user from the list
 echo '</br>';
@@ -259,7 +259,7 @@ if (in_array($me, $ff))
 	echo 'delete';
     unset($ff[array_search($me,$array)]);
 }
-else echo 'no';
+
 
 //print_r($ff);
 echo '</br>';

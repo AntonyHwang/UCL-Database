@@ -7,9 +7,12 @@
  $table = 'post_comment';
  $body = $_GET['comment'];
  $postid = $_GET['postid'];
- $sql = "INSERT INTO ".$table."(id_comment,id_post, id_user,body)
- VALUES (null, '$postid','$userid','$body')";
-
+ $sql = "INSERT INTO ".$table." (id_comment,id_post, id_user,body) VALUES ( NULL,'$postid','$userid','$body')";
+ //$del_com = "delete from ".$table." where id_comment =541";
+//echo $sql;
+//$dropFK='ALTER TABLE post_comment DROP CONSTRAINT post_comment_ibfk_1';
+  //$stmt = $conn->query($dropFK); 
+  //$stmt = $conn->query($del_com); 
   $stmt = $conn->query($sql);  
  if (!$stmt){
   die('post failed');

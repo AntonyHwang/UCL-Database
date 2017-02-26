@@ -10,7 +10,7 @@
     }
     
     $id1=32;
-    $id2=71;
+    $id2=91;
     $sql_insert = "INSERT INTO friend_request (id_from_user, id_to_user)VALUES ('".$id1."','".$id2."')";
     $in_friendship = "INSERT INTO friendship (id_friend1, id_friend2)
 VALUES ('$id1', '$id2')";
