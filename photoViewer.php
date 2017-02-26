@@ -1,89 +1,54 @@
 <style>
-    div.individualPhoto {
-    	text-align: center;
-    	margin: auto;
-        width: 800px;
-        border: 5px solid blue;
+    div.panel-body {
+        text-align: center;
+        margin: auto;
+        width: 500px;
+        border: 5px solid black;
     }
     img.individualPhoto {
         width: 420px;
-        text-align: left;
     }
-    figcaption.caption {
+    figcaption {
         height: auto;
-        border: 5px solid yellow;
-    }
-    figcaption.comment {
-        height: auto;
-        border: 1px solid black;
     }
 </style>
 
 <?php 
     require ("includes/config.php");
     include_once "header.php";
-        echo "LOL";
-    	$user_id = $_GET['id'];
+        $user_id = $_GET['id'];
         $photo_id = $_GET['photo_id'];
-    	$photoPath = $_GET['photoPath'];
-    	$caption = $_GET['caption'];
-        // $host = "eu-cdbr-azure-west-a.cloudapp.net";
-        // $user = "bd38b99b177044";
-        // $pwd = "5e59f1c8";
-        // $db = "blogster";
-        // try {
-        //     $conn = new PDO( "mysql:host=$host;dbname=$db", $user, $pwd);
-        //     $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-        // }
-        // catch(Exception $e){
-        //     die(var_dump($e));
-        // }
-        // $sql_select = ("SELECT * FROM comment WHERE id_photo = '".$photo_id."'");
-        // $stmt = $conn->prepare($sql_select);
-        // $stmt->execute();
-        // $results = $stmt->fetchAll();
-        //Add an add-comment feature, as well as render comments
-        //in photopage, maybe show number of comments or few comments
-        //if they want ot add from photopage, link them to photoViewer
+        $photoPath = $_GET['photoPath'];
+        $caption = $_GET['caption'];
     if (!empty($_POST)) {
-        // $host = "eu-cdbr-azure-west-a.cloudapp.net";
-        // $user = "bd38b99b177044";
-        // $pwd = "5e59f1c8";
-        // $db = "blogster";
-        // try {
-        //     $conn = new PDO( "mysql:host=$host;dbname=$db", $user, $pwd);
-        //     $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-        // }
-        // catch(Exception $e){
-        //     die(var_dump($e));
-        // }
         $user_id = $_POST['user_id'];
         $photo_id = $_POST['photo_id'];
         $photoPath = $_POST['photoPath'];
         $caption = $_POST['caption'];
         echo "WE ARE HERE";
         $sql_insert = "INSERT INTO photo_comment (id_photo, body, id_user) VALUES ('".$_POST['photo_id']."','".$_POST['comment']."','".$_POST['user_id']."');";
-        echo $sql_insert;
-        // $sql_insert = "INSERT INTO user (first_name, surname, email, password, gender, dob, privacy_setting)VALUES ('".$first_name."','".$surname."','".$email."','".$password."','".$gender."','".$dob."', 0);";
-                
         $stmt = $conn->prepare($sql_insert);
         $stmt->execute();
     }
 
         ?>
- 
-        <div class="panel-body">
-        <h2>    
-        <?php
-        echo "your current picture";
-        ?>
-        </h2>
+ <div class="container-fluid">
+    <div class="row">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-10">
+              <h1><?php echo "your current picture"; ?></h1>
+        </div>
+        <div class="col-md-1">
+        </div>
+    </div>
+    <div class="panel-body">
         <span>
             <img class="individualPhoto" src="<?php echo $photoPath?>">
         </span>
-        <br>
-        <figcaption class="caption"><?php echo $caption?></figcaption>
-        <br>
+        <span>
+        <figcaption class="caption">Caption: <?php echo $caption?></figcaption>
+        </span>
         <div class="clearfix"></div>
         <hr>
     <?php
@@ -91,7 +56,8 @@
         $com = "SELECT id_photo, timestamp, body, id_user FROM photo_comment WHERE id_photo = ".$photo_id.' ORDER BY timestamp DESC';
         $res_com = $conn->query($com);
         while($row = $res_com->fetch()){
-        echo "userid/name: " . $row["id_user"]. " " . $row["body"]. " at ".$row["timestamp"]."</br>";
+            $names = "SELECT first_name, surname FROM user WHERE id_user =".$row["id_user"]." ";
+        echo $names[0]["first_name"]. " ".$names[0]["surname"]. ": " . $row["body"]. " at ".$row["timestamp"]."</br>";
         }
         echo "</br>";
     ?>
@@ -104,7 +70,7 @@
         <input type="hidden" name="prevLink" value="<?php echo $_SERVER['REQUEST_URI'];?>">
         <input type="submit" value="Add Comment">
     </form>
-    </div>
+    </div> 
     <hr>
 
 

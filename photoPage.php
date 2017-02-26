@@ -1,16 +1,15 @@
 <style>
-    div.photoList {
+    div.panel-body {
         text-align: center;
         margin: auto;
         width: 500px;
-        border: 5px solid blue;
+        border: 5px solid black;
     }
     img.individualPhoto {
         width: 420px;
     }
     figcaption {
         height: auto;
-        border: 5px solid yellow;
     }
 </style>
 <?php 
@@ -49,17 +48,24 @@
 
 
             ?>
-            <div class="photoList">
+            <div class="container-fluid">
             <?php
             foreach($results as $row) {
                     $photoViewLink = "photoViewer.php?id=".$user_id."&photoPath=".$row["file_path"]."&caption=".$row["body"]."&photo_id=".$row['id_photo'];
                     ?>
+                        <div class="panel-body">
                         <a href="<?php echo $photoViewLink ?>">
                             <figure>
                                 <img class="individualPhoto" src="<?php echo $row["file_path"]?>">
-                                <figcaption><?php echo $row["body"]?></figcaption>
+                                </a>
+                                <hr><hr>
+                                <figcaption>Caption: <?php echo $row["body"]?></figcaption>
                             </figure>
+                        <a href="<?php echo $photoViewLink ?>"> 
+                            <input type=button onClick="location.href='$photoViewLink'" value='Add/View Comments'>
                         </a>
+                        </div>
+                        <hr>
                 <?php
             }
             ?>
