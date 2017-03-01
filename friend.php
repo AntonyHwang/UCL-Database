@@ -179,6 +179,7 @@ if (isset($_GET['name']) and $_GET['name']!=null){
 	
 	echo 'id: '.$friend.' ';
 	echo '<div class="container-fluid">';
+	echo "this shit repeats";
 	echo '<div class="row">';
 
 	echo '<div class="col-md-6">';

@@ -1,71 +1,85 @@
+
+
 <?php
+// First connect to the db and query for circles based on userid
 	require ("includes/config.php");
 	include_once "header.php";
+	$host = "eu-cdbr-azure-west-a.cloudapp.net";
+    $user = "bd38b99b177044";
+    $pwd = "5e59f1c8";
+    $db = "blogster";
+    // Connect to database.
+    try {
+        $conn = new PDO( "mysql:host=$host;dbname=$db", $user, $pwd);
+        $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+    }
+    catch(Exception $e){
+        die(var_dump($e));
+    }
+    $current_id = $_SESSION['id'];
+    $sql_circles = "SELECT name FROM circle WHERE id_user = '".$current_id."' ";
+    $stmt = $conn->prepare($sql_circles);
+    $stmt->execute();
+    echo $stmt->rowCount();
 
-	if (empty($_POST)) {
-		$host = "eu-cdbr-azure-west-a.cloudapp.net";
-	    $user = "bd38b99b177044";
-	    $pwd = "5e59f1c8";
-	    $db = "blogster";
-	    // Connect to database.
-	    try {
-	        $conn = new PDO( "mysql:host=$host;dbname=$db", $user, $pwd);
-	        $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-	    }
-	    catch(Exception $e){
-	        die(var_dump($e));
-	    }
-	    $current_id = $_SESSION['id'];
-	    $sql_circles = "SELECT name FROM circle WHERE id_user = '".$current_id."'";
-	    $stmt = $conn->prepare($sql_friend);
-	    $stmt->execute();
-	    $circles = $stmt->fetchAll();
-	    // for ($friend_list as $friend) {
-	    // 	echo $friend["first_name"]." ".$friend["surname"];
-	    // }
-	    if ($stmt->execute()) {
-	    	?>
-	    <form action="createCircle.php" method="post" enctype="multipart/form-data"> 
-			<input name="circle_name" type="text">Circle Name<br>
-	    	<?php
-	    while ($friend = $stmt->fetch(PDO::FETCH_ASSOC)) {
-			?>
-			<input name="selected[]" type="checkbox" value="<?php echo $friend["id_user"]?>"> <?php echo $friend["first_name"]." ".$friend["surname"];?> <br>
-				<?php
+echo "<!DOCTYPE html>
+<html>
+
+
+</head>
+<style>
+div {
+    
+    
+}
+.left{
+	float: left;
+	width:600px;
+	margin: auto;
+    border: 1px solid blue;
+}
+.recm{
+	float: right;
+	margin: auto;
+    border: 1px solid blue;
+}
+
+</style>
+<body>
+<h1> Circles </h1>";
+
+	if ($stmt->rowCount() > 0) {
+		while ($circlename = $stmt->fetch(PDO::FETCH_ASSOC)) {
+			print_r($circlename);
+			$c_name = $circlename["name"];
+			$sql_circle_members = "SELECT user.first_name , user.surname, user.id_user , circle.name FROM user INNER JOIN circle ON user.id_user = circle.id_user AND '".$c_name."' = circle.name";
+	    	$stmt2 = $conn->prepare($sql_circle_members);
+		    $stmt2->execute();
+		    if ($stmt2->rowCount() > 0) {
+		    	echo "<div class = 'left'> <h2>".$c_name."</h2>";
+		    	while ($circlemember = $stmt2->fetch(PDO::FETCH_ASSOC)) {
+		    		// print_r($circlemember);
+		    		$fullname = $circlemember["first_name"]." ".$circlemember["surname"];
+		    		$member_id = $circlemember["id_user"];
+		    		echo $fullname;
+		   //  		// echo 'id: '.$circlemember["first_name"]." ".$circlemember["surname"]' ';
+					echo '<div class="container-fluid">';
+					echo '<div class="row">';
+					echo '<div class="col-md-6">';?>
+					<img src= "/uploads/<?php echo $member_id?>/profile.jpg" alt="Profile Pic" style="width:75px; height 75px;">
+    	 			<a href="./profile.php?profile=<?php echo $member_id?>"> <b><?php echo $fullname?></b></a>
+
+		    		<?php echo "</div></div></div>";
+		    	}
+		    	echo "</div>";
+		    }
+		    print_r($circle_members);
+		    // echo "\n";
 		}
-		?>
-			<input name="selected[]" type="hidden" value="<?php echo $current_id?> ">
-			<input type="submit" value="Create Circle" name="create">
-		</form>
-		<?php
-	    }
 	}
-
-	else {
-		$i = 0;
-		$members = sizeof($_POST["selected"]);
-		$host = "eu-cdbr-azure-west-a.cloudapp.net";
-	    $user = "bd38b99b177044";
-	    $pwd = "5e59f1c8";
-	    $db = "blogster";
-	    // Connect to database.
-	    try {
-	        $conn = new PDO( "mysql:host=$host;dbname=$db", $user, $pwd);
-	        $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-	    }
-	    catch(Exception $e){
-	        die(var_dump($e));
-	    }
-		$sql_insert = "INSERT INTO circle (id_user, name) VALUES (?,?)";
-	    $stmt = $conn->prepare($sql_insert);
-	    $stmt->bindValue(2, $_POST["circle_name"]);
-		while ($i < $members) {
-			$stmt->bindValue(1, $_POST["selected"][$i]);
-			$stmt->execute();
-			$i += 1;
-		}
-		header('Location:createCircle.php');
-	}
-
+echo "
+</div>
+</body>
+</html>";
 ?>
 
