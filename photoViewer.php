@@ -55,9 +55,11 @@
         //echo "id_post:" . $row["id_post"]. "</br> userid: " . $row["id_user"]. "</br>body " . $row["body"]. "<br>";
         $com = "SELECT id_photo, timestamp, body, id_user FROM photo_comment WHERE id_photo = ".$photo_id.' ORDER BY timestamp DESC';
         $res_com = $conn->query($com);
-        while($row = $res_com->fetch()){
+        while($row = $res_com->fetch(PDO::FETCH_ASSOC)){
             $names = "SELECT first_name, surname FROM user WHERE id_user =".$row["id_user"]." ";
-        echo $names[0]["first_name"]. " ".$names[0]["surname"]. ": " . $row["body"]. " at ".$row["timestamp"]."</br>";
+            $commenter = $conn->query($names);
+            $name = $commenter->fetch(PDO::FETCH_ASSOC);
+            echo $name["first_name"]. " ".$name["surname"]. ": " . $row["body"]. " at ".$row["timestamp"]."</br>";
         }
         echo "</br>";
     ?>
