@@ -1,16 +1,42 @@
 <?php
 	require ("includes/config.php");
+	include_once "header.php";
 	if (!empty($_GET["uploadButton"])) {
 ?>
-	<form action="uploadPhoto.php" method="post" enctype="multipart/form-data">
-    Select image to upload: <input type="file" name="fileToUpload" id="fileToUpload">
-    Caption: <textarea name ="caption" rows="3" cols="30"></textarea>
-    Privacy: 
-	    <input type="radio" name="privacy" value="0">Public
-		<input type="radio" name="privacy" value="1">Friends
-		<input type="radio" name="privacy" value="2">Just you
-    <input type="submit" value="Upload Image" name="submit">
-</form>
+<style>
+.posts {
+    width: 500px;
+    margin: auto;
+    
+}
+.wrapper{
+    background-color:
+}
+#grad {
+  background: blue; /* For browsers that do not support gradients */
+  background: -webkit-linear-gradient(left top, red, yellow); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(bottom right, red, yellow); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(bottom right, red, yellow); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(to bottom right, blue, yellow); /* Standard syntax */
+}
+.panel-body {
+    background-color:white;
+}
+</style>
+<div class = 'posts'>
+<div class="well"> 
+   <form class="form-horizontal" role="form" action="#" method="get">
+    <h4>Share a Photo</h4>
+     <div class="form-group" style="padding:14px;">
+     	Select Photo <input type="file" name="fileToUpload" id="fileToUpload">
+      <textarea class="form-control" placeholder="Caption" name="caption"></textarea>
+    </br>Privacy: </br>
+<input class = "checkbox-inline" type="radio" name='privacy' value="0">Friends
+<input class = "checkbox-inline" type="radio" name='privacy' value="1">Circles
+<input class = "checkbox-inline" type="radio" name='privacy' value="2">Friends of Friends
+      
+    </div>
+    <button class="btn btn-primary pull-right" type="submit">Upload</button><ul class="list-inline"><li><a href="postPage.php?id=<?php echo $_SESSION['id']?>"><i class="glyphicon glyphicon-pencil"></i></a>  Make a new Post</li></ul>
 <?php
 
 }
