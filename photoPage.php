@@ -52,6 +52,7 @@
             <?php
             foreach($results as $row) {
                     $photoViewLink = "photoViewer.php?id=".$user_id."&photoPath=".$row["file_path"]."&caption=".$row["body"]."&photo_id=".$row['id_photo'];
+                    echo $row["file_path"];
                     ?>
                         <div class="panel-body">
                         <a href="<?php echo $photoViewLink ?>">

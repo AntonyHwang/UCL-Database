@@ -33,14 +33,14 @@ include_once('header.php');
      <div class="form-group" style="padding:14px;">
       <textarea class="form-control" placeholder="Update your status" name='body'></textarea>
     </br>Privacy: </br>
-<input class = "checkbox-inline" type="radio" name='privacy' value="0">friend
-<input class = "checkbox-inline" type="radio" name='privacy' value="1">circles
-<input class = "checkbox-inline" type="radio" name='privacy' value="2">friends of friends     
+<input class = "checkbox-inline" type="radio" name='privacy' value="0">Friend
+<input class = "checkbox-inline" type="radio" name='privacy' value="1">Circles
+<input class = "checkbox-inline" type="radio" name='privacy' value="2">Friends of friends     
       
     </div>
 
 
-    <button class="btn btn-primary pull-right" type="submit">Post</button><ul class="list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
+    <button class="btn btn-primary pull-right" type="submit">Post</button><ul class="list-inline"><li><a href="photoPage.php?id=<?php echo $_SESSION['id']?>"><i class="glyphicon glyphicon-camera"></i></a>  Upload a New Photo</li></ul>
   </form>
 </div>
 

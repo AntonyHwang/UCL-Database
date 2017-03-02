@@ -1,13 +1,8 @@
 <?php 
-    require 'includes/config.php'; 
+    require 'includes/config.php';
     include_once('header.php');
+    $_SESSION["user_type"] = "ADMIN";
 	
-    $sql_select = "SELECT * FROM user WHERE id_user = '".$_SESSION["id"]."'";
-    $stmt = $conn->query($sql_select);
-    $row = $stmt->fetch();
-    $email = $row["email"];
-    $gender = $row["gender"];
-    $dob = $row["dob"];
 	if (isset($_GET['profile']) and $_GET['profile']!=null){
         $sql_select = "SELECT * FROM user WHERE id_user = '".$_GET['profile']."'";
         $stmt = $conn->query($sql_select);
@@ -18,33 +13,38 @@
         $privacy_setting = $row["privacy_setting"];
         echo "<title>".ucfirst($row["first_name"])." ".ucfirst($row["surname"])."</title>";
 	}
-    //check friendship
-    $sql_get = "SELECT * FROM ((SELECT * FROM friendship WHERE id_friend1 = '".$_SESSION["id"]."' OR id_friend2 = '".$_SESSION["id"]."') AS friends) WHERE  id_friend1 = '".$_GET['profile']."' OR id_friend2 = '".$_GET['profile']."'";
-    $stmt = $conn->prepare($sql_get);
-    $stmt->execute();
-    if($stmt->rowCount() == 0) {
-        $friendship = "NO";
-    }
-    else {
+    if ($_SESSION["user_type"] == "ADMIN") {
         $friendship = "YES";
     }
-    //check request sent
-    $sql_get_request = "SELECT * FROM friend_request WHERE id_from_user = ".$_SESSION["id"]." AND id_to_user = ".$_GET['profile'];
-    $stmt = $conn->prepare($sql_get_request);
-    $stmt->execute();
-    if($stmt->rowCount() == 0) {
-        $friend_request = "NO";
-    }
     else {
-        $friend_request = "SENT";
-    }
-    
-    //check request received
-    $sql_get_request = "SELECT * FROM friend_request WHERE id_from_user = ".$_GET['profile']." AND id_to_user = ".$_SESSION["id"];
-    $stmt = $conn->prepare($sql_get_request);
-    $stmt->execute();
-    if($stmt->rowCount() != 0) {
-        $friend_request = "RECEIVED";
+        //check friendship
+        $sql_get = "SELECT * FROM ((SELECT * FROM friendship WHERE id_friend1 = '".$_SESSION["id"]."' OR id_friend2 = '".$_SESSION["id"]."') AS friends) WHERE  id_friend1 = '".$_GET['profile']."' OR id_friend2 = '".$_GET['profile']."'";
+        $stmt = $conn->prepare($sql_get);
+        $stmt->execute();
+        if($stmt->rowCount() == 0) {
+            $friendship = "NO";
+        }
+        else {
+            $friendship = "YES";
+        }
+        //check request sent
+        $sql_get_request = "SELECT * FROM friend_request WHERE id_from_user = ".$_SESSION["id"]." AND id_to_user = ".$_GET['profile'];
+        $stmt = $conn->prepare($sql_get_request);
+        $stmt->execute();
+        if($stmt->rowCount() == 0) {
+            $friend_request = "NO";
+        }
+        else {
+            $friend_request = "SENT";
+        }
+        
+        //check request received
+        $sql_get_request = "SELECT * FROM friend_request WHERE id_from_user = ".$_GET['profile']." AND id_to_user = ".$_SESSION["id"];
+        $stmt = $conn->prepare($sql_get_request);
+        $stmt->execute();
+        if($stmt->rowCount() != 0) {
+            $friend_request = "RECEIVED";
+        }
     }
 ?>
 
@@ -71,24 +71,38 @@
                 </div>
                 <div class="col-md-1">    
                 <?php 
-                if($friendship == "NO" && $friend_request == "NO") { 
+                if ($_SESSION["user_type"] == "ADMIN") {?>
+                    <form method="POST" action=''>
+                        <div>
+                            <input type="submit" class="btn btn-warning" name="delete_account" value="Delete Account" action="#"/>
+                        </div>
+                        <br>
+                        <div>
+                            <input type="submit" class="btn btn-primary" name="export_account" value="Export to XML" action="#"/>
+                        </div>
+                    </form>
+
+                <?php
+                }
+                else {
+                    if($friendship == "NO" && $friend_request == "NO") { 
                 ?>
+                    <form method="POST" action=''>
+                        <input type="submit" class="btn btn-primary" name="send" value="Send Friend Request" />
+                    </form>
 
-                <form method="POST" action=''>
-                    <input type="submit" class="btn btn-primary" name="send" value="Send Friend Request" />
-                </form>
-
-                <?php
-                 
-                } elseif($friendship == "NO" && $friend_request == "SENT") { ?>
-                    <input type="submit" class="btn btn-warning" value="Request Pending" action="#"/>
-                <?php
-                } elseif($friendship == "NO" && $friend_request == "RECEIVED") { ?>
-                    <input type="submit" class="btn btn-info" name="status" value="Request Received" action="#"/>
-                <?php
-                } else {?>  
-                    <input type="submit" class="btn btn-success" name="status" value="Friend" action="#"/>
-                <?php
+                    <?php
+                    
+                    } elseif($friendship == "NO" && $friend_request == "SENT") { ?>
+                        <input type="submit" class="btn btn-warning" value="Request Pending" action="#"/>
+                    <?php
+                    } elseif($friendship == "NO" && $friend_request == "RECEIVED") { ?>
+                        <input type="submit" class="btn btn-info" name="status" value="Request Received" action="#"/>
+                    <?php
+                    } else {?>  
+                        <input type="submit" class="btn btn-success" name="status" value="Friend" action="#"/>
+                    <?php
+                    }
                 }?>  
                 </div>
                 <div class="col-md-1">
@@ -116,11 +130,41 @@
 </html>
 
 <?php
-        if (isset($_POST['send'])) {
-            $sql_insert = "INSERT INTO friend_request (id_from_user, id_to_user)VALUES ('".$_SESSION["id"]."','".$_GET['profile']."')";
-            echo $sql_insert;
-            $stmt = $conn->prepare($sql_insert);
-            $stmt->execute();
-            header('Location: '.$_SERVER['REQUEST_URI']);
+    if (isset($_POST['send'])) {
+        $sql_insert = "INSERT INTO friend_request (id_from_user, id_to_user)VALUES ('".$_SESSION["id"]."','".$_GET['profile']."')";
+        echo $sql_insert;
+        $stmt = $conn->prepare($sql_insert);
+        $stmt->execute();
+        header('Location: '.$_SERVER['REQUEST_URI']);
+    }
+    else if (isset($_POST['delete_account'])) {
+        $sql_delete = "DELETE FROM user WHERE id_user = '".$_GET['profile']."'";
+        echo $sql_delete;
+        $stmt = $conn->prepare($sql_delete);
+        $stmt->execute();
+        header('Location: '.$_SERVER['REQUEST_URI']);
+    }
+    else if (isset($_POST['export_account'])) {
+        $sql_export = "SELECT * FROM user WHERE id_user = '".$_GET['profile']."'";
+        echo $sql_export;
+        $stmt = $conn->prepare($sql_export);
+        $result = $stmt->execute();
+
+        $xml   = new DOMDocument( '1.0', 'utf-8' );
+        $xml   ->formatOutput = True;
+        $root  = $dom->createElement( 'profiles' );
+        $xml   ->appendChild( $root );
+
+        while( $row = $result->fetch() ) {
+            $node = $xml->createElement( 'profile' );
+            foreach( $row as $key => $val )
+            {
+                
+
+                echo 'Wrote: ' . $doc->save("/tmp/test.xml") . ' bytes'; // Wrote: 72 bytes
+                        }
+            $root->appendChild( $node );
         }
+        $dom->save( './xml_export/'.$_GET['profile'].'.xml' );
+    }
 ?>

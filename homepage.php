@@ -87,8 +87,7 @@ if (isset($_GET['id_del']) and $_GET['id_del']!=null ){
 	$_GET['id_del']=null;
 	unset($_GET['id_del']);
     header("location:homepage.php");
-	}
-	
+	}	
 }
 
 //above is new part
