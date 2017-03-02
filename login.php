@@ -59,7 +59,9 @@
                 $email = $_POST['email'];
                 $password = $_POST['password'];
                 $sql_select = "SELECT * FROM user WHERE email = '".$email."' AND password = '".$password."'";
+                $admin_select = "SELECT * FROM admin WHERE email = '".$email."' AND password = '".$password."'";
                 $stmt = $conn->query($sql_select);
+                $adminsql = $conn->query($admin_select);
                 if(!test_input($email)) {
                     echo "<h1>You must enter your email</h1>";
                 }
@@ -67,9 +69,17 @@
                     echo "<h1>You must enter your password</h1>";
                 }
                 else if($row = $stmt->fetch()) {
+                    $_SESSION["user_type"] = "USER";
                     $_SESSION["id"] = $row["id_user"];;
                     $_SESSION["logged_in"] = "YES";
                     header('Location:myProfilePage.php');
+                }
+                else if($row = $adminsql->fetch())
+                {
+                    $_SESSION["user_type"] = "ADMIN";
+                    $_SESSION["id"] = $row["id_admin"];;
+                    $_SESSION["logged_in"] = "YES";
+                    header('Location:admin.php');
                 }
                 //Otherwise, render index/homepage. Set seesion to be logged in
                 else {
