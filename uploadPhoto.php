@@ -16,7 +16,7 @@
 }
 if (!empty($_POST)) {
 	$target_dir = "uploads/";
-	$target_file = $target_dir . $_SESSION["email"]. basename($_FILES["fileToUpload"]["name"]);
+	$target_file = $target_dir . $_SESSION["id"]."/".basename($_FILES["fileToUpload"]["name"]);
 	$uploadOk = 1;
 	$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
 	// Check if image file is a actual image or fake image
