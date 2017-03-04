@@ -145,26 +145,34 @@
         header('Location: '.$_SERVER['REQUEST_URI']);
     }
     else if (isset($_POST['export_account'])) {
+        $xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+        $root_element = $config['table_name']."s"; //fruits
+        $xml .= "<$root_element>";
         $sql_export = "SELECT * FROM user WHERE id_user = '".$_GET['profile']."'";
-        echo $sql_export;
         $stmt = $conn->prepare($sql_export);
-        $result = $stmt->execute();
+        $stmt->execute();
+        $row = $stmt->fetch();
 
-        $xml   = new DOMDocument( '1.0', 'utf-8' );
-        $xml   ->formatOutput = True;
-        $root  = $dom->createElement( 'profiles' );
-        $xml   ->appendChild( $root );
+        $input = new stdClass;
 
-        while( $row = $result->fetch() ) {
-            $node = $xml->createElement( 'profile' );
-            foreach( $row as $key => $val )
-            {
-                
+        $input->id = @trim($row["id_user"]);
+        $input->first_name = @trim($row["first_name"]);
+        $input->surname = @trim($row["surname"]);
+        $input->email = @trim($row["email"]);
+        $input->password = @trim($row["password"]);
+        $input->gender = @trim($row["gender"]);
+        $input->dob = @trim($row["dob"]);
+        $input->privacy_setting = @trim($row["privacy_setting"]);
 
-                echo 'Wrote: ' . $doc->save("/tmp/test.xml") . ' bytes'; // Wrote: 72 bytes
-                        }
-            $root->appendChild( $node );
+        $doc = new DOMDocument('1.0');
+        $doc->formatOutput = true;
+
+        $root = $doc->createElement('user');
+        $root = $doc->appendChild($root);
+        foreach ($input as $key => $value) {
+            $element = $doc->createElement($key, $value);
+            $root->appendChild($element);
         }
-        $dom->save( './xml_export/'.$_GET['profile'].'.xml' );
+        $doc->save("./xml_export/".$_GET['profile'].".xml");
     }
 ?>
