@@ -62,6 +62,28 @@
 	else {
 		//	insert new message into the database
 		print_r($_POST);
+		$host = "eu-cdbr-azure-west-a.cloudapp.net";
+	    $user = "bd38b99b177044";
+	    $pwd = "5e59f1c8";
+	    $db = "blogster";
+	    // Connect to database.
+	    try {
+	        $conn = new PDO( "mysql:host=$host;dbname=$db", $user, $pwd);
+	        $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+	    }
+	    catch(Exception $e){
+	        die(var_dump($e));
+	    }
+		$sql_insert = "INSERT INTO message (id_photo, id_user, file_path, timestamp, body, privacy_setting) VALUES (?,?,?,?,?,?)";
+        $stmt = $conn->prepare($sql_insert);
+        $stmt->bindValue(1, NULL);
+        $stmt->bindValue(2, $user_id);
+        $stmt->bindValue(3, $target_file);
+        $stmt->bindValue(4, NULL);
+        $stmt->bindValue(5, $caption);
+        $stmt->bindValue(6, $privacy);
+        $stmt->execute();
+        header('Location:photoPage.php');
 	}
 ?>
 <!-- Insert code into here -->

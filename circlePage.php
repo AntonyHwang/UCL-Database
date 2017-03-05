@@ -17,7 +17,7 @@
         die(var_dump($e));
     }
     $current_id = $_SESSION['id'];
-    $sql_circles = "SELECT name FROM circle WHERE id_user = '".$current_id."' ";
+    $sql_circles = "SELECT id_circle FROM member WHERE id_user = '".$current_id."' ";
     $stmt = $conn->prepare($sql_circles);
     $stmt->execute();
     echo $stmt->rowCount();
@@ -51,12 +51,15 @@ div {
 	if ($stmt->rowCount() > 0) {
 		while ($circlename = $stmt->fetch(PDO::FETCH_ASSOC)) {
 			print_r($circlename);
-			$c_name = $circlename["name"];
-			$sql_circle_members = "SELECT user.first_name , user.surname, user.id_user , circle.name FROM user INNER JOIN circle ON user.id_user = circle.id_user AND '".$c_name."' = circle.name";
+			$c_id = $circlename["id_circle"];
+			$sql_circle_members = "SELECT user.first_name , user.surname, user.id_user FROM user INNER JOIN member ON user.id_user = member.id_user AND '".$c_id."' = member.id_circle";
 	    	$stmt2 = $conn->prepare($sql_circle_members);
 		    $stmt2->execute();
+		    $sql_circle_name = "SELECT name FROM circle WHERE circle.id_circle = '".$c_id."'";
+		    $stmt3 = $conn->prepare($sql_circle_name);
+		    $stmt3->execute();
 		    if ($stmt2->rowCount() > 0) {
-		    	echo "<div class = 'left'> <h2>".$c_name."</h2>";
+		    	echo "<div class = 'left'> <h2>".$stmt3->fetch(PDO::FETCH_ASSOC)["name"]."</h2>";
 		    	while ($circlemember = $stmt2->fetch(PDO::FETCH_ASSOC)) {
 		    		// print_r($circlemember);
 		    		$fullname = $circlemember["first_name"]." ".$circlemember["surname"];
