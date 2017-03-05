@@ -44,7 +44,7 @@
     </div>
     <div class="panel-body">
         <span>
-            <img class="individualPhoto" src="<?php echo $photoPath?>">
+            <img class="individualPhoto" src="<?php echo $photoPath?>" style"width:75px; height 75px;">
         </span>
         <span>
         <figcaption class="caption">Caption: <?php echo $caption?></figcaption>
@@ -59,7 +59,9 @@
             $names = "SELECT first_name, surname FROM user WHERE id_user =".$row["id_user"]." ";
             $commenter = $conn->query($names);
             $name = $commenter->fetch(PDO::FETCH_ASSOC);
-            echo $name["first_name"]. " ".$name["surname"]. ": " . $row["body"]. " at ".$row["timestamp"]."</br>";
+            // echo $name["first_name"]. " ".$name["surname"]. ": " . $row["body"]. " at ".$row["timestamp"]."</br>";
+            echo $row["body"]. '<strong>'." Posted By: ".'</strong>'.$name["first_name"]. " ".$name["surname"].'<strong>'." AT : ".'</strong>'.$row["timestamp"]."</br>";
+        
         }
         echo "</br>";
     ?>
