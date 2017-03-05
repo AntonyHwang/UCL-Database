@@ -24,9 +24,9 @@
     <form action="register.php" method="post" align="center">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-5">
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-2">
                     <fieldset>
                         <div class="form-group">
                             <input autofocus class="form-control" name="first_name" id="first_name" placeholder="First Name" type="text" size="30"/>
@@ -64,7 +64,7 @@
                         </div><br>
                     </fieldset>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-5">
                 </div>
             </div>
         </div>
