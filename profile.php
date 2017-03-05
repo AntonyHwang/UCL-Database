@@ -1,7 +1,11 @@
 <?php 
     require 'includes/config.php';
-    include_once('header.php');
-    $_SESSION["user_type"] = "ADMIN";
+    if ($_SESSION["user_type"] == "ADMIN") {
+        include_once('adminheader.php');
+    }
+    else {
+        include_once('header.php');
+    }
 	
 	if (isset($_GET['profile']) and $_GET['profile']!=null){
         $sql_select = "SELECT * FROM user WHERE id_user = '".$_GET['profile']."'";

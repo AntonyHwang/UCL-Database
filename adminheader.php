@@ -46,24 +46,13 @@
                 <div>
                     <ul class="nav navbar-nav">
                         <?php if ($_SESSION["logged_in"] == "YES"): ?>
+
+                            <li><a href="All_Users.php">All Users</a></li>
+                             <li><a href="All_Posts.php">All Posts</a></li>
                            
-                            
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Circle<span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="createCircle.php">Create Circle</a></li>
-                                    <li><a href="circlePage.php">View Circles</a></li>
-                                    <li><a href="circleMessengerPage.php">Circle Messenger</a></li>
-                                </ul>
-                            </li>
-                          
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Account<span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    
                                     <li><a href="login.php">Log out</a></li>
-                                </ul>
-                            </li>
+                                     <li><a href="admin_register.php">Register Admin</a></li>
+                              
                         <?php else:
                             header('Location:login.php');
                         endif; ?>
