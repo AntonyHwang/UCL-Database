@@ -45,11 +45,16 @@
                 <div class="col-md-1">
                 </div>
             </div>
+
+
+
+            <!-- all posts-->
             <div class="row">
                 <div class="col-md-1">
                 </div>
                 <div class="col-md-10">
                 <?php
+                    $userid = $_SESSION['id'];
                     if (isset($_GET['comment']) and $_GET['comment']!=null and isset($_GET['postid'])){
                         $userid = $_SESSION['id'];
                         //echo $_GET['body'];
@@ -76,7 +81,7 @@
                 ?>
 
                 <?php 
-                    $sql = "SELECT id_post, id_user, body FROM post WHERE id_user = ".$_SESSION["id"].' ORDER BY timestamp DESC';
+                    $sql = "SELECT id_post, id_user, body,timestamp FROM post WHERE id_user = ".$_SESSION["id"].' ORDER BY timestamp DESC';
                     $sql2= "SELECT first_name,surname FROM user WHERE id_user = ".$_SESSION["id"].' ';
                     $result = $conn->query($sql);
                     $result2= $conn->query($sql2);
@@ -89,32 +94,55 @@
 
                 <html> 
                     <div class="panel-body">
-                    <h2><?php echo $username; ?>
+                    <h2>
+                        <?php
+                        echo "<img src= \"./uploads/".$userid."/profile.jpg\" alt=\"Profile Pic\" style=\"width:50px; height 50px;\">";
+                        echo "".$username;
+                        echo "&nbsp&nbsp&nbsp&nbsp&nbsp";
+                        echo "<a  href=\"./homepage.php?id_del=".$postid." \"><button class=\"btn btn-success\" >delete</button></a>";
+
+                        
+                        ?>
                     </h2>
                     <paragraph>
-                    <?php echo $row["body"];?>
+                        <?php 
+                        echo '<strong style=\" float = right\">'.$row['timestamp'] .'</strong>';
+
+                        echo '</br>';
+                        echo '</br>';
+                        echo $row["body"];
+                        
+                        ?>
                     </paragraph>
                     <br>
                     <div class="clearfix"></div>
                     <hr>
                 </html>
-                    <?php
-                        //echo "id_post:" . $row["id_post"]. "</br> userid: " . $row["id_user"]. "</br>body " . $row["body"]. "<br>";
-                        $com = "SELECT id_post, id_user,id_comment, body,timestamp FROM post_comment WHERE id_post = ". $row["id_post"].' ORDER BY timestamp DESC';
-                        $res_com = $conn->query($com);
-                        while($row = $res_com->fetch()){
-                        echo "userid/name: " . $row["id_user"]. " " . $row["body"]. " at ".$row["timestamp"]."</br>";
+                    <?php    
+                    $com = "SELECT id_post, id_user,id_comment, body,timestamp FROM post_comment WHERE id_post = ". $row["id_post"].' ORDER BY timestamp DESC';
+
+                    $res_com = $conn->query($com);
+                    while($sqlcomment = $res_com->fetch()){
+                        $commentUsername = "SELECT first_name,surname FROM user WHERE id_user = ".$sqlcomment["id_user"].' ';
+                        $res_commentUsername = $conn->query($commentUsername);
+                        while($sqlcommentUsername = $res_commentUsername->fetch()){
+                        $commentusername= ucfirst($sqlcommentUsername["first_name"])." ".ucfirst($sqlcommentUsername["surname"]);
                         }
-                        echo "</br>";
+
+                        echo "<img src= \"./uploads/".$sqlcomment["id_user"]."/profile.jpg\" alt=\"Profile Pic\" style=\"width:30px; height 30px;\">";
+
+                        echo $sqlcomment["body"]. '<strong>'." Posted By: ".'</strong>'.$commentusername.'<strong>'." AT : ".'</strong>'.$sqlcomment["timestamp"]."</br>";
+                    }
+                    echo "</br>";
                     ?>
                     <form  action = '#' method="get">
-                    <div class="input-group">
-                    <div class="input-group-btn">
-                    <button class="btn btn-default"><i class="glyphicon glyphicon-share"></i></button>
-                    </div>
-                    <input type="hidden" name="postid" value="<?php echo $postid; ?>" />
-                    <input type="text" name = 'comment' class="form-control" placeholder="Add a comment..">
-                    </div>
+                        <div class="input-group">
+                            <div class="input-group-btn">
+                                <button class="btn btn-default"><i class="glyphicon glyphicon-share"></i></button>
+                            </div>
+                            <input type="hidden" name="postid" value="<?php echo $postid; ?>" />
+                            <input type="text" name = 'comment' class="form-control" placeholder="Add a comment..">
+                        </div>
                     </form>
                     </div>
                     <hr>
