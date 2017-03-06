@@ -142,7 +142,7 @@
         header('Location: '.$_SERVER['REQUEST_URI']);
     }
     else if (isset($_POST['delete_account'])) {
-        $sql_delete = "DELETE FROM user WHERE id_user = '".$_GET['profile']."'";
+        $sql_delete = "DELETE FROM user WHERE id_user = ".$_GET['profile'];
         echo $sql_delete;
         $stmt = $conn->prepare($sql_delete);
         $stmt->execute();
