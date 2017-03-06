@@ -25,7 +25,7 @@
 </style>
 <div class = 'posts'>
 <div class="well"> 
-   <form class="form-horizontal" role="form" action="#" method="get">
+   <form class="form-horizontal" action="uploadPhoto.php" method="post" enctype="multipart/form-data">
     <h4>Share a Photo</h4>
      <div class="form-group" style="padding:14px;">
      	Select Photo <input type="file" name="fileToUpload" id="fileToUpload">
@@ -36,13 +36,15 @@
 <input class = "checkbox-inline" type="radio" name='privacy' value="2">Friends of Friends
       
     </div>
-    <button class="btn btn-primary pull-right" type="submit">Upload</button><ul class="list-inline"><li><a href="postPage.php?id=<?php echo $_SESSION['id']?>"><i class="glyphicon glyphicon-pencil"></i></a>  Make a new Post</li></ul>
+    <input type="submit" value="Upload Image" name="submit" style="align-right"><ul class="list-inline"><li><a href="postPage.php?id=<?php echo $_SESSION['id']?>"><i class="glyphicon glyphicon-pencil"></i></a>  Make a new Post</li></ul>
 <?php
 
 }
 if (!empty($_POST)) {
 	$target_dir = "uploads/";
+	print_r($_FILES["fileToUpload"]);
 	$target_file = $target_dir . $_SESSION["id"]."/".basename($_FILES["fileToUpload"]["name"]);
+	echo $target_file;
 	$uploadOk = 1;
 	$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
 	// Check if image file is a actual image or fake image
