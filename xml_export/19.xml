@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<user>
+  <id>19</id>
+  <first_name>iron</first_name>
+  <surname>man</surname>
+  <email>iron.man@gmail.com</email>
+  <password>a</password>
+  <gender>male</gender>
+  <dob>1970-01-01</dob>
+  <privacy_setting>0</privacy_setting>
+</user>

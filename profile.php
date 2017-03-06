@@ -149,9 +149,6 @@
         header('Location: '.$_SERVER['REQUEST_URI']);
     }
     else if (isset($_POST['export_account'])) {
-        $xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
-        $root_element = $config['table_name']."s"; //fruits
-        $xml .= "<$root_element>";
         $sql_export = "SELECT * FROM user WHERE id_user = '".$_GET['profile']."'";
         $stmt = $conn->prepare($sql_export);
         $stmt->execute();
@@ -170,7 +167,6 @@
 
         $doc = new DOMDocument('1.0');
         $doc->formatOutput = true;
-
         $root = $doc->createElement('user');
         $root = $doc->appendChild($root);
         foreach ($input as $key => $value) {
@@ -178,5 +174,6 @@
             $root->appendChild($element);
         }
         $doc->save("./xml_export/".$_GET['profile'].".xml");
+        header('location: download.php?profile='.$_GET['profile']);
     }
 ?>
