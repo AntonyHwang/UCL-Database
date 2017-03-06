@@ -1,8 +1,18 @@
 <?php 
     require('includes/config.php'); 
-    include_once('header.php');
+    if ($_SESSION["user_type"] == "ADMIN") {
+        include_once('adminheader.php');
+    }
+    else {
+        include_once('header.php');
+    }
 
-    $sql_select = "SELECT * FROM user WHERE id_user = '".$_SESSION["id"]."'";
+    if ($_SESSION["user_type"] == "ADMIN") {
+        $sql_select = "SELECT * FROM user WHERE id_user = '".$_GET["profile"]."'";
+    }
+    else {
+        $sql_select = "SELECT * FROM user WHERE id_user = '".$_SESSION["id"]."'";
+    }
     $stmt = $conn->query($sql_select);
     $row = $stmt->fetch();
     echo "<title>".ucfirst($row["first_name"])." ".ucfirst($row["surname"])."</title>";
@@ -19,7 +29,11 @@
                 <div class="col-md-3">
                     <nav>
                         <ul>
+                        <?php if ($_SESSION["user_type"] == "ADMIN") { ?>
+                            <img src="<?php echo './uploads/'.$_GET["profile"].'/profile.jpg'; ?>" alt="Profile Pic" style="width:120px;height 120px;">
+                <?php } else { ?>
                             <img src="<?php echo './uploads/'.$_SESSION["id"].'/profile.jpg'; ?>" alt="Profile Pic" style="width:120px;height 120px;">
+                <?php } ?>
                         </ul>
                     </nav>
                 </div>
@@ -54,9 +68,13 @@
                 </div>
                 <div class="col-md-10">
                 <?php
-                    $userid = $_SESSION['id'];
-                    if (isset($_GET['comment']) and $_GET['comment']!=null and isset($_GET['postid'])){
+                    if ($_SESSION["user_type"] == "ADMIN") {
+                        $userid = $_GET['profile'];
+                    }
+                    else {
                         $userid = $_SESSION['id'];
+                    }
+                    if (isset($_GET['comment']) and $_GET['comment']!=null and isset($_GET['postid'])){
                         //echo $_GET['body'];
                         $table = 'post_comment';
                         $body = $_GET['comment'];
@@ -81,8 +99,8 @@
                 ?>
 
                 <?php 
-                    $sql = "SELECT id_post, id_user, body,timestamp FROM post WHERE id_user = ".$_SESSION["id"].' ORDER BY timestamp DESC';
-                    $sql2= "SELECT first_name,surname FROM user WHERE id_user = ".$_SESSION["id"].' ';
+                    $sql = "SELECT id_post, id_user, body,timestamp FROM post WHERE id_user = ".$userid.' ORDER BY timestamp DESC';
+                    $sql2= "SELECT first_name,surname FROM user WHERE id_user = ".$userid.' ';
                     $result = $conn->query($sql);
                     $result2= $conn->query($sql2);
                     while($row2 = $result2->fetch()) {
@@ -99,7 +117,7 @@
                         echo "<img src= \"./uploads/".$userid."/profile.jpg\" alt=\"Profile Pic\" style=\"width:50px; height 50px;\">";
                         echo "".$username;
                         echo "&nbsp&nbsp&nbsp&nbsp&nbsp";
-                        echo "<a  href=\"./homepage.php?id_del=".$postid." \"><button class=\"btn btn-success\" >delete</button></a>";
+                        echo "<a  href=\"./myProfilePage.php?profile=".$userid."&id_del=".$postid." \"><button class=\"btn btn-success\" >delete</button></a>";
 
                         
                         ?>
@@ -163,4 +181,24 @@
         </div>
     </body>
 </html>
+
+<?php 
+    if (isset($_GET['id_del']) and $_GET['id_del']!=null ){
+        //echo $_GET['body'];
+        $table = 'post';
+        $post_del = $_GET['id_del'];
+        $del = "DELETE FROM post WHERE id_post= ".$post_del;
+        $stmt = $conn->query($del);  
+        if (!$stmt){
+            die('deleting failed');
+        }
+        else {
+            echo " deleted successfully<br>";
+            $_GET['id_del']=null;
+            unset($_GET['id_del']);
+            header("location:myProfilePage.php?profile=".$_GET["profile"]);
+        }
+
+    }  
+?>
 
