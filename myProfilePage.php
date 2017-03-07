@@ -6,7 +6,6 @@
     else {
         include_once('header.php');
     }
-
     if ($_SESSION["user_type"] == "ADMIN") {
         $sql_select = "SELECT * FROM user WHERE id_user = '".$_GET["profile"]."'";
     }
@@ -24,11 +23,9 @@
 
 
 <style>
-
 .panel-body {
 background-color:   #F0F8FF;
 }
-
 </style>
 
 
@@ -141,17 +138,15 @@ background-color:   #F0F8FF;
                     <h2>
                         <?php
                         echo "<img src= \"./uploads/".$userid."/profile.jpg\" alt=\"Profile Pic\" style=\"width:50px; height 50px;\">";
-                        echo " ".$username;
+                        echo "<a href=\"./profile.php?profile=".$userid."\" >$username</a>\n";  
                         echo "&nbsp&nbsp&nbsp&nbsp&nbsp";
                         echo "<a  href=\"./myProfilePage.php?profile=".$userid."&id_del=".$postid." \"><button class=\"btn btn-danger\" >Delete</button></a>";
-
                         
                         ?>
                     </h2>
                     <paragraph>
                         <?php 
                         echo '<strong style=\" float = right\">'.$row['timestamp'] .'</strong>';
-
                         echo '</br>';
                         echo '</br>';
                         echo $row["body"];
@@ -162,23 +157,101 @@ background-color:   #F0F8FF;
                     <div class="clearfix"></div>
                     <hr>
                 </html>
-                    <?php    
-                    $com = "SELECT id_post, id_user,id_comment, body,timestamp FROM post_comment WHERE id_post = ". $row["id_post"].' ORDER BY timestamp DESC';
+    <?php
+    //echo "id_post:" . $row["id_post"]. "</br> userid: " . $row["id_user"]. "</br>body " . $row["body"]. "<br>";
+    $com = "SELECT id_post, id_user,id_comment, body,timestamp FROM post_comment WHERE id_post = ". $row["id_post"].' ORDER BY timestamp DESC';
 
-                    $res_com = $conn->query($com);
-                    while($sqlcomment = $res_com->fetch()){
-                        $commentUsername = "SELECT first_name,surname FROM user WHERE id_user = ".$sqlcomment["id_user"].' ';
-                        $res_commentUsername = $conn->query($commentUsername);
-                        while($sqlcommentUsername = $res_commentUsername->fetch()){
-                        $commentusername= ucfirst($sqlcommentUsername["first_name"])." ".ucfirst($sqlcommentUsername["surname"]);
-                        }
+    $res_com = $conn->query($com);
+    ?>
+<!--   <div class="row">
+		<div class="col-md-1">
+			<img alt="Bootstrap Image Preview" src="http://lorempixel.com/140/140/" width = "40px"/>
+		</div>
+		<div class="col-md-11">
+			<div class="row">
+				<div class="col-md-12">
+                example user: this is a  test comment
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+                at 2010 5 7
+				</div>
+			</div>
+		</div>
+	</div> -->
+    <?php 
 
-                        echo "<img src= \"./uploads/".$sqlcomment["id_user"]."/profile.jpg\" alt=\"Profile Pic\" style=\"width:30px; height 30px;\">";
+  
+    while($sqlcomment = $res_com->fetch()){
+        $commentUsername = "SELECT first_name,surname FROM user WHERE id_user = ".$sqlcomment["id_user"].' ';
+        $res_commentUsername = $conn->query($commentUsername);
+        while($sqlcommentUsername = $res_commentUsername->fetch()){
+        $commentusername= ucfirst($sqlcommentUsername["first_name"])." ".ucfirst($sqlcommentUsername["surname"]);
+        }
+//picture and two rows goes here
+echo "   <div class=\"row\">\n"; 
+echo "		<div class=\"col-md-1\">\n"; 
+echo "          <img src= \"./uploads/".$sqlcomment["id_user"]."/profile.jpg\" alt=\"Profile Pic\" style=\"width:40px; height 40px;\">";
+echo "		</div>\n"; 
 
-                        echo $sqlcomment["body"]. '<strong>'." Posted By: ".'</strong>'.$commentusername.'<strong>'." AT : ".'</strong>'.$sqlcomment["timestamp"]."</br>";
-                    }
-                    echo "</br>";
-                    ?>
+
+echo "		<div class=\"col-md-10\">\n"; 
+echo "			<div class=\"row\">\n"; 
+echo "				<div class=\"col-md-12\">\n"; 
+//echo "<a href=\"./profile.php?profile=".$postOwner."\" >$username</a>\n";  
+    
+echo "<a href=\"./profile.php?profile=".$sqlcomment["id_user"]."\" >".$commentusername." </a>:".$sqlcomment["body"];
+
+?>
+
+
+
+<?php
+//echo "                example user: this is a  test comment\n"; 
+echo "				</div>\n"; 
+echo "			</div>\n"; 
+echo "			<div class=\"row\">\n"; 
+echo "				<div class=\"col-md-12\">\n"; 
+//echo "                at 2010 5 7\n"; 
+echo "                ".$sqlcomment["timestamp"];
+echo "				</div>\n"; 
+echo "			</div>\n"; 
+
+echo "		</div>\n"; 
+//button might go here
+echo "		<div class=\"col-md-1\">\n"; 
+if($sqlcomment["id_user"]==$_SESSION['id']){
+?>
+
+
+
+        <form  action = '#' method="get">
+            <div class="input-group">
+                <div class="input-group-btn">
+                    <button type="submit" class="btn btn-default btn-sm">
+                    <span class="glyphicon glyphicon-remove"></span>  
+                    </button>
+                </div>
+                                
+           
+                <input type="hidden" name="id_del_comment" value="<?php echo $sqlcomment["id_comment"]; ?>" />                
+            </div>
+        </form>
+
+
+
+<?php
+}
+echo "		</div>\n"; 
+
+echo "	</div>\n";
+echo "</br>";
+//button end
+        
+    }
+    //echo "</br>";
+    ?>
                     <form  action = '#' method="get">
                         <div class="input-group">
                             <div class="input-group-btn">
@@ -202,6 +275,7 @@ background-color:   #F0F8FF;
                 <br>
                 </div>
                 <div class="col-md-1">
+                
                 </div>
             </div>
         </div>
@@ -209,6 +283,26 @@ background-color:   #F0F8FF;
 </html>
 
 <?php 
+    //delete comments
+    if (isset($_GET['id_del_comment']) and $_GET['id_del_comment']!=null ){
+        //echo $_GET['body'];
+        
+        $post_del = $_GET['id_del_comment'];
+        $del = "DELETE FROM post_comment  WHERE id_comment= ".$post_del;
+        echo $del;
+        $stmt = $conn->query($del);  
+        if (!$stmt){
+
+            die('deleting failed');
+        }
+        else {
+            echo " deleted comment successfully<br>";
+            $_GET['id_del_comment']=null;
+            unset($_GET['id_del_comment']);
+            header("location:myProfilePage.php");
+        }
+
+    } 
     if (isset($_GET['id_del']) and $_GET['id_del']!=null ){
         //echo $_GET['body'];
         $table = 'post';
@@ -224,9 +318,7 @@ background-color:   #F0F8FF;
             unset($_GET['id_del']);
             header("location:myProfilePage.php?profile=".$_GET["profile"]);
         }
-
     }  
-
         if (isset($_POST['send'])) {
         $sql_insert = "INSERT INTO friend_request (id_from_user, id_to_user)VALUES ('".$_SESSION["id"]."','".$_GET['profile']."')";
         echo $sql_insert;
@@ -246,9 +338,7 @@ background-color:   #F0F8FF;
         $stmt = $conn->prepare($sql_export);
         $stmt->execute();
         $row = $stmt->fetch();
-
         $input = new stdClass;
-
         $input->id = @trim($row["id_user"]);
         $input->first_name = @trim($row["first_name"]);
         $input->surname = @trim($row["surname"]);
@@ -257,7 +347,6 @@ background-color:   #F0F8FF;
         $input->gender = @trim($row["gender"]);
         $input->dob = @trim($row["dob"]);
         $input->privacy_setting = @trim($row["privacy_setting"]);
-
         $doc = new DOMDocument('1.0');
         $doc->formatOutput = true;
         $root = $doc->createElement('user');
@@ -270,4 +359,3 @@ background-color:   #F0F8FF;
         header('location: download.php?profile='.$_GET['profile']);
     }
 ?>
-
