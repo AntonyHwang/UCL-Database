@@ -318,7 +318,7 @@ echo "          <img src= \"./uploads/".$sqlcomment["id_user"]."/profile.jpg\" a
 echo "		</div>\n"; 
 
 
-echo "		<div class=\"col-md-11\">\n"; 
+echo "		<div class=\"col-md-10\">\n"; 
 echo "			<div class=\"row\">\n"; 
 echo "				<div class=\"col-md-12\">\n"; 
 //echo "<a href=\"./profile.php?profile=".$postOwner."\" >$username</a>\n";  
@@ -327,15 +327,7 @@ echo "<a href=\"./profile.php?profile=".$sqlcomment["id_user"]."\" >".$commentus
 
 ?>
 
-        <form  action = '#' method="get">
-            <div class="input-group">
-                <div class="input-group-btn">
-                    <button class="btn btn-warning" type = "submit">Delete</button>
-                </div>
-                <input type="hidden" name="id_del_comment" value="<?php echo $sqlcomment["id_comment"]; ?>" />
-                
-            </div>
-        </form>
+
 
 <?php
 //echo "                example user: this is a  test comment\n"; 
@@ -347,10 +339,28 @@ echo "				<div class=\"col-md-12\">\n";
 echo "                ".$sqlcomment["timestamp"];
 echo "				</div>\n"; 
 echo "			</div>\n"; 
+
 echo "		</div>\n"; 
+//button might go here
+echo "		<div class=\"col-md-1\">\n"; 
+?>
+        <form  action = '#' method="get">
+            <div class="input-group">
+                <div class="input-group-btn">
+                    <button type="submit" class="btn btn-default btn-sm">
+                    <span class="glyphicon glyphicon-remove"></span>  
+                    </button>
+                </div>
+                <input type="hidden" name="id_del_comment" value="<?php echo $sqlcomment["id_comment"]; ?>" />
+                
+            </div>
+        </form>
+<?php
+echo "		</div>\n"; 
+
 echo "	</div>\n";
 echo "</br>";
-//
+//button end
         
     }
     echo "</br>";
