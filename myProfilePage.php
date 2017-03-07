@@ -45,7 +45,21 @@
                         <h4>Birthday:  <?php echo $dob;?></h4>
                     </article>
                 </div>
-                <div class="col-md-1">       
+                <div class="col-md-1">  
+                <?php 
+                if ($_SESSION["user_type"] == "ADMIN") {?>
+                    <form method="POST" action=''>
+                        <div>
+                            <input type="submit" class="btn btn-warning" name="delete_account" value="Delete Account" action="#"/>
+                        </div>
+                        <br>
+                        <div>
+                            <input type="submit" class="btn btn-primary" name="export_account" value="Export to XML" action="#"/>
+                        </div>
+                    </form>
+
+                <?php
+                }?>     
                 </div>
                 <div class="col-md-1">
                 </div>
