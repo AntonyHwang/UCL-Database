@@ -114,12 +114,12 @@
     echo "	<div class=\"row\">\n"; 
     echo "		<div class=\"col-md-6\">\n"; 
     echo "			<h3 class=\"text-left\">\n"; 
-    echo "				my firends\n"; 
+    echo "				Friends\n"; 
     echo "			</h3>\n"; 
     echo "		</div>\n"; 
     echo "		<div class=\"col-md-6\">\n"; 
-    echo "			<h3 class=\"text-right\">\n"; 
-    echo "				people you may know\n"; 
+    echo "			<h3 class=\"text-right\" align=\"left\">\n"; 
+    echo "				People You May Know\n"; 
     echo "			</h3>\n"; 
     echo "		</div>\n"; 
     echo "	</div>\n";
@@ -145,7 +145,7 @@
     echo "				</div>\n"; 
     echo "				<div class=\"col-md-6\">\n"; 
     //echo " the delete button";
-    echo "<a href=\"./friend.php?id_del_friend=".$friend." \"><button class=\"btn btn-warning\" >unfriend</button></a>";
+    echo "<a href=\"./friend.php?id_del_friend=".$friend." \"><button class=\"btn btn-warning\" >Unfriend</button></a>";
 
     
     echo "				</div>\n"; 
@@ -153,7 +153,7 @@
     //end of one friend
     echo "<hr>";
     }
-    echo "<h1>friendResquseet</h1>";
+    echo "<h1>Friend Request</h1>";
     $friendRequest = "SELECT id_from_user, id_to_user,id_request FROM `friend_request` WHERE `id_to_user` =$thisid" ;
 
 	$result = $conn->query($friendRequest);
@@ -224,9 +224,7 @@
     echo "				</div>\n"; 
     echo "				<div class=\"col-md-6\">\n"; 
     //echo " the delete button";
-    echo "<a><button class=\"btn btn-success\" >addfriend</button></a>";
-
-    
+    echo "<a href=\"./profile.php?profile=".$row[id_user]."\" class=\"btn btn-success\">View Profile</button></a>\n";  
     echo "				</div>\n"; 
     echo "			</div>\n"; 
     //end of one friend
