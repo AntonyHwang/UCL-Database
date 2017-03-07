@@ -35,7 +35,7 @@
                         $username= ucfirst($row["first_name"])." ".ucfirst($row["surname"]);
                         $user_id = $row["id_user"];
                         $profile_img = "./uploads/".$user_id."/profile.jpg";
-                        $profile_link = "./profile.php?profile=".$row[id_user];
+                        $profile_link = "./profile.php?profile=".$row["id_user"];
                         if ($count % 2 != 0) {
                 ?>
                         <div class="row">
@@ -49,7 +49,7 @@
                                         <?php echo "   ".$username ?>
                                     </div>
                                     <div class="col-md-8">  
-                                        <a href="./myProfilePage.php?profile=<?php echo $row[id_user]?>" class="btn btn-success">Profile Page</button></a>
+                                        <a href="./myProfilePage.php?profile=<?php echo $row["id_user"]?>" class="btn btn-success">Profile Page</button></a>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
