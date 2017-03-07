@@ -20,6 +20,18 @@
     $gender = $row["gender"];
     $dob = $row["dob"];
 ?>
+
+
+
+<style>
+
+.panel-body {
+background-color:   #F0F8FF;
+}
+
+</style>
+
+
 <html>
     <body>
         <div class="container-fluid">
@@ -118,7 +130,7 @@
                     $result = $conn->query($sql);
                     $result2= $conn->query($sql2);
                     while($row2 = $result2->fetch()) {
-                        $username= $row2["first_name"]." ".$row2["surname"];
+                        $username= ucfirst($row2["first_name"])." ".ucfirst($row2["surname"]);
                     }
                     while($row = $result->fetch()) {
                         $postid = $row["id_post"];
@@ -129,9 +141,9 @@
                     <h2>
                         <?php
                         echo "<img src= \"./uploads/".$userid."/profile.jpg\" alt=\"Profile Pic\" style=\"width:50px; height 50px;\">";
-                        echo "".$username;
+                        echo " ".$username;
                         echo "&nbsp&nbsp&nbsp&nbsp&nbsp";
-                        echo "<a  href=\"./myProfilePage.php?profile=".$userid."&id_del=".$postid." \"><button class=\"btn btn-success\" >delete</button></a>";
+                        echo "<a  href=\"./myProfilePage.php?profile=".$userid."&id_del=".$postid." \"><button class=\"btn btn-danger\" >Delete</button></a>";
 
                         
                         ?>

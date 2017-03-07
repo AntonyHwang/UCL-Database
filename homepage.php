@@ -65,7 +65,7 @@
 <style>
 
 .panel-body {
-background-color:#DCDCDC;
+background-color:   #F0F8FF;
 }
 
 </style>
@@ -234,9 +234,9 @@ $username= ucfirst($namerow["first_name"])." ".ucfirst($namerow["surname"]);
         <?php
 
         echo "<img src= \"./uploads/".$postOwner."/profile.jpg\" alt=\"Profile Pic\" style=\"width:50px; height 50px;\">";
-        echo "".$username;
+        echo " ".$username;
         echo "&nbsp&nbsp&nbsp&nbsp&nbsp";
-        echo "<a  href=\"./homepage.php?id_del=".$postid." \"><button class=\"btn btn-success\" >delete</button></a>";
+       
         ?>
     </h2>
     <paragraph>
