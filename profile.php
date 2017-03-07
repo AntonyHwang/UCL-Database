@@ -19,7 +19,7 @@
             die('deleting failed');
         }
         else {
-            echo " deleted comment successfully<br>";
+            //echo " deleted comment successfully<br>";
             $_GET['id_del_comment']=null;
             unset($_GET['id_del_comment']);
             header("location:profile.php?profile=".$_GET['profile']);
@@ -71,7 +71,7 @@
         }
         //check request sent
         $sql_get_request = "SELECT * FROM friend_request WHERE id_from_user = ".$_SESSION["id"]." AND id_to_user = ".$_GET['profile'];
-        echo $sql_get_request;
+        //echo $sql_get_request;
         $stmt = $conn->prepare($sql_get_request);
         $stmt->execute();
         if($stmt->rowCount() == 0) {
@@ -510,6 +510,8 @@ echo "</br>";
                 <div class="input-group-btn">
                     <button class="btn btn-default"><i class="glyphicon glyphicon-share"></i></button>
                 </div>
+                <input type="hidden" name="profile" value="<?php echo $_GET["profile"]; ?>" />                
+           
                 <input type="hidden" name="postid" value="<?php echo $postid; ?>" />
                 <input type="text" name = 'comment' class="form-control" placeholder="Add a comment..">
             </div>
