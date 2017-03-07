@@ -57,7 +57,26 @@
             header("location:homepage.php");
         }
 
-    }    
+    } //delete comments
+    if (isset($_GET['id_del_comment']) and $_GET['id_del_comment']!=null ){
+        //echo $_GET['body'];
+        
+        $post_del = $_GET['id_del_comment'];
+        $del = "DELETE FROM post_comment  WHERE id_comment= ".$post_del;
+        echo $del;
+        $stmt = $conn->query($del);  
+        if (!$stmt){
+
+            die('deleting failed');
+        }
+        else {
+            echo " deleted comment successfully<br>";
+            $_GET['id_del_comment']=null;
+            unset($_GET['id_del_comment']);
+            //header("location:homepage.php");
+        }
+
+    }     
 ?>
 
 
@@ -297,6 +316,8 @@ echo "   <div class=\"row\">\n";
 echo "		<div class=\"col-md-1\">\n"; 
 echo "          <img src= \"./uploads/".$sqlcomment["id_user"]."/profile.jpg\" alt=\"Profile Pic\" style=\"width:40px; height 40px;\">";
 echo "		</div>\n"; 
+
+
 echo "		<div class=\"col-md-11\">\n"; 
 echo "			<div class=\"row\">\n"; 
 echo "				<div class=\"col-md-12\">\n"; 
@@ -304,6 +325,19 @@ echo "				<div class=\"col-md-12\">\n";
     
 echo "<a href=\"./profile.php?profile=".$sqlcomment["id_user"]."\" >".$commentusername." </a>:".$sqlcomment["body"];
 
+?>
+
+        <form  action = '#' method="get">
+            <div class="input-group">
+                <div class="input-group-btn">
+                    <button class="btn btn-warning" type = "submit">Delete</button>
+                </div>
+                <input type="hidden" name="id_del_comment" value="<?php echo $sqlcomment["id_comment"]; ?>" />
+                
+            </div>
+        </form>
+
+<?php
 //echo "                example user: this is a  test comment\n"; 
 echo "				</div>\n"; 
 echo "			</div>\n"; 
