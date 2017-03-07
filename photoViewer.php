@@ -41,9 +41,10 @@
         echo "tryna delete";
         print_r($_POST);
         $post_del = $_POST["id_del"];
-        $sql_del = "DELETE FROM photo_comment  WHERE id_comment= ".$post_del;
+        $sql_del = "DELETE FROM photo_comment  WHERE id_comment= ?";
         echo $sql_del;
-        $stmt = $conn->query($sql_del);  
+        $stmt = $conn->prepare($sql_del);  
+        $stmt->bindValue(1, $post_del);
         if (!$stmt){
 
             die('deleting failed');
@@ -129,6 +130,11 @@
         <input type="hidden" name="caption" value="<?php echo $caption;?>" >
         Comment: <textarea name ="comment" rows="3" cols="30"></textarea>
         <input type="submit" name="addComment" value="Add Comment">
+    </form>
+    <form action="photoPage.php" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="profile" value="<?php echo $user_id?>">
+        <input type="hidden" name="id_del" value="<?php echo $photo_id?>">
+        <input type="submit" name="delete" value="Delete Photo">
     </form>
     </div> 
     <hr>

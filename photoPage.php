@@ -89,6 +89,7 @@
         $pwd = "5e59f1c8";
         $db = "blogster";
         // Connect to database.
+        $conn;
         try {
             $conn = new PDO( "mysql:host=$host;dbname=$db", $user, $pwd);
             $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
@@ -99,10 +100,11 @@
         echo $_POST["profile"];
         print_r($_POST);
         $post_del = $_POST["id_del"];
-        $sql_del = "DELETE FROM photo  WHERE id_photo= ".$post_del;
+        $sql_del = "DELETE FROM photo  WHERE id_photo = ? ";
         echo $sql_del;
-        $stmt = $conn->query($sql_del);  
-        if (!$stmt){
+        $stmt = $conn->prepare($sql_del);  
+        $stmt->bindValue(1, $post_del);
+        if (!$stmt->execute()){
 
             die('deleting failed');
         }
@@ -110,7 +112,7 @@
             echo " deleted photo successfully<br>";
             //delete the IMAGE FILE FROM THE 
             //UPLOAD FOLDER FILE PATH
-            header("Location:photoPage.php");
+            // header("Location:photoPage.php?id=<?php echo $_SESSION["id"]
         }
     }
     
