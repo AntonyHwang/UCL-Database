@@ -1,4 +1,8 @@
 <?php
+                    $_SESSION["user_type"] = "USER";
+                    $_SESSION["id"] =671;
+                    $_SESSION["logged_in"] = "YES";
+
     require'includes/config.php';
     include_once('header.php');
     function sortPostbytime($connect,$posts) {
@@ -22,62 +26,11 @@
     }
 
 
-    if (isset($_GET['comment']) and $_GET['comment']!=null and isset($_GET['postid'])){
-        $userid = $_SESSION['id'];
-        echo $userid;
-        $table = 'post_comment';
-        $body = $_GET['comment'];
-        $postid = $_GET['postid'];
-        $sql = "INSERT INTO ".$table." (id_comment,id_post, id_user,body) VALUES ( NULL,'$postid','$userid','$body')";
-        $stmt = $conn->query($sql);  
-        if (!$stmt){
-            die('post failed');
-        }
-        else {
-            echo"New post created successfully<br>";
-            $_GET['body']=null;
-            unset($_GET['body']);
-            header("location:homepage.php");
-        }
-    }
 
-    if (isset($_GET['id_del']) and $_GET['id_del']!=null ){
-        //echo $_GET['body'];
-        $table = 'post';
-        $post_del = $_GET['id_del'];
-        $del = "DELETE FROM post WHERE id_post= ".$post_del;
-        $stmt = $conn->query($del);  
-        if (!$stmt){
-            die('deleting failed');
-        }
-        else {
-            echo " deleted successfully<br>";
-            $_GET['id_del']=null;
-            unset($_GET['id_del']);
-            header("location:homepage.php");
-        }
 
-    } 
+
     //delete comments
-    if (isset($_GET['id_del_comment']) and $_GET['id_del_comment']!=null ){
-        //echo $_GET['body'];
-        
-        $post_del = $_GET['id_del_comment'];
-        $del = "DELETE FROM post_comment  WHERE id_comment= ".$post_del;
-        echo $del;
-        $stmt = $conn->query($del);  
-        if (!$stmt){
-
-            die('deleting failed');
-        }
-        else {
-            echo " deleted comment successfully<br>";
-            $_GET['id_del_comment']=null;
-            unset($_GET['id_del_comment']);
-            //header("location:homepage.php");
-        }
-
-    }     
+    
 ?>
 
 
@@ -253,6 +206,7 @@ $username= ucfirst($namerow["first_name"])." ".ucfirst($namerow["surname"]);
 ?>
 
 <div class="panel-body">
+
     <h2 class ="post_owner">    
         <?php
 
@@ -346,9 +300,11 @@ echo "		</div>\n";
 echo "		<div class=\"col-md-1\">\n"; 
 if($sqlcomment["id_user"]==$_SESSION['id']){
 ?>
-        <form  action = '#' method="get">
+        <form  action = 'server.php' method="get">
             <div class="input-group">
                 <div class="input-group-btn">
+                
+                    <input type="hidden" name="last_page" value="homepage.php" /> 
                     <button type="submit" class="btn btn-default btn-sm">
                     <span class="glyphicon glyphicon-remove"></span>  
                     </button>
@@ -367,12 +323,13 @@ echo "</br>";
     }
     echo "</br>";
     ?>
-    <!--comment-->
-        <form  action = '#' method="get">
+    <!--add a comment-->
+        <form  action = 'server.php' method="get">
             <div class="input-group">
                 <div class="input-group-btn">
                     <button class="btn btn-default"><i class="glyphicon glyphicon-share"></i></button>
                 </div>
+                <input type="hidden" name="last_page" value="homepage.php" /> 
                 <input type="hidden" name="postid" value="<?php echo $postid; ?>" />
                 <input type="text" name = 'comment' class="form-control" placeholder="Add a comment..">
             </div>

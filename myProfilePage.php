@@ -97,28 +97,7 @@ background-color:   #F0F8FF;
                     else {
                         $userid = $_SESSION['id'];
                     }
-                    if (isset($_GET['comment']) and $_GET['comment']!=null and isset($_GET['postid'])){
-                        //echo $_GET['body'];
-                        $table = 'post_comment';
-                        $body = $_GET['comment'];
-                        $postid = $_GET['postid'];
-                        $sql = "INSERT INTO ".$table."(id_comment,id_post, id_user,body) VALUES (null, '$postid','$userid','$body')";
-                        // if ($conn->query($sql) === TRUE) {
-                        //  echo"New post created successfully<br>";
-                        //  unset($_GET['body']);
-                        // } else {
-                        //  echo"Error:". $sql ."<br>". $conn->error;
-                        // }
-                        $stmt = $conn->query($sql);  
-                        if (!$stmt){
-                        die('post failed');
-                        }
-                        else {
-                            echo"New post created successfully<br>";
-                            $_GET['body']=null;
-                            unset($_GET['body']);
-                        }
-                    }
+
                 ?>
 
                 <?php 
@@ -134,15 +113,34 @@ background-color:   #F0F8FF;
                     ?>
 
                 <html> 
+
+            
                     <div class="panel-body">
                     <h2>
-                        <?php
-                        echo "<img src= \"./uploads/".$userid."/profile.jpg\" alt=\"Profile Pic\" style=\"width:50px; height 50px;\">";
-                        echo "<a href=\"./profile.php?profile=".$userid."\" >$username</a>\n";  
-                        echo "&nbsp&nbsp&nbsp&nbsp&nbsp";
-                        echo "<a  href=\"./myProfilePage.php?profile=".$userid."&id_del=".$postid." \"><button class=\"btn btn-danger\" >Delete</button></a>";
-                        
-                        ?>
+                        <div class="row">
+                            <div class="col-md-3">
+                            <?php 
+                            echo "<img src= \"./uploads/".$userid."/profile.jpg\" alt=\"Profile Pic\" style=\"width:50px; height 50px;\">";
+                            echo "<a href=\"./profile.php?profile=".$userid."\" >$username</a>\n";  
+                                               
+                            ?>
+                            </div>
+                            <div class="col-md-1">
+                            
+                            <form  action = 'server.php' method="get" >     
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                        delete  
+                                        </button>               
+                                    <input type="hidden" name="id_del" value="<?php echo $postid; ?>" />                
+                                   <input type="hidden" name="last_page" value="myProfilePage.php" />   
+                                </form>                         
+                                                    
+                            </div>
+                            <div class="col-md-8">
+                            </div>
+                        </div>                   
+
+  
                     </h2>
                     <paragraph>
                         <?php 
@@ -163,23 +161,7 @@ background-color:   #F0F8FF;
 
     $res_com = $conn->query($com);
     ?>
-<!--   <div class="row">
-		<div class="col-md-1">
-			<img alt="Bootstrap Image Preview" src="http://lorempixel.com/140/140/" width = "40px"/>
-		</div>
-		<div class="col-md-11">
-			<div class="row">
-				<div class="col-md-12">
-                example user: this is a  test comment
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-12">
-                at 2010 5 7
-				</div>
-			</div>
-		</div>
-	</div> -->
+
     <?php 
 
   
@@ -226,11 +208,12 @@ if($sqlcomment["id_user"]==$_SESSION['id']){
 
 
 
-        <form  action = '#' method="get">
+        <form  action = 'server.php' method="get">
             <div class="input-group">
                 <div class="input-group-btn">
                     <button type="submit" class="btn btn-default btn-sm">
-                    <span class="glyphicon glyphicon-remove"></span>  
+                    <span class="glyphicon glyphicon-remove"></span>
+                    <input type="hidden" name="last_page" value="myProfilePage.php" />     
                     </button>
                 </div>
                                 
@@ -252,12 +235,13 @@ echo "</br>";
     }
     //echo "</br>";
     ?>
-                    <form  action = '#' method="get">
+                    <form  action = 'server.php' method="get">
                         <div class="input-group">
                             <div class="input-group-btn">
                                 <button class="btn btn-default"><i class="glyphicon glyphicon-share"></i></button>
                             </div>
                             <input type="hidden" name="postid" value="<?php echo $postid; ?>" />
+                            <input type="hidden" name="last_page" value="myProfilePage.php" />   
                             <input type="text" name = 'comment' class="form-control" placeholder="Add a comment..">
                         </div>
                     </form>
@@ -283,42 +267,8 @@ echo "</br>";
 </html>
 
 <?php 
-    //delete comments
-    if (isset($_GET['id_del_comment']) and $_GET['id_del_comment']!=null ){
-        //echo $_GET['body'];
-        
-        $post_del = $_GET['id_del_comment'];
-        $del = "DELETE FROM post_comment  WHERE id_comment= ".$post_del;
-        echo $del;
-        $stmt = $conn->query($del);  
-        if (!$stmt){
 
-            die('deleting failed');
-        }
-        else {
-            echo " deleted comment successfully<br>";
-            $_GET['id_del_comment']=null;
-            unset($_GET['id_del_comment']);
-            header("location:myProfilePage.php");
-        }
 
-    } 
-    if (isset($_GET['id_del']) and $_GET['id_del']!=null ){
-        //echo $_GET['body'];
-        $table = 'post';
-        $post_del = $_GET['id_del'];
-        $del = "DELETE FROM post WHERE id_post= ".$post_del;
-        $stmt = $conn->query($del);  
-        if (!$stmt){
-            die('deleting failed');
-        }
-        else {
-            echo " deleted successfully<br>";
-            $_GET['id_del']=null;
-            unset($_GET['id_del']);
-            header("location:myProfilePage.php?profile=".$_GET["profile"]);
-        }
-    }  
         if (isset($_POST['send'])) {
         $sql_insert = "INSERT INTO friend_request (id_from_user, id_to_user)VALUES ('".$_SESSION["id"]."','".$_GET['profile']."')";
         echo $sql_insert;
