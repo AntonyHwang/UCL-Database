@@ -41,7 +41,7 @@
         echo $sql_delete;
         $stmt = $conn->prepare($sql_delete);
         $stmt->execute();
-        unlink('uploads/'.$_GET['profile']);
+        unlink('uploads/'.$_SESSION['id']);
         header('location: login.php');
     }
 ?>
