@@ -59,7 +59,7 @@ background-color:   #F0F8FF;
                 if ($_SESSION["user_type"] == "ADMIN") {?>
                     <form method="POST" action=''>
                         <div>
-                            <input type="submit" class="btn btn-warning" name="delete_account" value="Delete Account" action="#"/>
+                            <input type="submit" class="btn btn-warning" name="delete_account" value="Delete Account" action="All_Users.php"/>
                         </div>
                         <br>
                         <div>
@@ -281,7 +281,8 @@ echo "</br>";
         echo $sql_delete;
         $stmt = $conn->prepare($sql_delete);
         $stmt->execute();
-        header('Location: '.$_SERVER['REQUEST_URI']);
+        unlink('uploads/'.$_GET['profile']);
+        header('location: All_Users.php');
     }
     else if (isset($_POST['export_account'])) {
         $sql_export = "SELECT * FROM user WHERE id_user = '".$_GET['profile']."'";

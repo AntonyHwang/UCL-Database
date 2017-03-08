@@ -135,6 +135,7 @@
                 copy($default_profile_pic, $user_profile_pic);
                 $_SESSION["id"] = $rows["id_user"];
                 $_SESSION["logged_in"] = "YES";
+                $_SESSION["user_type"] = "USER";
                 header('Location:myProfilePage.php');
             }
         }

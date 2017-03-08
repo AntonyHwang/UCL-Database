@@ -1,5 +1,4 @@
-<?php
-    session_start();         
+<?php      
     require 'includes/config.php'; 
 ?>
  <html>
@@ -52,6 +51,7 @@
     <?php
         $_SESSION["logged_in"]="NO";
         $_SESSION["id"] = "";
+        $_SESSION["user_type"]="";
         //Insert registration info
         if(!empty($_POST)) {
             try {
