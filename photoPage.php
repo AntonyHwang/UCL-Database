@@ -67,6 +67,7 @@
                              <form action="photoPage.php" method="post" enctype="multipart/form-data">
                                 <input type="hidden" name="profile" value="<?php echo $user_id?>">
                                 <input type="hidden" name="id_del" value="<?php echo $row["id_photo"]?>">
+                                <input type="hidden" name="del_path" value="<?php echo $row["file_path"]?>">
                                 <input type="submit" name="delete" value="Delete">
                             </form>
                         </a>
@@ -110,9 +111,9 @@
         }
         else {
             echo " deleted photo successfully<br>";
-            //delete the IMAGE FILE FROM THE 
-            //UPLOAD FOLDER FILE PATH
-            // header("Location:photoPage.php?id=<?php echo $_SESSION["id"]
+            unlink($_POST["del_path"]);
+            echo $_POST["del_path"];
+            header('Location:photoPage.php?id='.$_POST["profile"].'');
         }
     }
     

@@ -106,7 +106,7 @@ if (!empty($_POST)) {
                 $stmt->bindValue(5, $caption);
                 $stmt->bindValue(6, $privacy);
 	            $stmt->execute();
-	            header('Location:photoPage.php');
+	            header('Location:photoPage.php?id='.$_SESSION['id'].'');
 	        }
 	        catch(Exception $e) {
 	            die(var_dump($e));
