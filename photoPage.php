@@ -30,13 +30,13 @@
     catch(Exception $e){
         die(var_dump($e));
     }
-    if (!empty($_GET) && empty($_GET["delete"])) {
-        try {
-            if ($_GET['id'] == $_SESSION['id']) {
+    if ($_GET['id'] == $_SESSION['id']) {
                 $photoUploadLink = "uploadPhoto.php?uploadButton=upload";
                 echo "<div style=\"float:right;\""."><a href=\"".$photoUploadLink." \"><button class=\"btn btn-primary\" >Upload Photo</button></a></div><br><br>";
                  
             }
+    if (!empty($_GET) && empty($_GET["delete"])) {
+        try {
             $user_id = $_GET['id'];
             $sql_select = ("SELECT * FROM photo WHERE id_user = '".$user_id."' ORDER BY id_photo DESC");
             $stmt = $conn->prepare($sql_select);
