@@ -56,10 +56,10 @@
         if(!empty($_POST)) {
             try {
                 // Retrieve data
-                $email = $_POST['email'];
+                $email =$_POST['email'];
                 $password = $_POST['password'];
-                $sql_select = "SELECT * FROM user WHERE email = '".$email."' AND password = '".$password."'";
-                $admin_select = "SELECT * FROM admin WHERE email = '".$email."' AND password = '".$password."'";
+                $sql_select = "SELECT * FROM user WHERE email = '".$email."' AND password = '".sha1($password)."'";
+                $admin_select = "SELECT * FROM admin WHERE email = '".$email."' AND password = '".sha1($password)."'";
                 $stmt = $conn->query($sql_select);
                 $adminsql = $conn->query($admin_select);
                 if(!test_input($email)) {

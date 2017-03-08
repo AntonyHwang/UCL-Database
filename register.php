@@ -50,13 +50,18 @@
                         </div><br>
                         <div class="form-group" align="left">
                             Birthday
-                            <input type="date" class="form-control" name="birthday" placeholder="YYYY-MM-DD">
+                            <?php
+                            $currentdate = date('Y-m-d');
+                            ?>
+                            <input type="date" class="form-control" name="birthday" placeholder="YYYY-MM-DD" max="<?php echo $currentdate ?>">
                         </div><br>
                         <div class="form-group">
                             <button class="btn btn-default" type="submit" style="vertical-align:left; float: center">
                                 <span aria-hidden="true" class="glyphicon glyphicon-log-in"></span>
                                 Register
                             </button>
+                            <br>
+                            <br>
                             <button class="btn btn-default" type="reset" style="vertical-align:left; float: center">
                                 <span aria-hidden="true" class="glyphicon glyphicon-log-in"></span>
                                 Reset
@@ -70,13 +75,14 @@
         </div>
     </form>
 <?php
-    //Insert registration info
+    
     if(!empty($_POST)) {
         try {
             // Retrieve data
             $first_name = strtolower($_POST['first_name']);
             $surname = strtolower($_POST['surname']);
             $email = strtolower($_POST['email']);
+           
             $password = $_POST['password'];
             $password_confirm = $_POST['confirmation'];
             $gender = $_POST['gender'];
@@ -84,25 +90,39 @@
             $sql_select = "SELECT * FROM user WHERE email = '".$email."'";
             $stmt = $conn->query($sql_select);
             $registrants = $stmt->fetchAll();
+
+            //  Data Validation
             if(!test_input($first_name)) {
-                echo "<h2>You must enter your first name</h2>";
+                echo "<script>alert('You must enter your first name');</script>";
+            }
+            else if (!preg_match("/^[a-zA-Z ]*$/",$first_name)) {
+                echo "<script>alert('First name incorrect format');</script>";
             }
             else if(!test_input($surname)) {
-                echo "<h2>You must enter your surname</h2>";
+                echo "<script>alert('You must enter your surname');</script>";
+            }
+            else if (!preg_match("/^[a-zA-Z ]*$/",$surname)) {
+                echo "<script>alert('Surname incorrect format');</script>";
             }
             else if(!test_input($email)) {
-                echo "<h2>You must enter your email</h2>";
+                echo "<script>alert('You must enter your email');</script>";
             }
             else if(!test_input($password)) {
-                echo "<h2>You must enter a valid password</h2>";
+                echo "<script>alert('You must enter a valid password');</script>";
             }
             else if($password != $password_confirm) {
-                echo "<h2>Password does not match</h2>";
+                echo "<script>alert('Password does not match');</script>";
             }
             else if(count($registrants) != 0) {
-                echo "<h2>Email already registered</h2>";
-            } else {
-                $sql_insert = "INSERT INTO user (first_name, surname, email, password, gender, dob, privacy_setting)VALUES ('".$first_name."','".$surname."','".$email."','".$password."','".$gender."','".$dob."', 0);";
+                echo "<script>alert('Email already registered');</script>";
+            } 
+             else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                echo "<script>alert('Invalid email format');</script>";
+            }
+         
+         //Insert registration info
+            else {
+                $sql_insert = "INSERT INTO user (first_name, surname, email, password, gender, dob, privacy_setting)VALUES ('".$first_name."','".$surname."','".$email."','".sha1($password)."','".$gender."','".$dob."', 0);";
                 $sql_get_id = "SELECT id_user FROM user WHERE email = '".$email."';";
                 $stmt = $conn->prepare($sql_insert);
                 $stmt->execute();

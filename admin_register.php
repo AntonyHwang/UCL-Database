@@ -72,7 +72,7 @@
             else if(count($registrants) != 0) {
                 echo "<h2>Email already registered</h2>";
             } else {
-                $sql_insert = "INSERT INTO admin (first_name, last_name, email, password)VALUES ('".$first_name."','".$surname."','".$email."','".$password."');";
+                $sql_insert = "INSERT INTO admin (first_name, last_name, email, password)VALUES ('".$first_name."','".$surname."','".$email."','".sha1($password)."');";
                 $stmt = $conn->prepare($sql_insert);
                 $stmt->execute();
                 header('Location:All_Users.php');

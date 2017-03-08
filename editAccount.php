@@ -132,7 +132,7 @@
                     echo "<h2>Email already registered</h2>";
                 }
                 else {
-                    $sql_update = "UPDATE user SET first_name = '".$first_name."', surname = '".$surname."', email = '".$email."', password = '".$password."', gender = '".$gender."', dob = '".$dob."', privacy_setting = ".$privacy_setting." WHERE id_user = '".$_SESSION["id"]."'";
+                    $sql_update = "UPDATE user SET first_name = '".$first_name."', surname = '".$surname."', email = '".$email."', password = '".sha1($password)."', gender = '".$gender."', dob = '".$dob."', privacy_setting = ".$privacy_setting." WHERE id_user = '".$_SESSION["id"]."'";
                     $stmt = $conn->prepare($sql_update);
                     $stmt->execute();
 

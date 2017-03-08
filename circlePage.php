@@ -33,13 +33,11 @@ div {
     
 }
 .left{
-	float: left;
 	width:600px;
 	margin: auto;
     border: 1px solid blue;
 }
 .recm{
-	float: right;
 	margin: auto;
     border: 1px solid blue;
 }
@@ -69,12 +67,24 @@ div {
 					echo '<div class="container-fluid">';
 					echo '<div class="row">';
 					echo '<div class="col-md-6">';?>
-					<img src= "/uploads/<?php echo $member_id?>/profile.jpg" alt="Profile Pic" style="width:75px; height 75px;">
+					<img src= "/uploads/<?php echo $member_id?>/profile.jpg" alt="Profile Pic" style="width:75px; height 75px;"><br>
     	 			<a href="./profile.php?profile=<?php echo $member_id?>"> <b><?php echo $fullname?></b></a>
+    	 			<br>
+    	 			<p align="right"><form action="#" method="post" enctype="multipart/form-data">
+							<input type="hidden" name="del_user" value="<?php echo $member_id?>">
+                                <input type="hidden" name="del_circle" value="<?php echo $c_id?>">
+                                <input type="submit" name="removeMember" value="remove">
+    	 			 </p>
 
 		    		<?php echo "</div></div></div>";
 		    	}
-		    	echo "</div>";
+		    	?>
+		    	<p align="left"><form action="#" method="post "enctype="multipart/form-data">
+                                <input type="hidden" name="del_circle" value="<?php echo $c_id?>">
+                                <input type="submit" name="deleteCircle" value="Delete Circle">
+    	 			 </p>
+    	 			 <?
+		    	echo "</div><br>";
 		    }
 		    print_r($circle_members);
 		    // echo "\n";

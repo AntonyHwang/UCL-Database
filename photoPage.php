@@ -64,6 +64,11 @@
                             </figure>
                         <a href="<?php echo $photoViewLink ?>"> 
                             <input type=button onClick="location.href='$photoViewLink'" value='Add/View Comments'>
+                             <form action="photoPage.php" method="post" enctype="multipart/form-data">
+                                <input type="hidden" name="profile" value="<?php echo $user_id?>">
+                                <input type="hidden" name="id_del" value="<?php echo $row["id_photo"]?>">
+                                <input type="submit" name="delete" value="Delete">
+                            </form>
                         </a>
                         </div>
                         <hr>
@@ -76,6 +81,38 @@
         }
         catch(Exception $e) {
             die(var_dump($e));
+        }
+    }
+    else if ($_POST["profile"] == $_SESSION["id"]) {
+        $host = "eu-cdbr-azure-west-a.cloudapp.net";
+        $user = "bd38b99b177044";
+        $pwd = "5e59f1c8";
+        $db = "blogster";
+        // Connect to database.
+        $conn;
+        try {
+            $conn = new PDO( "mysql:host=$host;dbname=$db", $user, $pwd);
+            $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+        }
+        catch(Exception $e){
+            die(var_dump($e));
+        }
+        echo $_POST["profile"];
+        print_r($_POST);
+        $post_del = $_POST["id_del"];
+        $sql_del = "DELETE FROM photo  WHERE id_photo = ? ";
+        echo $sql_del;
+        $stmt = $conn->prepare($sql_del);  
+        $stmt->bindValue(1, $post_del);
+        if (!$stmt->execute()){
+
+            die('deleting failed');
+        }
+        else {
+            echo " deleted photo successfully<br>";
+            //delete the IMAGE FILE FROM THE 
+            //UPLOAD FOLDER FILE PATH
+            // header("Location:photoPage.php?id=<?php echo $_SESSION["id"]
         }
     }
     
