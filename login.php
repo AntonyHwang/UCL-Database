@@ -63,10 +63,10 @@
                 $stmt = $conn->query($sql_select);
                 $adminsql = $conn->query($admin_select);
                 if(!test_input($email)) {
-                    echo "<h1>You must enter your email</h1>";
+                    echo "<script>alert('You must enter your email');</script>";
                 }
                 else if(!test_input($password)) {
-                    echo "<h1>You must enter your password</h1>";
+                    echo "<script>alert('You must enter your password');</script>";
                 }
                 else if($row = $stmt->fetch()) {
                     $_SESSION["user_type"] = "USER";
@@ -83,7 +83,7 @@
                 }
                 //Otherwise, render index/homepage. Set seesion to be logged in
                 else {
-                    echo "<h1>The email address or password is incorrect</h1>";
+                    echo "<script>alert('The email address or password is incorrect');</script>";
                 }
             }
             catch(Exception $e) {

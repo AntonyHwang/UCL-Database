@@ -45,10 +45,10 @@
                             Email: <input class="form-control" name="email" id="email" value="<?php echo $row["email"] ?>" type="text" size="30"/>
                         </div>
                         <div class="form-group" align="left">
-                            Password: <input class="form-control" name="password" id="password" value="<?php echo $row["password"] ?>" type="password" size="30"/>
+                            Password: <input class="form-control" name="password" id="password" value="" type="password" size="30"/>
                         </div>
                         <div class="form-group" align="left">
-                            Retype: <input class="form-control" name="confirmation" id="confirmation" value="<?php echo $row["password"] ?>" type="password" size="30"/>
+                            Retype: <input class="form-control" name="confirmation" id="confirmation" value="" type="password" size="30"/>
                         </div><br>
                         <div class="form-group" align="left">
                             Gender:<br>
@@ -108,20 +108,21 @@
             $gender = $_POST['gender'];
             $dob = $_POST['birthday'];
             $privacy_setting = $_POST['privacy'];
+
             if(!test_input($first_name)) {
-                echo "<h2>You must enter your first name</h2>";
+                echo "<script>alert('You must enter your first name');</script>";
             }
             else if(!test_input($surname)) {
-                echo "<h2>You must enter your surname</h2>";
+                echo "<script>alert('You must enter your surname');</script>";
             }
             else if(!test_input($email)) {
-                echo "<h2>You must enter your email</h2>";
+                echo "<script>alert('You must enter your email');</script>";
             }
             else if(!test_input($password)) {
-                echo "<h2>You must enter a valid password</h2>";
+                echo "<script>alert('You must enter a valid password');</script>";
             }
             else if($password != $password_confirm) {
-                echo "<h2>Password does not match</h2>";
+                echo "<script>alert('Password does not match');</script>";
             }
             else {
                 $sql_select = "SELECT * FROM user WHERE id_user != '".$_SESSION["id"]."' AND email = '".$email."'";
@@ -129,7 +130,7 @@
                 $stmt->execute();
                 $registrants = $stmt->fetchAll();
                 if(count($registrants) >= 1) {
-                    echo "<h2>Email already registered</h2>";
+                    echo "<script>alert('Email already registered');</script>";
                 }
                 else {
                     $sql_update = "UPDATE user SET first_name = '".$first_name."', surname = '".$surname."', email = '".$email."', password = '".sha1($password)."', gender = '".$gender."', dob = '".$dob."', privacy_setting = ".$privacy_setting." WHERE id_user = '".$_SESSION["id"]."'";
@@ -146,13 +147,12 @@
                         if ($_FILES["file"]["error"] > 0) {
                             echo "Return Code: " . $_FILES["file"]["error"] . "<br/><br/>";
                         } else {
-                            echo "<span>Your File Uploaded Succesfully...!!</span><br/>";
                             move_uploaded_file($_FILES["file"]["tmp_name"], "./uploads/".$_SESSION["id"]."/profile.jpg");
                         }   
                     } else {
-                        echo "<span>Profile Image not Updated<span>";
+                        echo "<script>alert('Profile image not updated');</script>";
                     }
-                    echo "<h2>Account detail updated</h2>";
+                    echo "<script>alert('Account detail updated');</script>";
                 }
             }
     }
