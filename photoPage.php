@@ -12,16 +12,12 @@
         height: auto;
     }
 </style>
-<link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+
 <?php 
     ob_start();
     require ("includes/config.php");
     include_once "header.php";
-    $host = "eu-cdbr-azure-west-a.cloudapp.net";
-    $user = "bd38b99b177044";
-    $pwd = "5e59f1c8";
-    $db = "blogster";
+
     // Connect to database.
     try {
         $conn = new PDO( "mysql:host=$host;dbname=$db", $user, $pwd);
@@ -30,70 +26,9 @@
     catch(Exception $e){
         die(var_dump($e));
     }
-    if ($_GET['id'] == $_SESSION['id']) {
-                $photoUploadLink = "uploadPhoto.php?uploadButton=upload";
-                echo "<div style=\"float:right;\""."><a href=\"".$photoUploadLink." \"><button class=\"btn btn-primary\" >Upload Photo</button></a></div><br><br>";
-                 
-            }
-    if (!empty($_GET) && empty($_GET["delete"])) {
-        try {
-            $user_id = $_GET['id'];
-            $sql_select = ("SELECT * FROM photo WHERE id_user = '".$user_id."' ORDER BY id_photo DESC");
-            $stmt = $conn->prepare($sql_select);
-            $stmt->execute();
-            $results = $stmt->fetchAll();
 
-            ?>
-            <div class="row">
-                <div class="col-md-1">
-                </div>
-                <div class="col-md-10" style="text-align: center">
-                      <h1>Your Photos</h1><br>
-                </div>
-                <div class="col-md-1">
-                </div>
-            </div>
-            <?php
-            foreach($results as $row) {
-                    $photoViewLink = "photoViewer.php?id=".$user_id."&photoPath=".$row["file_path"]."&caption=".$row["body"]."&photo_id=".$row['id_photo'];
-                    ?>
-                    <div class="container-fluid" style="width:75%">
-                        <div class="row" style="border-radius: 25px; background-color: #cae7f9;">
-                            <div class="col-md-8" style="opacity: 4;">
-                                <br>
-                                <a href="<?php echo $photoViewLink ?>">
-                                    <figure>
-                                        <img class="center-block" style="max-width:100%;max-height:100%;"src="<?php echo $row["file_path"]?>">
-                                        </a>
-                                    </figure>
-                                <a href="<?php echo $photoViewLink ?>"> 
-                                </div>
-                                <div class="col-md-4">
-                                    <hr>
-                                        <figcaption ><strong> Caption: </strong><?php echo $row["body"]?></figcaption>
-                                        <hr>
-                                    <br>
-                                    <?php echo "<a href=\"".$photoViewLink." \"><button class=\"btn btn-primary\" >Add/View Comments</button></a><br><br>";
-                                    $photoDeleteLink = "photoPage.php?profile=".$user_id."&id_del=".$row["id_photo"]."&del_path=".$row["file_path"];
-                                    echo "<a href=\"".$photoDeleteLink." \"><button class=\"btn btn-warning\" >Delete Photo</button></a><br><br>";
-                                    
-                             ?>
-                        </a>
-                    </div>
-                </div>
-                <hr>
-            </div>
-        </div>
-                <?php
-            }
-            ?>
-        <?php
-        }
-        catch(Exception $e) {
-            die(var_dump($e));
-        }
-    }
-    if ($_GET["profile"] == $_SESSION["id"]) {
+    //delete photos
+    if (isset($_GET["profile"] ) && $_GET["profile"] == $_SESSION["id"]) {
         $host = "eu-cdbr-azure-west-a.cloudapp.net";
         $user = "bd38b99b177044";
         $pwd = "5e59f1c8";
@@ -121,18 +56,12 @@
         else {
             echo " deleted photo successfully<br>";
             unlink($_GET["del_path"]);
-            echo $_GET["del_path"];
+            //echo $_GET["del_path"];
             $refresh = $_GET['profile'];
-            echo "<a href=\"photoPage.php?id=".$refresh." \"><button class=\"btn btn-primary\" >Return to Photos</button></a><br><br>";
+            //echo "<a href=\"photoPage.php?id=".$refresh." \"><button class=\"btn btn-primary\" >Return to Photos</button></a><br><br>";
         }
     }
-    if ($_POST["profile"] == $_SESSION["id"]) {
-        $host = "eu-cdbr-azure-west-a.cloudapp.net";
-        $user = "bd38b99b177044";
-        $pwd = "5e59f1c8";
-        $db = "blogster";
-        // Connect to database.
-        $conn;
+    if (isset($_POST["profile"] ) && $_POST["profile"] == $_SESSION["id"]) {
         try {
             $conn = new PDO( "mysql:host=$host;dbname=$db", $user, $pwd);
             $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
@@ -161,4 +90,87 @@
     }
     
 ?>
+<?php 
+//get photo of this user and do intersection with all allow_to_seen_photo
+$profile_id = $_SESSION['id'];
+$photolist_oneuser=[];
+$photos_user = "SELECT id_photo, id_user FROM photo WHERE  id_user = ".$profile_id.'  ORDER BY timestamp DESC';
+$result = $conn->query($photos_user);
+foreach($result as $user){
+    array_push($photolist_oneuser,$user[0]);
+}
+?>
+<?php 
+$index = 0;
 
+
+               
+
+?>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-1">
+		</div>
+		<div class="col-md-9">
+        <h1>My Photos</h1>
+		</div>
+		<div class="col-md-1">
+        <?php
+            $photoUploadLink = "uploadPhoto.php?uploadButton=upload";
+            echo "<div style=\"float:right;\""."><a href=\"".$photoUploadLink." \"><button class=\"btn btn-primary\" >Upload Photo</button></a></div><br><br>";
+        ?>        
+		</div>
+		<div class="col-md-1">
+		</div>
+	</div>
+</div>
+<div class="container-fluid">
+	<div class="row">
+        <div class="col-md-1">
+        </div>
+		<div class="col-md-10">
+        
+            <?php
+            foreach($photolist_oneuser as $photo_id){
+            if($index % 3 ==0) echo "<div class=\"row\">";
+                $current_photo = $photolist_oneuser[$index];
+                $sql_select = ("SELECT * FROM photo WHERE id_photo = '".$current_photo."' ORDER BY id_photo DESC");
+                $stmt = $conn->query($sql_select);
+                $row = $stmt->fetch();
+                $index++;
+            ?>
+
+			
+				<div class="col-md-4">
+					<div class="thumbnail">
+						<img class="center-block" style="max-width:100%;max-height:300px;"src="<?php echo $row["file_path"]?>">
+                        <div class="caption">
+							<h3>
+								<?php echo $row["body"]?>
+							</h3>
+
+							<p>
+                                <?php
+                                $photoViewLink = "photoViewer.php?id=".$row["id_user"]."&photoPath=".$row["file_path"]."&caption=".$row["body"]."&photo_id=".$row['id_photo']."&user=".$_SESSION["id"];
+                                ?>
+                            
+								<a class="btn btn-primary" href="<?php echo $photoViewLink;?>">comment</a> 
+                                <?php 
+                                $photoDeleteLink = "photoPage.php?profile=".$row["id_user"]."&id_del=".$row["id_photo"]."&del_path=".$row["file_path"];
+                                echo "<a href=\"".$photoDeleteLink." \"><button class=\"btn btn-warning\" >Delete Photo</button></a><br><br>";
+                                                                  
+                                ?>
+  
+							</p>
+						</div>
+					</div>
+				</div>				
+            <?php 
+            if($index % 3 ==0)echo "</div>";
+            }
+            ?>
+		</div>
+        <div class="col-md-1">
+        </div>
+	</div>
+</div>
