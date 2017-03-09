@@ -57,6 +57,30 @@
         }
     }  
 //insert post
+
+$userid = $_SESSION["id"];
+//handle post 
+if (isset($_GET['body']) and $_GET['body']!=null){
+    //echo $_GET['body'];
+    $table = 'post';
+    $body = $_GET['body'];
+    if(isset($_GET['privacy']))
+    $privacy = $_GET['privacy'];
+    else $privacy = 0;
+    $sql = "INSERT INTO ".$table."(id_post, id_user,body,privacy_setting)
+    VALUES (null, '$userid','$body','$privacy')";    
+     $stmt = $conn->query($sql);  
+    if (!$stmt){
+        die('post failed');
+        }
+    else {
+    echo"New post created successfully<br>";
+    $_GET['body']=null;
+    unset($_GET['body']);
+    header("location:homepage.php");
+    }
+    
+}
 //insert comment
         if (isset($_GET['comment']) and $_GET['comment']!=null and isset($_GET['postid'])){
             //echo $_GET['body'];
