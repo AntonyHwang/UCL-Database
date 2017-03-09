@@ -43,15 +43,7 @@
         array_push($friends,$friend);       
     }
  //for each my friend ,get their posts
-foreach ($friends as $current_id)
-{
-    $sql = "SELECT id_post, id_user, body FROM post WHERE privacy_setting  = '0' AND id_user = ".$current_id.' ORDER BY timestamp DESC';
-    $result = $conn->query($sql);
-    while($row = $result->fetch()) {
-    $postid = $row["id_post"];
-        array_push($allposts,$postid);
-    }
-}
+
  //for each my friend ,get their photo
  $allphotos = [];
 foreach ($friends as $current_id)
