@@ -3,18 +3,6 @@
 	include_once "header.php";
 
 	if (empty($_POST)) {
-		$host = "eu-cdbr-azure-west-a.cloudapp.net";
-	    $user = "bd38b99b177044";
-	    $pwd = "5e59f1c8";
-	    $db = "blogster";
-	    // Connect to database.
-	    try {
-	        $conn = new PDO( "mysql:host=$host;dbname=$db", $user, $pwd);
-	        $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-	    }
-	    catch(Exception $e){
-	        die(var_dump($e));
-	    }
 	    $current_id = $_SESSION['id'];
 	    $sql_friend = "SELECT user.first_name, user.surname, user.id_user FROM user INNER JOIN friendship ON ((user.id_user = friendship.id_friend2 AND friendship.id_friend1 = '$current_id' ) OR (user.id_user = friendship.id_friend1 AND friendship.id_friend2 = '".$current_id."'))";
 	 //    echo "lol";
