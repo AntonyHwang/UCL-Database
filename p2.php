@@ -527,3 +527,71 @@ echo "</br>";
 
 
 
+
+<?php 
+$number_photos =count($photo_user_allow_seen);
+
+$remain = $number_photos % 3;
+echo $remain."  ";
+$index = 0;
+$row=0;
+if($remain == 0)$row = floor($number_photos/3);
+else $row=floor($number_photos/3) +1;
+echo $row;
+
+
+               
+
+?>
+<div class="container-fluid">
+	<div class="row">
+        <div class="col-md-1">
+        </div>
+		<div class="col-md-10">
+        
+            <?php
+            foreach($photo_user_allow_seen as $photo_id){
+            if($index % 3 ==0) echo "<div class=\"row\">";
+                $current_photo = $photo_user_allow_seen[$index];
+                $sql_select = ("SELECT * FROM photo WHERE id_photo = '".$current_photo."' ORDER BY id_photo DESC");
+                $stmt = $conn->query($sql_select);
+                $row = $stmt->fetch();
+                $index++;
+            ?>
+
+			
+				<div class="col-md-4">
+					<div class="thumbnail">
+						<img class="center-block" style="max-width:100%;max-height:400px;"src="<?php echo $row["file_path"]?>">
+                        <div class="caption">
+							<h3>
+								<?php echo $row["body"]?>
+							</h3>
+
+							<p>
+                            <?php
+                             $photoViewLink = "photoViewer.php?id=".$_SESSION['id']."&photoPath=".$row["file_path"]."&caption=".$row["body"]."&photo_id=".$row['id_photo'];
+                            ?>
+                            
+								<a class="btn btn-primary" href="<?php echo $photoViewLink;?>">comment</a> 
+							</p>
+						</div>
+					</div>
+				</div>
+				
+
+            <?php 
+            if($index % 3 ==0)echo "</div>";
+            }
+            ?>
+
+			
+
+
+
+
+		</div>
+        <div class="col-md-1">
+        </div>
+	</div>
+</div>
