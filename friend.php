@@ -1,7 +1,6 @@
 <?php
     require'includes/config.php';
     include_once('header.php');
-
 // Create connection
 	try {
 		$conn = new PDO( "mysql:host=$host;dbname=$db", $user, $pwd);
@@ -12,7 +11,6 @@
 		die(var_dump($e));
 	}
 	$thisid = $_SESSION['id'];
-
 	function getFriends($user,$conn){
 		$friend_list =[];
 		$getlist = "SELECT * FROM `friendship` WHERE `id_friend1` =".$user. " OR `id_friend2` =".$user;
@@ -36,7 +34,6 @@
 		$result = $conn->query($getlist);
 		$row_count = $result->rowCount();
         return $row_count;
-
 	}   
 	function getFriendsFriends($friend_list,$conn){
 		$all = [];
@@ -66,25 +63,21 @@
              return $ranlist;
                      
          }
-
 	}
    function mightknow($friend_list,$me,$conn){
        $list = [];
        foreach($friend_list as $user){
            if(count(commonfriends($user,$me,$conn))>2){
                array_push($list,$user);
-
            }
        }
        return $list;
-
    }
    function commonfriends($a,$b,$conn){
        $list1 = getFriends($a,$conn);
        $list2 = getFriends($b,$conn);
        //print_r(array_intersect($list1, $list2)) ;
        return array_intersect($list1, $list2);
-
    }
     //handle delete friend
     if (isset($_GET['id_del_friend']) and $_GET['id_del_friend']!=null){
@@ -120,15 +113,11 @@
     $f2 = getFriendsFriends($f1,$conn);
     $f2=array_unique($f2);
     if (in_array($thisid, $f2)) unset($f2[array_search($thisid,$f2)]);
-
-
     $wait2remm = array_diff($f2, $f1);
     //get my  friend list and friendlist of one user_error
     //count the common friends  
     $remm = getRecommedation($wait2remm,20);
     //$remm = mightknow($wait2remm,$thisid,$conn);
-
-
     echo "<div class=\"container-fluid\">\n"; 
     //NEW 
     echo "	<div class=\"row\">\n";
@@ -148,8 +137,6 @@
     echo "			</h1>\n"; 
     echo "		</div>\n"; 
     echo "	</div>\n";
-
-
     echo "	<div class=\"row\">\n"; 
     //left part
     echo "		<div class=\"col-md-6\">\n"; 
@@ -171,26 +158,20 @@
     echo "				<div class=\"col-md-6\">\n"; 
     //echo " the delete button";
     echo "<a href=\"./friend.php?id_del_friend=".$friend." \"><button class=\"btn btn-warning\" >Unfriend</button></a>";
-
     
     echo "				</div>\n"; 
     echo "			</div>\n"; 
     //end of one friend
     echo "<hr>";
     }
-
     echo "<h1>Friend Request</h1>";
-
     $friendRequest = "SELECT id_from_user, id_to_user,id_request FROM `friend_request` WHERE `id_to_user` =$thisid" ;
-
 	$result = $conn->query($friendRequest);
-
 	$waitinglist = $result->fetchAll();
     $followers =[];
     foreach($waitinglist as $row){
         array_push($followers,$row[0]);
     }//print_r($followers);
-
 //start of friendrequests
     foreach($waitinglist as $row){
         $friend = $row[0];
@@ -232,7 +213,6 @@
     }
 //end of fq
     echo "		</div>\n"; 
-
     //right part
     echo "		<div class=\"col-md-6\">\n"; 
     foreach($remm as $friend){
@@ -251,25 +231,18 @@
     echo "				</div>\n"; 
     echo "				<div class=\"col-md-6\">\n"; 
     //echo " the delete button";
-    echo "<a href=\"./profile.php?profile=".$row[id_user]."\" class=\"btn btn-Primary\">View Profile</button></a>\n";  
+    echo "<a href=\"./profile.php?profile=".$row["id_user"]."\" class=\"btn btn-Primary\">View Profile</button></a>\n";  
     echo "				</div>\n"; 
     echo "			</div>\n"; 
     //end of one friend
     echo "<hr>";
     }
-
     echo "		</div>\n"; 
     //end of right part
-
     echo "	</div>\n"; 
-
-
     echo "      </div>\n";
     echo "		<div class=\"col-md-1\">\n";    
     echo "      </div>\n";
     echo "</div>\n";
-
-
     echo "</div>\n";
 ?>
-
