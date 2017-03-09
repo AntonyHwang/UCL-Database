@@ -126,6 +126,39 @@
             echo "<a href=\"photoPage.php?id=".$refresh." \"><button class=\"btn btn-primary\" >Return to Photos</button></a><br><br>";
         }
     }
+    if ($_POST["profile"] == $_SESSION["id"]) {
+        $host = "eu-cdbr-azure-west-a.cloudapp.net";
+        $user = "bd38b99b177044";
+        $pwd = "5e59f1c8";
+        $db = "blogster";
+        // Connect to database.
+        $conn;
+        try {
+            $conn = new PDO( "mysql:host=$host;dbname=$db", $user, $pwd);
+            $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+        }
+        catch(Exception $e){
+            die(var_dump($e));
+        }
+        echo $_POST["profile"];
+        print_r($_POST);
+        $post_del = $_POST["id_del"];
+        $sql_del = "DELETE FROM photo  WHERE id_photo = ? ";
+        echo $sql_del;
+        $stmt = $conn->prepare($sql_del);  
+        $stmt->bindValue(1, $post_del);
+        if (!$stmt->execute()){
+
+            die('deleting failed');
+        }
+        else {
+            echo " deleted photo successfully<br>";
+            unlink($_GET["del_path"]);
+            echo $_GET["del_path"];
+            $refresh = $_GET['profile'];
+            echo "<a href=\"photoPage.php?id=".$refresh." \"><button class=\"btn btn-primary\" >Return to Photos</button></a><br><br>";
+        }
+    }
     
 ?>
 
