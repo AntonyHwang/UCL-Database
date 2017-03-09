@@ -148,6 +148,21 @@ sort($allposts);
                 </div>
             </div>
         </div>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-10">
+                    <h1>Posts <a href="homepage_photos.php">Photo</a></h1>    
+                </div>
+                <div class="col-md-1">
+                </div>
+            </div>
+        </div>
+
+
+
         <div class="container-fluid">
              <div class="row">
                 <div class="col-md-1">
