@@ -7,7 +7,7 @@
             // create prepared statement
             if ($type == "all") {
                 $sql = "SELECT id_user, first_name, surname FROM 
-                        (SELECT first_name, surname, id_user, password, CONCAT(first_name,' ',surname) AS 'Con_Name' FROM user) AS x 
+                        (SELECT first_name, surname, id_user, password, CONCAT(first_name,' ',surname) AS 'Con_Name' FROM user WHERE id_user <> '".$_SESSION["id"]."') AS x 
                         WHERE Con_Name LIKE :term";
             }
             else if ($type == "friends") {
