@@ -16,6 +16,47 @@
     catch(Exception $e){
         die(var_dump($e));
     }
+    if (!empty($_GET) && !empty($_GET["del_user"])) {
+        $del_circle = $_GET["del_circle"];
+        $del_user = $_GET["del_user"];
+        $sql_del = "DELETE FROM member WHERE id_user = ? AND id_circle = ?";
+        $stmt_del = $conn->prepare($sql_del);
+        $stmt_del->bindValue(1, $del_user);
+        $stmt_del->bindValue(2, $del_circle);
+        if ($stmt_del->execute()) {
+        	echo "Member removed successfully";
+        	//if only 1 
+        	if ($_GET["last_mem"] == 1) {
+        		$_GET["deleteCircle"] = 1;
+        	}
+        }
+        else {
+        	echo "Could not remove member";
+        }
+
+    }
+    if (!empty($_GET) && !empty($_GET["deleteCircle"])) {
+    	$del_circle = $_GET["del_circle"];
+    	$sql_del_members = "DELETE FROM member WHERE id_circle = ? ";
+    	$stmt_del_members = $conn->prepare($sql_del_members);
+    	$stmt_del_members->bindValue(1, $del_circle);
+    	if ($stmt_del_members->execute()) {
+    		echo "members cleansed from circle";
+    		$sql_del = "DELETE FROM circle WHERE id_circle = ?";
+	        $stmt_del = $conn->prepare($sql_del);
+	        $stmt_del->bindValue(1, $del_circle);
+	        if ($stmt_del->execute()) {
+	        	echo "Circle deleted successfully";
+	        }
+	        else {
+	        	echo "Could not delete circle";
+	        }
+    	}
+    	else {
+    		echo "could not remove members from circle before deleting circle";
+    	}
+
+    }
     $current_id = $_SESSION['id'];
     $sql_circles = "SELECT id_circle FROM member WHERE id_user = '".$current_id."' ";
     $stmt = $conn->prepare($sql_circles);
@@ -56,13 +97,17 @@ div {
 		    $sql_circle_name = "SELECT name FROM circle WHERE circle.id_circle = '".$c_id."'";
 		    $stmt3 = $conn->prepare($sql_circle_name);
 		    $stmt3->execute();
-		    if ($stmt2->rowCount() > 0) {
+		    $memberCount = $stmt2->rowCount();
+		    if ($memberCount > 0) {
+		    	echo $memberCount;
+		    	// print_r($stmt2->fetchAll());
 		    	echo "<div class = 'left'> <h2>".$stmt3->fetch(PDO::FETCH_ASSOC)["name"]."</h2>";
+		    	$index = 0;
 		    	while ($circlemember = $stmt2->fetch(PDO::FETCH_ASSOC)) {
 		    		// print_r($circlemember);
 		    		$fullname = $circlemember["first_name"]." ".$circlemember["surname"];
 		    		$member_id = $circlemember["id_user"];
-		    		echo $fullname;
+		    		echo $fullname."-".$member_id;
 		   //  		// echo 'id: '.$circlemember["first_name"]." ".$circlemember["surname"]' ';
 					echo '<div class="container-fluid">';
 					echo '<div class="row">';
@@ -70,23 +115,15 @@ div {
 					<img src= "/uploads/<?php echo $member_id?>/profile.jpg" alt="Profile Pic" style="width:75px; height 75px;"><br>
     	 			<a href="./profile.php?profile=<?php echo $member_id?>"> <b><?php echo $fullname?></b></a>
     	 			<br>
-    	 			<p align="right"><form action="#" method="post" enctype="multipart/form-data">
-							<input type="hidden" name="del_user" value="<?php echo $member_id?>">
-                                <input type="hidden" name="del_circle" value="<?php echo $c_id?>">
-                                <input type="submit" name="removeMember" value="remove">
-    	 			 </p>
-
-		    		<?php echo "</div></div></div>";
+    	 			<?php
+    	 			echo "<a href=\"./circlePage.php?del_user=".$member_id."&del_circle=".$c_id."&last_mem=".$memberCount." \"><button class=\"btn btn-warning\" >Remove</button></a>";
+echo "</div></div></div>";
+		    		$index += 1;
 		    	}
-		    	?>
-		    	<p align="left"><form action="#" method="post "enctype="multipart/form-data">
-                                <input type="hidden" name="del_circle" value="<?php echo $c_id?>">
-                                <input type="submit" name="deleteCircle" value="Delete Circle">
-    	 			 </p>
-    	 			 <?
+		    	echo "<a href=\"./circlePage.php?del_circle=".$c_id."&deleteCircle=1 \"><button class=\"btn btn-warning\" >Delete Circle</button></a>";
 		    	echo "</div><br>";
 		    }
-		    print_r($circle_members);
+		    print_r($_POST);
 		    // echo "\n";
 		}
 	}

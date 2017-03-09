@@ -1,7 +1,4 @@
 <?php
-                    $_SESSION["user_type"] = "USER";
-                    $_SESSION["id"] =671;
-                    $_SESSION["logged_in"] = "YES";
 
     require'includes/config.php';
     include_once('header.php');

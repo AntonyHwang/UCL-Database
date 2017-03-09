@@ -12,6 +12,8 @@
         height: auto;
     }
 </style>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
 <?php 
     ob_start();
     require ("includes/config.php");
@@ -28,62 +30,70 @@
     catch(Exception $e){
         die(var_dump($e));
     }
-    if (!empty($_GET)) {
-        try {
-            if ($_GET['id'] == $_SESSION['id']) {
-                ?>
-                <form action="uploadPhoto.php" method="get" >
-                    <input type="hidden" name="uploadButton" value="upload">
-                    <input type="submit" value="Upload Photo">
-                </form>
-                <?php
+    if ($_GET['id'] == $_SESSION['id']) {
+                $photoUploadLink = "uploadPhoto.php?uploadButton=upload";
+                echo "<div style=\"float:right;\""."><a href=\"".$photoUploadLink." \"><button class=\"btn btn-primary\" >Upload Photo</button></a></div><br><br>";
+                 
             }
+    if (!empty($_GET) && empty($_GET["delete"])) {
+        try {
             $user_id = $_GET['id'];
             $sql_select = ("SELECT * FROM photo WHERE id_user = '".$user_id."' ORDER BY id_photo DESC");
             $stmt = $conn->prepare($sql_select);
             $stmt->execute();
             $results = $stmt->fetchAll();
 
-            #ADD different photo rendering for circles/friends/privacy when we decide how to do that
-
-
             ?>
-            <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-10" style="text-align: center">
+                      <h1>Your Photos</h1><br>
+                </div>
+                <div class="col-md-1">
+                </div>
+            </div>
             <?php
             foreach($results as $row) {
                     $photoViewLink = "photoViewer.php?id=".$user_id."&photoPath=".$row["file_path"]."&caption=".$row["body"]."&photo_id=".$row['id_photo'];
-                    echo $row["file_path"];
                     ?>
-                        <div class="panel-body">
-                        <a href="<?php echo $photoViewLink ?>">
-                            <figure>
-                                <img class="individualPhoto" src="<?php echo $row["file_path"]?>">
-                                </a>
-                                <hr><hr>
-                                <figcaption>Caption: <?php echo $row["body"]?></figcaption>
-                            </figure>
-                        <a href="<?php echo $photoViewLink ?>"> 
-                            <input type=button onClick="location.href='$photoViewLink'" value='Add/View Comments'>
-                             <form action="photoPage.php" method="post" enctype="multipart/form-data">
-                                <input type="hidden" name="profile" value="<?php echo $user_id?>">
-                                <input type="hidden" name="id_del" value="<?php echo $row["id_photo"]?>">
-                                <input type="submit" name="delete" value="Delete">
-                            </form>
+                    <div class="container-fluid" style="width:75%">
+                        <div class="row" style="border-radius: 25px; background-color: #cae7f9;">
+                            <div class="col-md-8" style="opacity: 4;">
+                                <br>
+                                <a href="<?php echo $photoViewLink ?>">
+                                    <figure>
+                                        <img class="center-block" style="max-width:100%;max-height:100%;"src="<?php echo $row["file_path"]?>">
+                                        </a>
+                                    </figure>
+                                <a href="<?php echo $photoViewLink ?>"> 
+                                </div>
+                                <div class="col-md-4">
+                                    <hr>
+                                        <figcaption ><strong> Caption: </strong><?php echo $row["body"]?></figcaption>
+                                        <hr>
+                                    <br>
+                                    <?php echo "<a href=\"".$photoViewLink." \"><button class=\"btn btn-primary\" >Add/View Comments</button></a><br><br>";
+                                    $photoDeleteLink = "photoPage.php?profile=".$user_id."&id_del=".$row["id_photo"]."&del_path=".$row["file_path"];
+                                    echo "<a href=\"".$photoDeleteLink." \"><button class=\"btn btn-warning\" >Delete Photo</button></a><br><br>";
+                                    
+                             ?>
                         </a>
-                        </div>
-                        <hr>
+                    </div>
+                </div>
+                <hr>
+            </div>
+        </div>
                 <?php
             }
             ?>
-        </div>
         <?php
-            print_r($results);
         }
         catch(Exception $e) {
             die(var_dump($e));
         }
     }
-    else if ($_POST["profile"] == $_SESSION["id"]) {
+    if ($_GET["profile"] == $_SESSION["id"]) {
         $host = "eu-cdbr-azure-west-a.cloudapp.net";
         $user = "bd38b99b177044";
         $pwd = "5e59f1c8";
@@ -97,9 +107,9 @@
         catch(Exception $e){
             die(var_dump($e));
         }
-        echo $_POST["profile"];
+        echo $_GET["profile"];
         print_r($_POST);
-        $post_del = $_POST["id_del"];
+        $post_del = $_GET["id_del"];
         $sql_del = "DELETE FROM photo  WHERE id_photo = ? ";
         echo $sql_del;
         $stmt = $conn->prepare($sql_del);  
@@ -110,9 +120,10 @@
         }
         else {
             echo " deleted photo successfully<br>";
-            //delete the IMAGE FILE FROM THE 
-            //UPLOAD FOLDER FILE PATH
-            // header("Location:photoPage.php?id=<?php echo $_SESSION["id"]
+            unlink($_GET["del_path"]);
+            echo $_GET["del_path"];
+            $refresh = $_GET['profile'];
+            echo "<a href=\"photoPage.php?id=".$refresh." \"><button class=\"btn btn-primary\" >Return to Photos</button></a><br><br>";
         }
     }
     
