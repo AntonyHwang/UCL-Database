@@ -101,7 +101,7 @@ div {
 		    if ($memberCount > 0) {
 		    	echo $memberCount;
 		    	// print_r($stmt2->fetchAll());
-		    	echo "<div class = 'left'> <h2>".$stmt3->fetch(PDO::FETCH_ASSOC)["name"]."</h2>";
+		    	echo "<div class ='container-fluid' style='border-radius: 25px; background-color: #cae7f9;'> <h2>".$stmt3->fetch(PDO::FETCH_ASSOC)["name"]."</h2>";
 		    	$index = 0;
 		    	while ($circlemember = $stmt2->fetch(PDO::FETCH_ASSOC)) {
 		    		// print_r($circlemember);
@@ -109,15 +109,16 @@ div {
 		    		$member_id = $circlemember["id_user"];
 		    		echo $fullname."-".$member_id;
 		   //  		// echo 'id: '.$circlemember["first_name"]." ".$circlemember["surname"]' ';
-					echo '<div class="container-fluid">';
-					echo '<div class="row">';
+					echo '<div class="row" style="border-radius: 25px; background-color: #cae7f9;">';
 					echo '<div class="col-md-6">';?>
 					<img src= "/uploads/<?php echo $member_id?>/profile.jpg" alt="Profile Pic" style="width:75px; height 75px;"><br>
     	 			<a href="./profile.php?profile=<?php echo $member_id?>"> <b><?php echo $fullname?></b></a>
     	 			<br>
+                </div>
+                <div class="col-md-6">
     	 			<?php
     	 			echo "<a href=\"./circlePage.php?del_user=".$member_id."&del_circle=".$c_id."&last_mem=".$memberCount." \"><button class=\"btn btn-warning\" >Remove</button></a>";
-echo "</div></div></div>";
+echo "</div></div>";
 		    		$index += 1;
 		    	}
 		    	echo "<a href=\"./circlePage.php?del_circle=".$c_id."&deleteCircle=1 \"><button class=\"btn btn-warning\" >Delete Circle</button></a>";
@@ -128,7 +129,6 @@ echo "</div></div></div>";
 		}
 	}
 echo "
-</div>
 </body>
 </html>";
 ?>
