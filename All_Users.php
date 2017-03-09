@@ -26,7 +26,7 @@
             </div>
             <div class="col-md-10">
                 <?php 
-                    $sql= "SELECT id_user, first_name,surname FROM user ";
+                    $sql= "SELECT id_user, first_name,surname FROM user ORDER BY first_name";
                     $result = $conn->query($sql);
                     $count = 1;
 

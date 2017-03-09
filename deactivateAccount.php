@@ -21,7 +21,7 @@
                                         Once your account is deactivated. All your data and photos will be removed from our database.
                                     </p>
                                 </div>
-                                <button type="submit" class="btn btn-warning" name="delete_account" action="login.php">
+                                <button type="submit" class="btn btn-danger" name="delete_account" action="login.php">
                                     Deactivate Account
                                 </button>
                             </form>

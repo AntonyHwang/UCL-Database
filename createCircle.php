@@ -1,31 +1,45 @@
 <?php
 	require ("includes/config.php");
 	include_once "header.php";
+?>
 
+<style>
+	.posts {
+		width: 500px;
+		margin: auto;
+		
+	}
+</style>
+<?php
 	if (empty($_POST)) {
 	    $current_id = $_SESSION['id'];
-	    $sql_friend = "SELECT user.first_name, user.surname, user.id_user FROM user INNER JOIN friendship ON ((user.id_user = friendship.id_friend2 AND friendship.id_friend1 = '$current_id' ) OR (user.id_user = friendship.id_friend1 AND friendship.id_friend2 = '".$current_id."'))";
-	 //    echo "lol";
+	    $sql_friend = "SELECT user.first_name, user.surname, user.id_user FROM user INNER JOIN friendship ON ((user.id_user = friendship.id_friend2 AND friendship.id_friend1 = '$current_id' ) OR (user.id_user = friendship.id_friend1 AND friendship.id_friend2 = '".$current_id."')) ORDER BY user.first_name";
 	    $stmt = $conn->prepare($sql_friend);
-	    // $stmt->execute();
-	    // $friend_list = $stmt->fetchAll();
-	    // for ($friend_list as $friend) {
-	    // 	echo $friend["first_name"]." ".$friend["surname"];
-	    // }
+
 	    if ($stmt->execute()) {
-	    	?>
-	    <form action="createCircle.php" method="post" enctype="multipart/form-data"> 
-			<input name="circle_name" type="text">Circle Name<br>
-	    	<?php
-	    while ($friend = $stmt->fetch(PDO::FETCH_ASSOC)) {
+	    ?>
+		<div class = 'posts'>
+    	<div class="well"> 
+		<form class="form-horizontal" action="createCircle.php" method="post">
+			<h4>New Circle</h4>
+			<div class="form-group" style="padding:14px;">
+			<input class="form-control" name="circle_name" placeholder="Circle name"/>
+			</br>Add members: </br>
+			<?php
+				while ($friend = $stmt->fetch(PDO::FETCH_ASSOC)) {
 			?>
-			<input name="selected[]" type="checkbox" value="<?php echo $friend["id_user"]?>"> <?php echo $friend["first_name"]." ".$friend["surname"];?> <br>
-				<?php
-		}
-		?>
+					<input name="selected[]" type="checkbox" value="<?php echo $friend["id_user"]?>"> <?php echo ucfirst($friend["first_name"])." ".ucfirst($friend["surname"]);?> <br>
+			<?php
+				}
+			?> 
+			
+			</div>
+
 			<input name="selected[]" type="hidden" value="<?php echo $_SESSION['id']?>">
-			<input type="submit" value="Create Circle" name="create">
+			<button class="btn btn-primary pull-right" type="submit" name="create">Create</button><ul class="list-inline"><li><a href="photoPage.php?id=<?php echo $_SESSION['id']?>"><i class="glyphicon glyphicon-camera"></i></a>  Upload a New Photo</li></ul>
 		</form>
+    </div>
+
 		<?php
 	    }
 	}
@@ -33,18 +47,6 @@
 	else {
 		$i = 0;
 		$members = sizeof($_POST["selected"]);
-		$host = "eu-cdbr-azure-west-a.cloudapp.net";
-	    $user = "bd38b99b177044";
-	    $pwd = "5e59f1c8";
-	    $db = "blogster";
-	    // Connect to database.
-	    try {
-	        $conn = new PDO( "mysql:host=$host;dbname=$db", $user, $pwd);
-	        $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-	    }
-	    catch(Exception $e){
-	        die(var_dump($e));
-	    }
 	    $sql_circle_check = "SELECT * FROM member INNER JOIN circle ON member.id_circle = circle.id_circle WHERE member.id_user = '".$_SESSION["id"]."' AND circle.name = '".$_POST["circle_name"]."'";
 	    $circle_check = $conn->prepare($sql_circle_check);
 	    $circle_check->execute();
