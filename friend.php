@@ -82,7 +82,7 @@
    function commonfriends($a,$b,$conn){
        $list1 = getFriends($a,$conn);
        $list2 = getFriends($b,$conn);
-       print_r(array_intersect($list1, $list2)) ;
+       //print_r(array_intersect($list1, $list2)) ;
        return array_intersect($list1, $list2);
 
    }
@@ -138,14 +138,14 @@
     //title 
     echo "	<div class=\"row\">\n"; 
     echo "		<div class=\"col-md-6\">\n"; 
-    echo "			<h3 class=\"text-left\">\n"; 
+    echo "			<h1 class=\"text-left\">\n"; 
     echo "				Friends\n"; 
-    echo "			</h3>\n"; 
+    echo "			</h1>\n"; 
     echo "		</div>\n"; 
     echo "		<div class=\"col-md-6\">\n"; 
-    echo "			<h3 class=\"text-right\" align=\"left\">\n"; 
+    echo "			<h1 class=\"text-left\" align=\"left\">\n"; 
     echo "				People You May Know\n"; 
-    echo "			</h3>\n"; 
+    echo "			</h1>\n"; 
     echo "		</div>\n"; 
     echo "	</div>\n";
 
@@ -157,7 +157,7 @@
         $sql = "SELECT * FROM `user` WHERE `id_user` =".$friend;
         $result = $conn->query($sql);
         $row = $result->fetch(PDO::FETCH_ASSOC);
-        $name = $row['first_name'].' '.$row['surname'];
+        $name = ucfirst($row['first_name']).' '.ucfirst($row['surname']);
         
                 //one friend
     echo "			<div class=\"row\">\n"; 
@@ -189,19 +189,19 @@
     $followers =[];
     foreach($waitinglist as $row){
         array_push($followers,$row[0]);
-    }print_r($followers);
+    }//print_r($followers);
 
 //start of friendrequests
     foreach($waitinglist as $row){
         $friend = $row[0];
         $follower = $row[1];
-        echo $friend;
-        echo $row[1];
+        //echo $friend;
+        //echo $row[1];
         
         $sql = "SELECT * FROM `user` WHERE `id_user` =".$friend;
         $result = $conn->query($sql);
         $row1 = $result->fetch(PDO::FETCH_ASSOC);
-        $name = $row1['first_name'].' '.$row1['surname'];
+        $name = ucfirst($row1['first_name']).' '.ucfirst($row1['surname']);
         
                 //one friend
     echo "			<div class=\"row\">\n"; 
@@ -216,13 +216,13 @@
     echo '  <input type="hidden" name="p_friend" value="'."$friend".'" />';
     echo '  <input type="hidden" name="id_request" value="'."$row[2]".'" />';
     echo '  <input type="hidden" name="mod" value="accept" />';
-    echo '  <button class="btn btn-success" type="submit">accept</button>';
+    echo '  <button class="btn btn-success" type="submit">Accept</button>';
     echo '</form>';
-
+    echo '&nbsp &nbsp &nbsp';
     echo '<form  style="display: inline-block;">';
     echo '  <input type="hidden" name="id_request" value="'.$row[2].'" />';	
     echo '  <input type="hidden" name="mod" value="delete" />';	
-    echo '  <button class="btn btn-success" type="submit">delete</button>';    
+    echo '  <button class="btn btn-danger" type="submit">Delete</button>';    
     echo '</form>';
     
     echo "				</div>\n"; 
@@ -240,7 +240,7 @@
         $sql = "SELECT * FROM `user` WHERE `id_user` =".$friend;
         $result = $conn->query($sql);
         $row = $result->fetch(PDO::FETCH_ASSOC);
-        $name = $row['first_name'].' '.$row['surname'];
+        $name = ucfirst($row['first_name']).' '.ucfirst($row['surname']);
         
                 //one friend
     echo "			<div class=\"row\">\n"; 
@@ -251,7 +251,7 @@
     echo "				</div>\n"; 
     echo "				<div class=\"col-md-6\">\n"; 
     //echo " the delete button";
-    echo "<a href=\"./profile.php?profile=".$row[id_user]."\" class=\"btn btn-success\">View Profile</button></a>\n";  
+    echo "<a href=\"./profile.php?profile=".$row[id_user]."\" class=\"btn btn-Primary\">View Profile</button></a>\n";  
     echo "				</div>\n"; 
     echo "			</div>\n"; 
     //end of one friend
