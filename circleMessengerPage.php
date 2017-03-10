@@ -21,15 +21,13 @@ $(function () {
 </script>
 
 <style>
-.posts{
-	
-	background-color:white;
-}
+
 .me-chat-bubble{
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	float: right;
 	color: white;
 	display: inline-block;
-	background-color:#4169E1;
+	background-color:#3b5998;
 	align-self: flex-end;
 	font-size: 16px;
 	position: relative;
@@ -42,10 +40,11 @@ $(function () {
  }
 
  .you-chat-bubble{
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	float: left;
-	color: #4169E1;
+	color: black;
 	display: inline-block;
-	background-color:white;
+	background-color:#DCDCDC;
 	align-self: flex-start;
 	font-size: 16px;
 	position: relative;
@@ -60,6 +59,7 @@ $(function () {
  #scroll {
     height: 800px;
     overflow-y: scroll;
+	overflow-x: hidden;
 }
 </style>
 
@@ -81,8 +81,8 @@ $(function () {
 		</div>
 		<div class="col-md-6">
 			<div class="row">
-				<div id="scroll" class = 'posts'>
-					<div class="well"> 
+				<div id="scroll">
+				
 
 					<?php
 							$messages_sql = "SELECT message.id_user, message.timestamp, user.id_user, user.first_name, user.surname, message.timestamp, message.body FROM message JOIN user ON user.id_user = message.id_user WHERE message.id_circle = ".$_GET["circle_id"]." ORDER BY message.timestamp";
@@ -184,7 +184,7 @@ $(function () {
 							$prev_msg_date = $current_msg_date;
 							}
 					?>
-					</div>
+					
 				</div>
 			</div>
 			<div class="row">
