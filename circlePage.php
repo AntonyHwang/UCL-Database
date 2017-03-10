@@ -87,7 +87,7 @@
 		
 						</p>
 						<p>
-							<a class="btn btn-primary btn-large" href="#">Message Circle</a>
+							<a class="btn btn-primary btn-large" href="circleMessengerPage.php?circle_id=<?php echo $c_id ?>">Message Circle</a>
 						</p>
 					</div>
 				</div>
@@ -103,7 +103,7 @@
 			
 							</p>
 							<p>
-								<a class="btn btn-primary btn-large" href="#">Message Circle</a>
+								<a class="btn btn-primary btn-large" href="circleMessengerPage.php?circle_id=<?php echo $c_id ?>">Message Circle</a>
 							</p>
 						</div>
 					</div>
