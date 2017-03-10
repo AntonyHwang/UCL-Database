@@ -54,10 +54,8 @@
                                 <ul class="dropdown-menu">
                                     <li><a href="createCircle.php">Create Circle</a></li>
                                     <li><a href="circlePage.php">View Circles</a></li>
-                                    <li><a href="circleMessengerPage.php">Circle Messenger</a></li>
                                 </ul>
                             </li>
-                            <li><a href="postPage.php?id=<?php echo $_SESSION['id']?>">Post</a></li>
                             <li><a href="photoPage.php?id=<?php echo $_SESSION['id']?>">Photo</a></li>
                             <li><a href="friend.php">Friend</a></li>
                             <li class="dropdown">
