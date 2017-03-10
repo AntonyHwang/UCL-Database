@@ -21,6 +21,10 @@ $(function () {
 </script>
 
 <style>
+.posts{
+	
+	background-color:white;
+}
 .me-chat-bubble{
 	float: right;
 	color: white;
