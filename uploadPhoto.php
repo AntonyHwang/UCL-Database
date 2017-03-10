@@ -83,7 +83,7 @@ if (!empty($_POST)) {
 			$date=new DateTime();
 	$result = $date->format('Y-m-d-H-i-s');
 	//$target_file = $target_dir . $_SESSION["id"]."/".basename($_FILES["fileToUpload"]["name"]);
-	$target_file = $target_dir . $_SESSION["id"]."/".$result;
+	$target_file = $target_dir . $_SESSION["id"]."/".$result.".".$imageFileType;
 	echo $target_file;
 	
 	    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
