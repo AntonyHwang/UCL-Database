@@ -24,7 +24,7 @@
 
 <style>
 .panel-body {
-background-color:   #F0F8FF;
+background-color:white;
 }
 </style>
 
