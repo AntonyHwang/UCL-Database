@@ -52,6 +52,7 @@
 					<h1>
 						Circles
 					</h1>
+					<hr>
 				</div>
 			<div class="col-md-1">
 			</div>

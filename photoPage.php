@@ -29,19 +29,6 @@
 
     //delete photos
     if (isset($_GET["profile"] ) && $_GET["profile"] == $_SESSION["id"]) {
-        $host = "eu-cdbr-azure-west-a.cloudapp.net";
-        $user = "bd38b99b177044";
-        $pwd = "5e59f1c8";
-        $db = "blogster";
-        // Connect to database.
-        $conn;
-        try {
-            $conn = new PDO( "mysql:host=$host;dbname=$db", $user, $pwd);
-            $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-        }
-        catch(Exception $e){
-            die(var_dump($e));
-        }
         echo $_GET["profile"];
         print_r($_POST);
         $post_del = $_GET["id_del"];
@@ -107,7 +94,22 @@ $index = 0;
                
 
 ?>
-
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-1">
+		</div>
+		<div class="col-md-10">
+        <h1>My Photos</h1>
+        <hr>
+		</div>
+		<div class="col-md-1">
+        <?php
+            $photoUploadLink = "uploadPhoto.php?uploadButton=upload";
+            //echo "<div style=\"float:right;\""."><a href=\"".$photoUploadLink." \"><button class=\"btn btn-primary\" >Upload Photo</button></a></div><br><br>";
+        ?>        
+		</div>
+	</div>
+</div>
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-1">
@@ -140,23 +142,6 @@ $index = 0;
 	</div>
 </div>
 
-<div class="container-fluid">
-	<div class="row">
-		<div class="col-md-1">
-		</div>
-		<div class="col-md-9">
-        <h1>My Photos</h1>
-		</div>
-		<div class="col-md-1">
-        <?php
-            $photoUploadLink = "uploadPhoto.php?uploadButton=upload";
-            //echo "<div style=\"float:right;\""."><a href=\"".$photoUploadLink." \"><button class=\"btn btn-primary\" >Upload Photo</button></a></div><br><br>";
-        ?>        
-		</div>
-		<div class="col-md-1">
-		</div>
-	</div>
-</div>
 <div class="container-fluid">
 	<div class="row">
         <div class="col-md-1">

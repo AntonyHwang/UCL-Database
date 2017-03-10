@@ -78,6 +78,7 @@ background-color:white;
                 </div>
                 <div class="col-md-10">
                       <h1>Your Own Posts</h1>
+                      <hr>
                 </div>
                 <div class="col-md-1">
                 </div>
