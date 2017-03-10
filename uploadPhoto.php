@@ -4,46 +4,48 @@
 	if (!empty($_GET["uploadButton"])) {
 ?>
 <style>
-.posts {
-    width: 500px;
-    margin: auto;
-    
-}
-.wrapper{
-    background-color:
-}
-#grad {
-  background: blue; /* For browsers that do not support gradients */
-  background: -webkit-linear-gradient(left top, red, yellow); /* For Safari 5.1 to 6.0 */
-  background: -o-linear-gradient(bottom right, red, yellow); /* For Opera 11.1 to 12.0 */
-  background: -moz-linear-gradient(bottom right, red, yellow); /* For Firefox 3.6 to 15 */
-  background: linear-gradient(to bottom right, blue, yellow); /* Standard syntax */
-}
-.panel-body {
-    background-color:white;
-}
+	.posts {
+
+		margin: auto;
+		
+	}
+	.wrapper{
+		background-color:
+	}
+
+	.panel-body {
+		background-color:white;
+	}
 </style>
+
+
 <div class = 'posts'>
-<div class="well"> 
-   <form class="form-horizontal" action="uploadPhoto.php" method="post" enctype="multipart/form-data">
-    <h4>Share a Photo</h4>
-     <div class="form-group" style="padding:14px;">
-     	Select Photo <input type="file" name="fileToUpload" id="fileToUpload">
-      <textarea class="form-control" placeholder="Caption" name="caption"></textarea>
-    </br>Privacy: </br>
-<input class = "checkbox-inline" type="radio" name='privacy' value="0">Friends
-<input class = "checkbox-inline" type="radio" name='privacy' value="1">Circles
-<input class = "checkbox-inline" type="radio" name='privacy' value="2">Friends of Friends
-      
-    </div>
-    <input type="submit" value="Upload Image" name="submit" style="align-right"><ul class="list-inline"><li><a href="postPage.php?id=<?php echo $_SESSION['id']?>"><i class="glyphicon glyphicon-pencil"></i></a>  Make a new Post</li></ul>
-<?php
+	<div class="well"> 
+		<form class="form-horizontal" action="uploadPhoto.php" method="post" enctype="multipart/form-data">
+			<h4>Share a Photo</h4>
+			<div class="form-group" style="padding:14px;">
+				Select Photo <input type="file" name="fileToUpload" id="fileToUpload">
+				<textarea class="form-control" placeholder="Caption" name="caption"></textarea>
+				</br>Privacy: </br>
+				<input class = "checkbox-inline" type="radio" name='privacy' value="0">Friends
+				<input class = "checkbox-inline" type="radio" name='privacy' value="1">Circles
+				<input class = "checkbox-inline" type="radio" name='privacy' value="2">Friends of Friends
+					
+			</div>
+			<ul class="list-inline"><li><a href="postPage.php?id=<?php echo $_SESSION['id']?>"><i class="glyphicon glyphicon-pencil"></i></a>  Make a new Post</li></ul>
+
+			<button class="btn btn-primary pull-right" type="submit"  name="submit">Upload Image</button>
+		</form>
+	</div>
+</div>	
+    <!--<input type="submit" value="Upload Image" name="submit" style="align-right">--><?php
 
 }
 if (!empty($_POST)) {
 	$target_dir = "uploads/";
 	print_r($_FILES["fileToUpload"]);
 	$target_file = $target_dir . $_SESSION["id"]."/".basename($_FILES["fileToUpload"]["name"]);
+	//$target_file = $target_dir . $_SESSION["id"]."/".$result;
 	echo $target_file;
 	$uploadOk = 1;
 	$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
@@ -78,6 +80,12 @@ if (!empty($_POST)) {
 	    echo "Sorry, your file was not uploaded.";
 	// if everything is ok, try to upload file
 	} else {
+			$date=new DateTime();
+	$result = $date->format('Y-m-d-H-i-s');
+	//$target_file = $target_dir . $_SESSION["id"]."/".basename($_FILES["fileToUpload"]["name"]);
+	$target_file = $target_dir . $_SESSION["id"]."/".$result.".".$imageFileType;
+	echo $target_file;
+	
 	    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
 	        echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
 	        $host = "eu-cdbr-azure-west-a.cloudapp.net";
