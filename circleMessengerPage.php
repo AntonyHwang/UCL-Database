@@ -12,6 +12,14 @@
 
 	$current_id = $_SESSION['id'];
 ?>
+<script>
+$(function () {
+    var wtf = $('#scroll');
+    var height = wtf[0].scrollHeight;
+    wtf.scrollTop(height);
+});
+</script>
+
 <style>
 .me-chat-bubble{
 	float: right;
@@ -44,6 +52,11 @@
 	vertical-align: top;
 	border-radius: 5px;
  }
+
+ #scroll {
+    height: 800px;
+    overflow-y: scroll;
+}
 </style>
 
 <div class="container-fluid">
@@ -54,6 +67,7 @@
 		<h1>
 			<?php echo $c_name; ?>
 		</h1>
+		<hr>
 		</div>
 		<div class="col-md-1">
 		</div>
@@ -63,23 +77,7 @@
 		</div>
 		<div class="col-md-6">
 			<div class="row">
-				<div class = 'posts'>
-					<div class="well"> 
-					<form class="form-horizontal" role="form" action="circleMessengerPage.php?circle_id=<?php echo $_GET["circle_id"] ?>" method="post">
-							<h4>Messenger</h4>
-							<div class="form-group" style="padding:14px;">
-							<textarea class="form-control" placeholder="Type your message here..." name="message"></textarea>
-							<input type="hidden" name="sender" value="<?php echo $user_name?>">
-							<input type="hidden" name="id_circle" value="<?php echo $circle_info["id_circle"]?>">
-							</div>
-							<button class="btn btn-primary pull-right" type="submit" name="send">Send</button>
-							<br>
-						</form>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class = 'posts'>
+				<div id="scroll" class = 'posts'>
 					<div class="well"> 
 
 					<?php
@@ -109,7 +107,8 @@
 										<div class="col-md-2">
 											<div class="row">
 												<div class="col-md-12">
-													<?php echo $time = date('H:i', $message_info["timestamp"]); ?>
+													<?php $time = date($message_info["timestamp"]); 
+															echo explode(' ', $time)[1]?>
 												</div>
 											</div>
 										</div>
@@ -170,7 +169,8 @@
 										<div class="col-md-2">
 											<div class="row">
 												<div class="col-md-12">
-													<?php echo $time = date('H:i', $message_info["timestamp"]); ?>
+													<?php $time = date($message_info["timestamp"]); 
+															echo explode(' ', $time)[1]?>
 												</div>
 											</div>
 										</div>
@@ -180,9 +180,25 @@
 							$prev_msg_date = $current_msg_date;
 							}
 					?>
+					</div>
 				</div>
 			</div>
-		</div>
+			<div class="row">
+				<div class = 'posts'>
+					<div class="well"> 
+					<form class="form-horizontal" role="form" action="circleMessengerPage.php?circle_id=<?php echo $_GET["circle_id"] ?>" method="post">
+							<h4>Messenger</h4>
+							<div class="form-group" style="padding:14px;">
+							<textarea class="form-control" placeholder="Type your message here..." name="message"></textarea>
+							<input type="hidden" name="sender" value="<?php echo $user_name?>">
+							<input type="hidden" name="id_circle" value="<?php echo $circle_info["id_circle"]?>">
+							</div>
+							<button class="btn btn-primary pull-right" type="submit" name="send">Send</button>
+							<br>
+						</form>
+					</div>
+				</div>
+			</div>
 		<div class="col-md-4">
 		</div>
 		<div class="col-md-1">
