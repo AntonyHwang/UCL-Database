@@ -190,8 +190,6 @@ $(function () {
 							<h4>Messenger</h4>
 							<div class="form-group" style="padding:14px;">
 							<textarea class="form-control" placeholder="Type your message here..." name="message"></textarea>
-							<input type="hidden" name="sender" value="<?php echo $user_name?>">
-							<input type="hidden" name="id_circle" value="<?php echo $circle_info["id_circle"]?>">
 							</div>
 							<button class="btn btn-primary pull-right" type="submit" name="send">Send</button>
 							<br>
