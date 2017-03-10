@@ -52,6 +52,52 @@
             $friend_request = "RECEIVED";
         }
     }
+    //check the privacy setting 
+   function getFriends($user,$conn){
+		$friend_list =[];
+		$getlist = "SELECT * FROM `friendship` WHERE `id_friend1` =".$user. " OR `id_friend2` =".$user;
+		$result = $conn->query($getlist);
+		$data = $result->fetchAll();		
+		foreach ($data as $value){
+			if($value[1]==$user){
+				$friend = $value[0];
+			}else{
+				$friend = $value[1];
+			}
+			array_push($friend_list,$friend);
+		}
+		return $friend_list;
+	}
+    $myfriends = getFriends($_SESSION["id"],$conn);
+
+    $isAdmin=false;
+    $isff=false;
+    $isfriend=false;
+    $isfriend=in_array($_GET["profile"], $myfriends);
+
+	function getFriendsFriends($friend_list,$conn){
+		$all = [];
+		foreach($friend_list as $one_friend){
+			$onelist = getFriends($one_friend,$conn);
+			$all = array_merge($onelist, $all);
+		}
+		//print_r($all);
+		return $all;
+	}    
+    $myff = getFriendsFriends($myfriends,$conn);
+    $isff=in_array($_GET["profile"], $myff);
+    //echo "friend :".$isfriend."| ff: ".$isff;
+    $privacy=false;
+    if($_SESSION["user_type"] == "ADMIN")$privacy=true;
+    else if($privacy_setting==0){
+        $privacy = false;
+    }else if(($privacy_setting==1)&& $isfriend){
+        $privacy = true;
+    }else if($privacy_setting==2&& ($isff||$isfriend)){
+        $privacy = true;
+    }else if($privacy_setting==3){
+        $privacy = true;
+    }
 ?>
 
 <html>
@@ -68,12 +114,19 @@
                     </nav>
                 </div>
                 <div class="col-md-6">
+                <?php
+                //echo $privacy_setting;
+                 if($privacy){
+                ?>
                     <article>
                         <h1><?php echo ucfirst($row["first_name"])." ".ucfirst($row["surname"]);?></h1>
                         <h4>Gender: <?php echo $gender;?></h4>
                         <h4>Email: <?php echo $email;?></h4>
                         <h4>Birthday:  <?php echo $dob;?></h4>
                     </article>
+                <?php
+                } 
+                ?>
                 </div>
                 <div class="col-md-1">    
                 <?php 
