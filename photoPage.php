@@ -107,6 +107,39 @@ $index = 0;
                
 
 ?>
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-1">
+		</div>
+		<div class="col-md-10">
+            <div class = 'posts'>
+                <div class="well"> 
+                    <form class="form-horizontal" action="uploadPhoto.php" method="post" enctype="multipart/form-data">
+                        <h4>Share a Photo</h4>
+                        <div class="form-group" style="padding:14px;">
+                            Select Photo <input type="file" name="fileToUpload" id="fileToUpload">
+                            <textarea class="form-control" placeholder="Caption" name="caption"></textarea>
+                            </br>Privacy: </br>
+                            <input class = "checkbox-inline" type="radio" name='privacy' value="0">Friends
+                            <input class = "checkbox-inline" type="radio" name='privacy' value="1">Circles
+                            <input class = "checkbox-inline" type="radio" name='privacy' value="2">Friends of Friends
+                                
+                        </div>
+                        <ul class="list-inline"><li><a href="homepage.php?id=<?php echo $_SESSION['id']?>"><i class="glyphicon glyphicon-pencil"></i></a>  Make a new Post</li></ul>
+
+                        <button class="btn btn-primary pull-right" type="submit"  name="submit">Upload Image</button>
+                    </form>
+                    </br>
+                </div>
+            </div>	
+
+		</div>
+		<div class="col-md-1">
+		</div>
+	</div>
+</div>
+
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-1">
@@ -117,7 +150,7 @@ $index = 0;
 		<div class="col-md-1">
         <?php
             $photoUploadLink = "uploadPhoto.php?uploadButton=upload";
-            echo "<div style=\"float:right;\""."><a href=\"".$photoUploadLink." \"><button class=\"btn btn-primary\" >Upload Photo</button></a></div><br><br>";
+            //echo "<div style=\"float:right;\""."><a href=\"".$photoUploadLink." \"><button class=\"btn btn-primary\" >Upload Photo</button></a></div><br><br>";
         ?>        
 		</div>
 		<div class="col-md-1">
