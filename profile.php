@@ -81,21 +81,26 @@
 			$onelist = getFriends($one_friend,$conn);
 			$all = array_merge($onelist, $all);
 		}
-		//print_r($all);
 		return $all;
 	}    
     $myff = getFriendsFriends($myfriends,$conn);
     $isff=in_array($_GET["profile"], $myff);
-    //echo "friend :".$isfriend."| ff: ".$isff;
+   // echo "friend :".$isfriend."| ff: ".$isff;
+    //echo gettype($isff);
     $privacy=false;
     if($_SESSION["user_type"] == "ADMIN")$privacy=true;
-    else if($privacy_setting==0){
+    else if($privacy_setting=="0"){
         $privacy = false;
-    }else if(($privacy_setting==1)&& $isfriend){
+    }else if(($privacy_setting=="1")&& $isfriend==true){
         $privacy = true;
-    }else if($privacy_setting==2&& ($isff||$isfriend)){
+    }else if($privacy_setting=="2" && $isff==true){
+        echo "p2";
         $privacy = true;
-    }else if($privacy_setting==3){
+    }else if($privacy_setting=="2" && $isfriend==true){
+        echo "p2";
+        $privacy = true;
+    }
+    else if($privacy_setting=="3"){
         $privacy = true;
     }
 ?>
@@ -115,8 +120,9 @@
                 </div>
                 <div class="col-md-6">
                 <?php
+                //echo gettype($privacy_setting);
                 //echo $privacy_setting;
-                 if($privacy){
+                 if($privacy==true){
                 ?>
                     <article>
                         <h1><?php echo ucfirst($row["first_name"])." ".ucfirst($row["surname"]);?></h1>
@@ -261,30 +267,8 @@
     $list = [];
     //get all friends
     $array = $result->fetchAll();
+    $friends = $myff;
 
-    foreach ($array as $value) {
-        if($value[1]==$value[0]){
-            countinue;
-        }
-        if($value[1]==$thisid){
-            $friend = $value[0];
-        }
-        else{
-            $friend = $value[1];
-        }
-
-        $sql = "SELECT * FROM `user` WHERE `id_user` =".$value[1];
-        $result = $conn->query($sql);   
-        if ($result->rowCount() > 0) {
-        // output data of each row  
-            while($row = $result->fetch(PDO::FETCH_ASSOC)) {
-
-            // echo $row['first_name'].' '.$row['surname'];
-            }
-        }
-
-        array_push($friends,$friend);       
-    }
  //for each my friend ,get their posts
 foreach ($friends as $current_id)
 {
