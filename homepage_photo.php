@@ -78,7 +78,7 @@ $ff=array_unique($ff);
 //remove depulicate
 $me =$_SESSION['id'];
 //remove this user from the list
-if (in_array($me, $ff))     unset($ff[array_search($me,$array)]);
+if (in_array($me, $ff))     unset($ff[array_search($me,$ff)]);
 //remove my friend from  all friends of friends
 $remm = array_diff($ff, $friends);
 //for each user in the friend of friend ,get his posts
