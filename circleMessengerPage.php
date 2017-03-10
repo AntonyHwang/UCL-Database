@@ -9,7 +9,42 @@
 	$row = $stmt->fetch();
 	$owner_id = $row['id_user'];
 	$c_name = $row['name'];
+
+	$current_id = $_SESSION['id'];
 ?>
+<style>
+.me-chat-bubble{
+	float: right;
+	color: white;
+	display: inline-block;
+	background-color:#4169E1;
+	align-self: flex-end;
+	font-size: 16px;
+	position: relative;
+	display: inline-block;
+	clear: both;
+	margin-bottom: 4px;
+	padding: 12px 12px;
+	vertical-align: top;
+	border-radius: 5px;
+ }
+
+ .you-chat-bubble{
+	float: left;
+	color: #4169E1;
+	display: inline-block;
+	background-color:white;
+	align-self: flex-start;
+	font-size: 16px;
+	position: relative;
+	display: inline-block;
+	clear: both;
+	margin-bottom: 4px;
+	padding: 12px 12px;
+	vertical-align: top;
+	border-radius: 5px;
+ }
+</style>
 
 <div class="container-fluid">
 	<div class="row">
@@ -48,84 +83,101 @@
 					<div class="well"> 
 
 					<?php
-							$current_id = $_SESSION['id'];
-							$messages_sql = "SELECT message.id_user, user.id_user, user.first_name, user.surname, message.timestamp, message.body FROM message JOIN user ON user.id_user = message.id_user WHERE message.id_circle = ".$_GET["circle_id"]." ORDER BY message.timestamp";
+							$messages_sql = "SELECT message.id_user, message.timestamp, user.id_user, user.first_name, user.surname, message.timestamp, message.body FROM message JOIN user ON user.id_user = message.id_user WHERE message.id_circle = ".$_GET["circle_id"]." ORDER BY message.timestamp";
 							$messages = $conn->prepare($messages_sql);
 							//echo $messages_sql;
 							$messages->execute();
 							//echo $messages_sql;
+							$date = new DateTime('tomorrow');
+							$prev_msg_date = $date->format('Y-m-d');
+
 							while ($message_info = $messages->fetch()) {
-								//if ($message_info["id_user"] == $_SESSION['id']) {
-								//	echo "<div>";
-								//	echo "<img src= \"./uploads/".$message_info["id_user"]."/profile.jpg\" alt=\"Profile Pic\" style=\"width:40px; height 40px;\">";
-								//	echo "&nbsp";
-								//	echo "<a href=\"./profile.php?profile=".$message_info["id_user"]."\" >".$msg_username." </a>: ".$message_info["body"];
-								//	echo "</div>";
-								//	echo "<br>";
-								//}
+								$current_msg_timestamp = strtotime($message_info["timestamp"]);
+								$current_msg_date = date('Y-m-d', $current_msg_timestamp);
+								if ($current_msg_date != $prev_msg_date) { ?>
+									<div class="row" align="center">
+										<br>
+										<strong>
+										<?php echo $current_msg_date; ?>
+										</strong>
+									</div>
+								<?php }
 								$msg_username = ucfirst($message_info["first_name"])." ".ucfirst($message_info["surname"]);
-								if ($message_info["id_user"] == $_SESSION["id"]) {
-									echo "<div class=\"row\">";
-										echo "<div class=\"col-md-2\">";
-											echo "<div class=\"row\">";
-												echo $message_info["timestamp"];
-											echo "</div>";
-											echo "<div class=\"row\">";
-											echo "</div>";
-										echo "</div>";
-										echo "<div class=\"col-md-10\">";
-											echo "<div class=\"row\">";
-												echo "<div class=\"col-md-11\">";
-													echo "<div class=\"row\">";
-														echo "&nbsp <a>Me align=\"right\ </a>";
-													echo "</div>";
-
-													echo "<div class=\"row\">";
-													echo "&nbsp &nbsp";
-														echo $message_info["body"];
-													echo "</div>";
-												echo "</div>";
-												echo "<div class=\"col-md-1\">";
-													echo "<img src= \"./uploads/".$message_info["id_user"]."/profile.jpg\" alt=\"Profile Pic\" style=\"width:40px; height 40px;\" align=\"right\">";
-												echo "</div>";
-											echo "</div>";
-										echo "</div>";
-										echo "<br>";
-										echo "<br>";
-										echo "<br>";
-									echo "</div>";
-								}
-								else {
-									echo "<div class=\"row\">";
-										echo "<div class=\"col-md-10\">";
-											echo "<div class=\"row\">";
-												echo "<div class=\"col-md-1\">";
-													echo "<img src= \"./uploads/".$message_info["id_user"]."/profile.jpg\" alt=\"Profile Pic\" style=\"width:40px; height 40px;\">";
-												echo "</div>";
-												echo "<div class=\"col-md-11\">";
-													echo "<div class=\"row\">";
-														echo "&nbsp <a href=\"./profile.php?profile=".$message_info["id_user"]."\" >".$msg_username." </a>";
-													echo "</div>";
-
-													echo "<div class=\"row\">";
-													echo "&nbsp &nbsp";
-														echo $message_info["body"];
-													echo "</div>";
-												echo "</div>";
-											echo "</div>";
-										echo "</div>";
-										echo "<div class=\"col-md-2\">";
-											echo "<div class=\"row\">";
-												echo $message_info["timestamp"];
-											echo "</div>";
-											echo "<div class=\"row\">";
-											echo "</div>";
-										echo "</div>";
-										echo "<br>";
-										echo "<br>";
-										echo "<br>";
-									echo "</div>";
-								}
+								
+								if ($message_info["id_user"] == $_SESSION["id"]) {?>
+									<div class="row">
+										<div class="col-md-2">
+											<div class="row">
+												<div class="col-md-12">
+													<?php echo $time = date('H:i', $message_info["timestamp"]); ?>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-10">
+											<div class="row">
+												<div class="col-md-10">
+													<div class="row"align="right">
+														<div class="col-md-12">
+															<?php echo ""; ?>
+														</div>
+													</div>
+													<div class="row" align="right">
+														<div class="col-md-12">
+														<div class="me-chat-bubble-wrap">
+															<div class="me-chat-bubble">
+																<?php echo $message_info["body"]; ?>
+															</div>
+														</div>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-2">
+													<div class="row">
+														<div class="col-md-12">
+															<?php echo "<img src= \"./uploads/".$message_info["id_user"]."/profile.jpg\" alt=\"Profile Pic\" class=\"img-rounded\" style=\"width:60px; height 60px;\">"; ?>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<br>
+							<?php } else { ?>
+									<div class="row">
+										<div class="col-md-10">
+											<div class="row">
+												<div class="col-md-2">
+													<?php echo "<img src= \"./uploads/".$message_info["id_user"]."/profile.jpg\" alt=\"Profile Pic\" class=\"img-rounded\" style=\"width:60px; height 60px;\">"; ?>
+												</div>
+												<div class="col-md-10">
+													<div class="row" align="left">
+														<div class="col-md-12">
+															<?php echo "<a href=\"./profile.php?profile=".$message_info["id_user"]."\" >".$msg_username." </a>"; ?>
+														</div>
+													</div>
+													<div class="row" align="left">
+														<div class="col-md-12">
+															<div class="you-chat-bubble-wrap">
+																<div class="you-chat-bubble">
+																	<?php echo $message_info["body"]; ?>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-2">
+											<div class="row">
+												<div class="col-md-12">
+													<?php echo $time = date('H:i', $message_info["timestamp"]); ?>
+												</div>
+											</div>
+										</div>
+									</div>
+									<br>
+						<?php		}
+							$prev_msg_date = $current_msg_date;
 							}
 					?>
 				</div>
