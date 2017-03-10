@@ -154,7 +154,7 @@ sort($allposts);
                 <div class="col-md-1">
                 </div>
                 <div class="col-md-10">
-                    <h1>Posts <a href="homepage_photos.php">Photo</a></h1>    
+                    <h1>Posts <a href="homepage_photo.php">Photo</a></h1>    
                 </div>
                 <div class="col-md-1">
                 </div>
