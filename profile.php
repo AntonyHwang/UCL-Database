@@ -245,21 +245,7 @@
     $allposts=[];
     //above is new part
     $sql = "SELECT id_post, id_user, body FROM post WHERE id_user = ".$_SESSION["id"].' ORDER BY timestamp DESC';
-    $sql2= "SELECT first_name,surname FROM user WHERE id_user = ".$_SESSION["id"].' ';
     $result = $conn->query($sql);
-    $result2= $conn->query($sql2);
-    while($row2 = $result2->fetch()) {
-        $username= ucfirst($row2["first_name"])." ".ucfirst($row2["surname"]);
-    }
-    while($row = $result->fetch()) {
-        $postid = $row["id_post"];
-
-        $com = "SELECT id_post, id_user,id_comment, body,timestamp FROM post_comment WHERE id_post = ". $row["id_post"].' ORDER BY timestamp DESC';
-
-        $res_com = $conn->query($com);
-
-    }
-
     $friends=array();
     $thisid = $_SESSION["id"];
     $sql = "SELECT * FROM `friendship` WHERE `id_friend1` =".$thisid. " OR `id_friend2` =".$thisid;
@@ -274,12 +260,6 @@ foreach ($friends as $current_id)
 {
     $sql = "SELECT id_post, id_user, body FROM post WHERE privacy_setting  = '0' AND id_user = ".$current_id.' ORDER BY timestamp DESC';
     $result = $conn->query($sql);
-
-    $sql2= "SELECT first_name,surname FROM user WHERE id_user = ".$current_id.' ';
-    $result2= $conn->query($sql2);
-    while($row2 = $result2->fetch()) {
-        $username= ucfirst($row2["first_name"])." ".ucfirst($row2["surname"]);
-    }
     while($row = $result->fetch()) {
     $postid = $row["id_post"];
         array_push($allposts,$postid);
@@ -290,23 +270,7 @@ foreach ($friends as $current_id)
 
 $ff = [];
 //each my friend ,member,member f 's friends 
-foreach ($friends as $member) {     
-    $sql = "SELECT * FROM `friendship` WHERE `id_friend1` =".$member.' or id_friend2='.$member ;
-    $result = $conn->query($sql);
-    //echo 'user '.$member.' got '.$result->num_rows.'  friends</br>';
-    if ($result->rowCount() > 0) {
-        $fri2 = $result->fetchAll();
-        //add their all friends
-        foreach ($fri2 as $row) {
-            //echo 'adding '.$row[1].'</br>';
-            if($row[0]==$member)
-            array_push($ff,$row[1]);
-            else array_push($ff,$row[0]);
-            //ff is friends s friends
-        }
-    }
-
-}
+$ff = getFriendsFriends($friends,$conn);
 $ff=array_unique($ff);
 //remove depulicate
 $me =$_SESSION['id'];
@@ -322,12 +286,6 @@ foreach ($remm as $current_id)
 {
     $ffsql = "SELECT id_post, id_user, body FROM post WHERE privacy_setting  = '2' and  id_user = ".$current_id.'  ORDER BY timestamp DESC';
     $result = $conn->query($ffsql);
-
-    $sql2= "SELECT first_name,surname FROM user WHERE id_user = ".$current_id.' ';
-    $result2= $conn->query($sql2);
-    while($row2 = $result2->fetch()) {
-        $username= ucfirst($row2["first_name"])." ".ucfirst($row2["surname"]);
-    }
     while($row = $result->fetch()) {
         $postid = $row["id_post"];
         array_push($allposts,$postid);
@@ -344,7 +302,6 @@ foreach($result as $user){
     array_push($postlist_oneuser,$user[0]);
 }
 $post_user_allow_seen = array_intersect($postlist_oneuser,$allposts);
-
 
 //$sortedpostlist = sortPostbytime($conn,$allposts);
 ?>
@@ -368,8 +325,6 @@ $allposts =array_reverse($post_user_allow_seen);
 foreach($allposts as $current_postid){
 $getpost = "SELECT id_post, id_user, body,timestamp FROM post WHERE id_post = ".$current_postid;
 $getpostresult = $conn->query($getpost);
-
-
 
 while($row = $getpostresult->fetch()) {
 $postid = $row["id_post"];
