@@ -1,3 +1,13 @@
+<?php 
+    require'includes/config.php';
+    include_once('header.php');
+
+    $user_id = $_POST['user_id'];
+    $photo_id = $_POST['photo_id'];
+    $photoPath = $_POST['photo_path'];
+    $caption = $_POST['photo_caption'];
+?>
+
 <style>
     div.panel-body {
         text-align: center;
@@ -12,6 +22,53 @@
         height: auto;
     }
 </style>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-10">
+            <h1>
+                Photo
+            </h1>
+            <hr>
+        </div>
+    </div>
+	<div class="row">
+        <div class="col-md-1">
+        </div>
+		<div class="col-md-10">	
+            <div class="col-md-8">
+                <div class="thumbnail">
+                <br>
+                    <img class="center-block" style="max-width:100%;max-height:100%;"src="<?php echo $photoPath;?>">
+                    <div class="caption">
+                        <h3>
+                            <?php echo $row["body"]?>
+                        </h3>
+                        <p>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="thumbnail">
+                    <div class="caption">
+                        <h3>
+                            <?php echo $caption ?>
+                        </h3>
+                        <p>
+
+                        </p>
+                    </div>
+                </div>
+            </div>			
+		</div>
+        <div class="col-md-1">
+        </div>
+	</div>
+</div>
+
 
 <?php 
     require ("includes/config.php");

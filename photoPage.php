@@ -14,7 +14,6 @@
 </style>
 
 <?php 
-    ob_start();
     require ("includes/config.php");
     include_once "header.php";
 
@@ -168,12 +167,22 @@ $index = 0;
 							</h3>
 
 							<p>
-                                <?php
-                                $photoViewLink = "photoViewer.php?id=".$row["id_user"]."&photoPath=".$row["file_path"]."&caption=".$row["body"]."&photo_id=".$row['id_photo']."&user=".$_SESSION["id"];
+                                
+                        <form  action = 'photoViewer.php' method="post">
+                            <div class="input-group">
+                                <input type="hidden" name="user_id" value="<?php echo $row["id_user"] ?>" /> 
+                                <input type="hidden" name="photo_id" value="<?php echo $row["id_photo"] ?>" /> 
+                                <input type="hidden" name="photo_path" value="<?php echo $row["file_path"] ?>" /> 
+                                <input type="hidden" name="photo_caption" value="<?php echo $row["body"] ?>" /> 
+                            </div>
+                            <button type="submit" name ="comment" class="btn btn-primary">Comment</button> 
+                                
+                        </form>   
+                        <?php                            
+                                //$photoViewLink = "photoViewer.php?id=".$row["id_user"]."&photoPath=".$row["file_path"]."&caption=".$row["body"]."&photo_id=".$row['id_photo']."&user=".$_SESSION["id"];
                                 ?>
                             
-								<a class="btn btn-primary" href="<?php echo $photoViewLink;?>">Comment</a> 
-                                <?php 
+								<?php 
                                 $photoDeleteLink = "photoPage.php?profile=".$row["id_user"]."&id_del=".$row["id_photo"]."&del_path=".$row["file_path"];
                                 echo "<a href=\"".$photoDeleteLink." \"><button class=\"btn btn-danger\" >Delete Photo</button></a><br><br>";
                                                                   
