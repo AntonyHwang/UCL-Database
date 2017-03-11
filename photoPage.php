@@ -172,10 +172,10 @@ $index = 0;
                                 $photoViewLink = "photoViewer.php?id=".$row["id_user"]."&photoPath=".$row["file_path"]."&caption=".$row["body"]."&photo_id=".$row['id_photo']."&user=".$_SESSION["id"];
                                 ?>
                             
-								<a class="btn btn-primary" href="<?php echo $photoViewLink;?>">comment</a> 
+								<a class="btn btn-primary" href="<?php echo $photoViewLink;?>">Comment</a> 
                                 <?php 
                                 $photoDeleteLink = "photoPage.php?profile=".$row["id_user"]."&id_del=".$row["id_photo"]."&del_path=".$row["file_path"];
-                                echo "<a href=\"".$photoDeleteLink." \"><button class=\"btn btn-warning\" >Delete Photo</button></a><br><br>";
+                                echo "<a href=\"".$photoDeleteLink." \"><button class=\"btn btn-danger\" >Delete Photo</button></a><br><br>";
                                                                   
                                 ?>
   
