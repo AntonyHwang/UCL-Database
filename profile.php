@@ -89,8 +89,6 @@
 	}    
     $myff = getFriendsFriends($myfriends,$conn);
     $isff=in_array($_GET["profile"], $myff);
-   // echo "friend :".$isfriend."| ff: ".$isff;
-    //echo gettype($isff);
     $privacy=false;
     if($_SESSION["user_type"] == "ADMIN")$privacy=true;
     else if($privacy_setting=="0"){
@@ -123,20 +121,22 @@
                     </nav>
                 </div>
                 <div class="col-md-6">
+
+                    <article>
+                        <h1><?php echo ucfirst($row["first_name"])." ".ucfirst($row["surname"]);?></h1>
                 <?php
                 //echo gettype($privacy_setting);
                 //echo $privacy_setting;
                  if($privacy==true){
                 ?>
-                    <article>
-                        <h1><?php echo ucfirst($row["first_name"])." ".ucfirst($row["surname"]);?></h1>
                         <h4>Gender: <?php echo $gender;?></h4>
                         <h4>Email: <?php echo $email;?></h4>
                         <h4>Birthday:  <?php echo $dob;?></h4>
-                    </article>
                 <?php
                 } 
                 ?>
+                    </article>
+
                 </div>
                 <div class="col-md-1">    
                 <?php 
