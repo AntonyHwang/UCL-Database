@@ -8,6 +8,16 @@
         <div class="row">
             <div class="col-md-1">
             </div>
+            <div class="col-md-10">
+                <h1>Users</h1>    
+                <hr>
+            </div>
+            <div class="col-md-1">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-1">
+            </div>
             <div class="col-md-2">
                 <form action="All_Users.php" method="post" enctype="multipart/form-data">
                     Select XML to Import: 
