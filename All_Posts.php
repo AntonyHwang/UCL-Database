@@ -42,7 +42,7 @@ while($row = $MyPostlist->fetch()) {
                 <div class="col-md-1">
                 </div>
                 <div class="col-md-10">
-                    <h1>Posts | <a href="homepage_photo.php">Photos</a></h1>    
+                    <h1>All Posts </h1>    
                     <hr>
                 </div>
                 <div class="col-md-1">

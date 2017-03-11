@@ -53,7 +53,7 @@ $row=0;
         <div class="col-md-1">
         </div>
 		<div class="col-md-10">
-            <h1><a href="homepage.php">Posts</a> | Photos</h1>    
+            <h1>All  Photos</h1>    
              <hr>
 		</div>
         <div class="col-md-1">
