@@ -39,9 +39,9 @@ background-color:white;
                     <nav>
                         <ul>
                         <?php if ($_SESSION["user_type"] == "ADMIN") { ?>
-                            <img src="<?php echo './uploads/'.$_GET["profile"].'/profile.jpg'; ?>" alt="Profile Pic" style="width:120px;height 120px;">
+                            <img src="<?php echo './uploads/'.$_GET["profile"].'/profile.jpg'; ?>" class="img-rounded" alt="Profile Pic" style="width:120px;height 120px;">
                 <?php } else { ?>
-                            <img src="<?php echo './uploads/'.$_SESSION["id"].'/profile.jpg'; ?>" alt="Profile Pic" style="width:120px;height 120px;">
+                            <img src="<?php echo './uploads/'.$_SESSION["id"].'/profile.jpg'; ?>" class="img-rounded" alt="Profile Pic" style="width:120px;height 120px;">
                 <?php } ?>
                         </ul>
                     </nav>
@@ -121,8 +121,8 @@ background-color:white;
                         <div class="row">
                             <div class="col-md-3">
                             <?php 
-                            echo "<img src= \"./uploads/".$userid."/profile.jpg\" alt=\"Profile Pic\" style=\"width:50px; height 50px;\">";
-                            echo "<a href=\"./profile.php?profile=".$userid."\" >$username</a>\n";  
+                            echo "<img src= \"./uploads/".$userid."/profile.jpg\" alt=\"Profile Pic\" class=\"img-rounded\" style=\"width:50px; height 50px;\">";
+                            echo "&nbsp <a href=\"./profile.php?profile=".$userid."\" >$username</a>\n";  
                                                
                             ?>
                             </div>
@@ -130,7 +130,7 @@ background-color:white;
                             
                             <form  action = 'server.php' method="get" >     
                                         <button type="submit" class="btn btn-danger btn-sm">
-                                        delete  
+                                        Delete  
                                         </button>               
                                     <input type="hidden" name="id_del" value="<?php echo $postid; ?>" />                
                                    <input type="hidden" name="last_page" value="myProfilePage.php" />   
@@ -175,7 +175,7 @@ background-color:white;
 //picture and two rows goes here
 echo "   <div class=\"row\">\n"; 
 echo "		<div class=\"col-md-1\">\n"; 
-echo "          <img src= \"./uploads/".$sqlcomment["id_user"]."/profile.jpg\" alt=\"Profile Pic\" style=\"width:40px; height 40px;\">";
+echo "          <img src= \"./uploads/".$sqlcomment["id_user"]."/profile.jpg\" class=\"img-rounded\" alt=\"Profile Pic\" style=\"width:40px; height 40px;\">";
 echo "		</div>\n"; 
 
 

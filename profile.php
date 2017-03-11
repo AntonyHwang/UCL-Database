@@ -6,6 +6,10 @@
     else {
         include_once('header.php');
     }
+
+    if ($_SESSION['id'] == $_GET['profile']) {
+        header('Location:myProfilePage.php');
+    }
      
 
 	if (isset($_GET['profile']) and $_GET['profile']!=null){
@@ -114,7 +118,7 @@
                 <div class="col-md-3">
                     <nav>
                         <ul>
-                            <img src="<?php echo './uploads/'.$_GET['profile'].'/profile.jpg'; ?>" alt="Profile Pic" style="width:120px;height 120px;">
+                            <img src="<?php echo './uploads/'.$_GET['profile'].'/profile.jpg'; ?>" class="img-rounded" alt="Profile Pic" style="width:120px;height 120px;">
                         </ul>
                     </nav>
                 </div>
@@ -341,7 +345,7 @@ $username= ucfirst($namerow["first_name"])." ".ucfirst($namerow["surname"]);
     <h2 class ="post_owner">    
         <?php
 
-        echo "<img src= \"./uploads/".$postOwner."/profile.jpg\" alt=\"Profile Pic\" style=\"width:50px; height 50px;\">";
+        echo "<img src= \"./uploads/".$postOwner."/profile.jpg\" class=\"img-rounded\" alt=\"Profile Pic\" style=\"width:50px; height 50px;\">";
 //echo "<a href=\"./profile.php?profile=".$postOwner."\"</a>";
         echo "<a href=\"./profile.php?profile=".$postOwner."\" >$username</a>\n";  
     
@@ -400,7 +404,7 @@ $username= ucfirst($namerow["first_name"])." ".ucfirst($namerow["surname"]);
 //picture and two rows goes here
 echo "   <div class=\"row\">\n"; 
 echo "		<div class=\"col-md-1\">\n"; 
-echo "          <img src= \"./uploads/".$sqlcomment["id_user"]."/profile.jpg\" alt=\"Profile Pic\" style=\"width:40px; height 40px;\">";
+echo "          <img src= \"./uploads/".$sqlcomment["id_user"]."/profile.jpg\" class=\"img-rounded\" alt=\"Profile Pic\" style=\"width:40px; height 40px;\">";
 echo "		</div>\n"; 
 
 

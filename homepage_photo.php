@@ -133,6 +133,7 @@ else $row=floor($number_photos/3) +1;
         </div>
 		<div class="col-md-10">
             <h1>Photos <a href="homepage.php">Posts</a></h1>    
+             <hr>
 		</div>
         <div class="col-md-1">
         </div>

@@ -194,8 +194,8 @@ foreach($allposts as $current_postid){
 
     <h2 class ="post_owner">    
         <?php
-        echo "<img src= \"./uploads/".$postOwner."/profile.jpg\" alt=\"Profile Pic\" style=\"width:50px; height 50px;\">";
-        echo "<a href=\"./profile.php?profile=".$postOwner."\" >$username</a>\n";   
+        echo "<img src= \"./uploads/".$postOwner."/profile.jpg\" class=\"img-rounded\" alt=\"Profile Pic\" style=\"width:50px; height 50px;\">";
+        echo "&nbsp <a href=\"./profile.php?profile=".$postOwner."\" >$username</a>\n";   
         echo "&nbsp&nbsp&nbsp&nbsp&nbsp";
         ?>
     </h2>
@@ -225,14 +225,14 @@ foreach($allposts as $current_postid){
 //picture and two rows goes here
 echo "   <div class=\"row\">\n"; 
 echo "		<div class=\"col-md-1\">\n"; 
-echo "          <img src= \"./uploads/".$sqlcomment["id_user"]."/profile.jpg\" alt=\"Profile Pic\" style=\"width:40px; height 40px;\">";
+echo "          <img src= \"./uploads/".$sqlcomment["id_user"]."/profile.jpg\" class=\"img-rounded\" alt=\"Profile Pic\" style=\"width:40px; height 40px;\">";
 echo "		</div>\n"; 
 echo "		<div class=\"col-md-10\">\n"; 
 echo "			<div class=\"row\">\n"; 
 echo "				<div class=\"col-md-12\">\n"; 
 //echo "<a href=\"./profile.php?profile=".$postOwner."\" >$username</a>\n";  
     
-echo "<a href=\"./profile.php?profile=".$sqlcomment["id_user"]."\" >".$commentusername." </a>:".$sqlcomment["body"];
+echo "<a href=\"./profile.php?profile=".$sqlcomment["id_user"]."\" >".$commentusername." </a>: ".$sqlcomment["body"];
 
 ?>
 
