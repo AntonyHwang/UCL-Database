@@ -46,7 +46,7 @@
                 <div>
                     <ul class="nav navbar-nav">
                         <?php if ($_SESSION["logged_in"] == "YES"): ?>
-                            <li class="active"><a href="homepage.php">Home</a></li>
+                            <li><a href="homepage.php">Home</a></li>
                             <li><a href="myProfilePage.php">Profile</a></li>
                             <!-- drop down menu -->
                             <li class="dropdown">
