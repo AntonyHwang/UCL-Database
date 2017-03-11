@@ -22,14 +22,11 @@ background-color:white;
 
 
 
-$myposts = [];
+$allposts = [];
 $me = $_SESSION["id"];
-$myposts_sql =  "SELECT id_post, id_user, body FROM post ORDER BY timestamp DESC";
-$MyPostlist = $conn->query($myposts_sql);
-while($row = $MyPostlist->fetch()) {
-    $postid = $row["id_post"];
-    array_push($myposts,$postid);
-}
+$allposts_sql =  "SELECT id_post, id_user, body ,timestamp FROM post ORDER BY timestamp DESC";
+$MyPostlist = $conn->query($allposts_sql);
+
 
 
 ?>
@@ -64,10 +61,8 @@ while($row = $MyPostlist->fetch()) {
 
 
 
-foreach($myposts as $current_postid){
-    $getpost = "SELECT id_post, id_user, body,timestamp FROM post WHERE id_post = ".$current_postid;
-    $getpostresult = $conn->query($getpost);
-    while($row = $getpostresult->fetch()) {
+
+    while($row = $MyPostlist->fetch()) {
         $postid = $row["id_post"];
         $postOwner = $row["id_user"];
         $getpostowner = "SELECT first_name,surname FROM user WHERE id_user = ".$postOwner.' ';
@@ -79,13 +74,31 @@ foreach($myposts as $current_postid){
 
 <div class="panel-body">
 
-    <h2 class ="post_owner">    
-        <?php
-        echo "<img src= \"./uploads/".$postOwner."/profile.jpg\" class=\"img-rounded\" alt=\"Profile Pic\" style=\"width:50px; height 50px;\">";
-        echo "&nbsp <a href=\"./profile.php?profile=".$postOwner."\" >$username</a>\n";   
-        echo "&nbsp&nbsp&nbsp&nbsp&nbsp";
-        ?>
-    </h2>
+                    <h2>
+                        <div class="row">
+                            <div class="col-md-3">
+                            <?php 
+                            echo "<img src= \"./uploads/".$postOwner."/profile.jpg\" alt=\"Profile Pic\" class=\"img-rounded\" style=\"width:60px; height 60px;\">";
+                            echo "&nbsp <a href=\"./profile.php?profile=".$postOwner."\" >$username</a>\n";  
+                                               
+                            ?>
+                            </div>
+                            <div class="col-md-1">                       
+                                                    
+                            </div>
+                            <div class="col-md-8" align="right">
+                                <form  action = 'server.php' method="get" >     
+                                    <button type="submit" class="btn btn-danger btn-sm">
+                                        Delete Post
+                                    </button>               
+                                    <input type="hidden" name="id_del" value="<?php echo $postid; ?>" />                
+                                    <input type="hidden" name="last_page" value="All_Posts.php" />   
+                                </form>  
+                            </div>
+                        </div>                   
+
+  
+                    </h2>
     <paragraph>
                         <?php 
                         echo "<h3>&nbsp&nbsp&nbsp&nbsp".$row["body"]."</h3>";
@@ -163,23 +176,14 @@ echo "</br>";
     echo "</br>";
     ?>
     <!--add a comment-->
-        <form  action = 'server.php' method="get">
-            <div class="input-group">
-                <div class="input-group-btn">
-                    <button class="btn btn-default"><i class="glyphicon glyphicon-share"></i></button>
-                </div>
-                <input type="hidden" name="last_page" value="homepage.php" /> 
-                <input type="hidden" name="postid" value="<?php echo $postid; ?>" />
-                <input type="text" name = 'comment' class="form-control" placeholder="Add a comment..">
-            </div>
-        </form>
+
     </div>
     <!--end of one post-->
 <hr>
 <?php
 
 }
-}
+
 ?>
                 </div>
                 <div class="col-md-1">
