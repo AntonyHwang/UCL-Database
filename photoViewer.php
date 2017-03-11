@@ -2,17 +2,16 @@
     require'includes/config.php';
     include_once('header.php');
 
-        $user_id = $_POST['user_id'];
-        $photo_id = $_POST['photo_id'];
-        $photoPath = $_POST['photoPath'];
-        $caption = $_POST['caption'];
+    $user_id = $_POST['user_id'];
+    $photo_id = $_POST['photo_id'];
+    $photoPath = $_POST['photoPath'];
+    $caption = $_POST['caption'];
 
     if (!empty($_POST) && !empty($_POST["addComment"])) {
         $user_id = $_POST['user_id'];
         $photo_id = $_POST['photo_id'];
         $photoPath = $_POST['photoPath'];
         $caption = $_POST['caption'];
-        echo "WE ARE HERE";
         $sql_insert = "INSERT INTO photo_comment (id_photo, body, id_user) VALUES ('".$_POST['photo_id']."','".$_POST['comment']."','".$_POST['user_id']."');";
         $stmt = $conn->prepare($sql_insert);
         $stmt->execute();
@@ -73,15 +72,8 @@
 		<div class="col-md-10">	
             <div class="col-md-8">
                 <div class="thumbnail" id="scroll">
-                <br>
+                    <br>
                     <img class="center-block" style="max-width:100%;max-height:100%;"src="<?php echo $photoPath;?>">
-                    <div class="caption">
-                        <h3>
-                            <?php echo $row["body"]?>
-                        </h3>
-                        <p>
-                        </p>
-                    </div>
                 </div>
             </div>
             <div class="col-md-4">
@@ -106,17 +98,17 @@
                             $com = "SELECT id_comment, id_photo, timestamp, body, id_user FROM photo_comment WHERE id_photo = ".$photo_id.' ORDER BY timestamp';
                             $res_com = $conn->query($com);
                             while($row = $res_com->fetch(PDO::FETCH_ASSOC)){
-                                $names = "SELECT first_name, surname FROM user WHERE id_user =".$row["id_user"]." ";
+                                $names = "SELECT id_user, first_name, surname FROM user WHERE id_user =".$row["id_user"]." ";
                                 $commenter = $conn->query($names);
                                 $name = $commenter->fetch(PDO::FETCH_ASSOC);?>
                                 <div class="row">
                                     <div class="col-md-3">
                                         &nbsp &nbsp &nbsp
-                                        <?php echo "<img src= \"./uploads/".$user_id."/profile.jpg\" alt=\"Profile Pic\" class=\"img-rounded\" style=\"width:60px; height 60px;\">"; ?>
+                                        <?php echo "<img src= \"./uploads/".$name["id_user"]."/profile.jpg\" alt=\"Profile Pic\" class=\"img-rounded\" style=\"width:60px; height 60px;\">"; ?>
                                     </div>
                                     <div class="col-md-9">
                                         <div class="row">
-                                            <a href="./profile.php?profile="<?php echo $row["id_user"]?>> <?php echo ucfirst($name["first_name"])." ".ucfirst($name["surname"])?> </a>
+                                            <a href="./profile.php?profile="<?php echo $name["id_user"]?>> <?php echo ucfirst($name["first_name"])." ".ucfirst($name["surname"])?> </a>
                                         </div>
                                         <div class="row">
                                             <?php echo $row["body"]; ?>
@@ -143,11 +135,13 @@
                     </div>
                     <div>
                                     <form action="photoViewer.php" method="post">
-                                        <input type="hidden" name="user_id" value="<?php echo $user_id;?>" >
+                                        <input type="hidden" name="user_id" value="<?php echo $_SESSION["id"];?>" >
                                         <input type="hidden" name="photo_id" value="<?php echo $photo_id;?>" >
                                         <input type="hidden" name="photoPath" value="<?php echo $photoPath;?>" >
                                         <input type="hidden" name="caption" value="<?php echo $caption;?>" >
-                                        <textarea name ="comment" rows="3" cols="30"></textarea>
+                                        <div class="form-group">
+                                        <textarea class="form-control" placeholder="Type your message here..." name="comment"></textarea>
+                                        </div>
                                         <button class="btn btn-primary" type="submit" name="addComment" value="Add Comment">Add Comment </button>
                                     </form>
                                     <?php 
