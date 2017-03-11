@@ -239,7 +239,7 @@ $(function () {
 									<?php if ($mem_id == $owner_id) { ?>
 										<button class="btn btn-success" >Owner</button>
 									<?php } else if ($mem_id == $_SESSION["id"]) { ?>
-										<button type="submit" class="btn btn-warning" name="leave" >Leave Circle</button></a>
+										<button type="submit" class="btn btn-danger" name="leave" >Leave Circle</button></a>
 									<?php } else { ?>
 										<button type="submit" class="btn btn-warning" name="remove" >Remove</button></a>
 									<?php } ?>
