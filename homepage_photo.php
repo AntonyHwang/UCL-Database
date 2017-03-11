@@ -132,7 +132,7 @@ else $row=floor($number_photos/3) +1;
         <div class="col-md-1">
         </div>
 		<div class="col-md-10">
-            <h1>Photos <a href="homepage.php">Posts</a></h1>    
+            <h1><a href="homepage.php">Posts</a> | Photos</h1>    
              <hr>
 		</div>
         <div class="col-md-1">
@@ -170,7 +170,7 @@ else $row=floor($number_photos/3) +1;
                                 $photoViewLink = "photoViewer.php?id=".$row["id_user"]."&photoPath=".$row["file_path"]."&caption=".$row["body"]."&photo_id=".$row['id_photo']."&user=".$_SESSION["id"];
                                 ?>
                             
-								<a class="btn btn-primary" href="<?php echo $photoViewLink;?>">comment</a> 
+								<a class="btn btn-primary" href="<?php echo $photoViewLink;?>">Comment</a> 
 							</p>
 						</div>
 					</div>

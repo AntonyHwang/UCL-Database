@@ -118,7 +118,7 @@
                 <div class="col-md-1">
                 </div>
                 <div class="col-md-10">                      
-                      <h1>Photos <a href="profile.php?profile=<?php echo $_GET["profile"];?>">Posts</a></h1>                
+                      <h1><a href="profile.php?profile=<?php echo $_GET["profile"];?>">Posts</a> | Photos</h1>                
                 </div>
                 <div class="col-md-1">
                 </div>

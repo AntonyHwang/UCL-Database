@@ -181,7 +181,7 @@
                 <div class="col-md-1">
                 </div>
                 <div class="col-md-10">
-                      <h1>Posts <a href="album.php?profile=<?php echo $_GET["profile"];?>">Photos</a></h1>
+                      <h1>Posts | <a href="album.php?profile=<?php echo $_GET["profile"];?>">Photos</a></h1>
                       <hr>
                 </div>
                 <div class="col-md-1">
@@ -345,9 +345,9 @@ $username= ucfirst($namerow["first_name"])." ".ucfirst($namerow["surname"]);
     <h2 class ="post_owner">    
         <?php
 
-        echo "<img src= \"./uploads/".$postOwner."/profile.jpg\" class=\"img-rounded\" alt=\"Profile Pic\" style=\"width:50px; height 50px;\">";
+        echo "<img src= \"./uploads/".$postOwner."/profile.jpg\" class=\"img-rounded\" alt=\"Profile Pic\" style=\"width:60px; height 60px;\">";
 //echo "<a href=\"./profile.php?profile=".$postOwner."\"</a>";
-        echo "<a href=\"./profile.php?profile=".$postOwner."\" >$username</a>\n";  
+        echo "  <a href=\"./profile.php?profile=".$postOwner."\" >$username</a>\n";  
     
         //echo "".$username;
         echo "&nbsp&nbsp&nbsp&nbsp&nbsp";
@@ -355,23 +355,18 @@ $username= ucfirst($namerow["first_name"])." ".ucfirst($namerow["surname"]);
         ?>
     </h2>
     <paragraph>
-        <?php
-        echo '<strong style=\" float = right\">'.$row['timestamp'] .'</strong>';
-
-        echo '</br>';
-        echo '</br>';
-        echo $row["body"];
-
-
-        echo '</br>';
-        //echo '</br></br> at '.$row['timestamp'];
-        ?>
+                        <?php 
+                        echo "<h3>&nbsp&nbsp&nbsp&nbsp".$row["body"]."</h3>";
+                        echo "<br>";
+                        echo '<small style=\" float = right\">'.$row['timestamp'] .'</small>';
+                        
+                        ?>
     </paragraph>
     </br>
     <hr>
     <?php
     //echo "id_post:" . $row["id_post"]. "</br> userid: " . $row["id_user"]. "</br>body " . $row["body"]. "<br>";
-    $com = "SELECT id_post, id_user,id_comment, body,timestamp FROM post_comment WHERE id_post = ". $row["id_post"].' ORDER BY timestamp DESC';
+    $com = "SELECT id_post, id_user,id_comment, body,timestamp FROM post_comment WHERE id_post = ". $row["id_post"].' ORDER BY timestamp';
 
     $res_com = $conn->query($com);
     ?>
@@ -404,7 +399,7 @@ $username= ucfirst($namerow["first_name"])." ".ucfirst($namerow["surname"]);
 //picture and two rows goes here
 echo "   <div class=\"row\">\n"; 
 echo "		<div class=\"col-md-1\">\n"; 
-echo "          <img src= \"./uploads/".$sqlcomment["id_user"]."/profile.jpg\" class=\"img-rounded\" alt=\"Profile Pic\" style=\"width:40px; height 40px;\">";
+echo "          <img src= \"./uploads/".$sqlcomment["id_user"]."/profile.jpg\" class=\"img-rounded\" alt=\"Profile Pic\" style=\"width:55px; height 55px;\">";
 echo "		</div>\n"; 
 
 
@@ -413,7 +408,7 @@ echo "			<div class=\"row\">\n";
 echo "				<div class=\"col-md-12\">\n"; 
 //echo "<a href=\"./profile.php?profile=".$postOwner."\" >$username</a>\n";  
     
-echo "<a href=\"./profile.php?profile=".$sqlcomment["id_user"]."\" >".$commentusername." </a>:".$sqlcomment["body"];
+echo "<strong><a href=\"./profile.php?profile=".$sqlcomment["id_user"]."\" >".$commentusername." </a>: </strong><h4>&nbsp&nbsp&nbsp&nbsp".$sqlcomment["body"]."</h4>";
 
 ?>
 
@@ -424,9 +419,10 @@ echo "<a href=\"./profile.php?profile=".$sqlcomment["id_user"]."\" >".$commentus
 echo "				</div>\n"; 
 echo "			</div>\n"; 
 echo "			<div class=\"row\">\n"; 
+echo "          <br>";
 echo "				<div class=\"col-md-12\">\n"; 
 //echo "                at 2010 5 7\n"; 
-echo "                ".$sqlcomment["timestamp"];
+echo "                <small style=\" float = right\">".$sqlcomment['timestamp'] ."</small>";;
 echo "				</div>\n"; 
 echo "			</div>\n"; 
 
