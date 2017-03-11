@@ -154,12 +154,26 @@ else $row=floor($number_photos/3) +1;
                 $stmt = $conn->query($sql_select);
                 $row = $stmt->fetch();
                 $index++;
+                $postOwner = $row["id_user"];
+                $getpostowner = "SELECT first_name,surname FROM user WHERE id_user = ".$postOwner.' ';
+                $getpostowernresult = $conn->query($getpostowner);
+                $namerow = $getpostowernresult->fetch();
+                $username= ucfirst($namerow["first_name"])." ".ucfirst($namerow["surname"]);   
+
             ?>
 
 			
 				<div class="col-md-4">
 					<div class="thumbnail">
 						<img class="center-block" style="max-width:100%;max-height:300px;"src="<?php echo $row["file_path"]?>">
+                        <div class="row">
+                        <div class="col-md-12" align="centre">
+                        <a href="<?php   echo "./profile.php?profile=$postOwner";?>  ">  <?php echo $username;?></a>
+                        <?php// echo "   ".$username ;
+                        
+                        ?>
+                        </div>
+                        </div> 
                         <div class="caption">
 							<h3>
 								<?php echo $row["body"]?>
