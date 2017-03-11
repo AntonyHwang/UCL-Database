@@ -1,6 +1,8 @@
 <?php
+
     require'includes/config.php';
-    include_once('adminheader.php');
+    include_once('header.php');
+
 ?>
 
 
@@ -17,18 +19,19 @@ background-color:white;
 </style>
 
 <?php 
-    $allposts=[];  
-    $sql = "SELECT id_post, id_user, body FROM post ORDER BY timestamp DESC";
-    $result = $conn->query($sql);
 
-    //$friends=array();
-    //$result = $conn->query($sql);
-    $list = [];
-    //get all friends
-    $array = $result->fetchAll();
-    foreach($array as $postid){
-        array_push($allposts,$postid);
-    }
+
+
+$myposts = [];
+$me = $_SESSION["id"];
+$myposts_sql =  "SELECT id_post, id_user, body FROM post ORDER BY timestamp DESC";
+$MyPostlist = $conn->query($myposts_sql);
+while($row = $MyPostlist->fetch()) {
+    $postid = $row["id_post"];
+    array_push($myposts,$postid);
+}
+
+
 ?>
 
 
@@ -39,23 +42,14 @@ background-color:white;
                 <div class="col-md-1">
                 </div>
                 <div class="col-md-10">
-                    <h1>Posts</h1>    
+                    <h1>Posts | <a href="homepage_photo.php">Photos</a></h1>    
                     <hr>
                 </div>
                 <div class="col-md-1">
                 </div>
             </div>
         </div>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-1">
-                </div>
-                <div class="col-md-10">                       
-                </div>
-                <div class="col-md-1">
-                </div>
-            </div>
-        </div>
+
 
         <div class="container-fluid">
              <div class="row">
@@ -69,9 +63,9 @@ background-color:white;
 <?php 
 
 
-//$allposts =array_reverse($allposts);
-foreach($allposts as $current_postid){
-    $getpost = "SELECT id_post, id_user, body, timestamp FROM post ORDER BY DESC";
+
+foreach($myposts as $current_postid){
+    $getpost = "SELECT id_post, id_user, body,timestamp FROM post WHERE id_post = ".$current_postid;
     $getpostresult = $conn->query($getpost);
     while($row = $getpostresult->fetch()) {
         $postid = $row["id_post"];
@@ -144,9 +138,21 @@ echo "			</div>\n";
 echo "		</div>\n"; 
 //button might go here
 echo "		<div class=\"col-md-1\">\n"; 
+if($sqlcomment["id_user"]==$_SESSION['id']){
 ?>
-
+        <form  action = 'server.php' method="get">
+            <div class="input-group">
+                <div class="input-group-btn">               
+                    <input type="hidden" name="last_page" value="homepage.php" /> 
+                    <button type="submit" class="btn btn-default btn-sm">
+                    <span class="glyphicon glyphicon-remove"></span>  
+                    </button>
+                </div>
+                <input type="hidden" name="id_del_comment" value="<?php echo $sqlcomment["id_comment"]; ?>" />                
+            </div>
+        </form>
 <?php
+}
 echo "		</div>\n"; 
 
 echo "	</div>\n";
@@ -182,3 +188,9 @@ echo "</br>";
         </div>
     </body>
 </html>
+
+
+
+
+
+
