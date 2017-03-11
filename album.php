@@ -268,16 +268,8 @@
         array_push($friends,$friend);       
     }
  //for each my friend ,get their posts
-foreach ($friends as $current_id)
-{
-    $sql = "SELECT id_post, id_user, body FROM post WHERE privacy_setting  = '0' AND id_user = ".$current_id.' ORDER BY timestamp DESC';
-    $result = $conn->query($sql);
-    while($row = $result->fetch()) {
-    $postid = $row["id_post"];
-        array_push($allposts,$postid);
-    }
-}
- //for each my friend ,get their photo
+
+
  $allphotos = [];
 foreach ($friends as $current_id)
 {
@@ -363,12 +355,12 @@ $photo_user_allow_seen = array_intersect($photolist_oneuser,$allphotos);
 $number_photos =count($photo_user_allow_seen);
 
 $remain = $number_photos % 3;
-echo $remain."  ";
+
 $index = 0;
 $row=0;
 if($remain == 0)$row = floor($number_photos/3);
 else $row=floor($number_photos/3) +1;
-echo $row;
+
 
 
                
