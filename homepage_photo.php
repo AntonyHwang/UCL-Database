@@ -105,7 +105,16 @@ $usersseen=array_merge($remm,$friends);
 sort($allphotos);
 //get photo of this user and do intersection with all allow_to_seen_photo
 $photo_user_allow_seen =$allphotos;
-
+$profile_id = $_SESSION['id'];
+$photolist_oneuser=[];
+$photos_user = "SELECT id_photo, id_user FROM photo WHERE  id_user = ".$profile_id.'  ORDER BY timestamp DESC';
+$result = $conn->query($photos_user);
+foreach($result as $user){
+    array_push($photolist_oneuser,$user[0]);
+}
+$photo_user_allow_seen =array_merge($photo_user_allow_seen,$photolist_oneuser);
+$photo_user_allow_seen=array_unique($photo_user_allow_seen);
+sort($photo_user_allow_seen);
 //$sortedpostlist = sortPostbytime($conn,$allposts);
 ?>
 
