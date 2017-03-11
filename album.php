@@ -392,11 +392,16 @@ else $row=floor($number_photos/3) +1;
 							</h3>
 
 							<p>
-                                <?php
-                                $photoViewLink = "photoViewer.php?id=".$row["id_user"]."&photoPath=".$row["file_path"]."&caption=".$row["body"]."&photo_id=".$row['id_photo']."&user=".$_SESSION["id"];
-                                ?>
-                            
-								<a class="btn btn-primary" href="<?php echo $photoViewLink;?>">comment</a> 
+                        <form  action = 'photoViewer.php' method="post">
+                            <div class="input-group">
+                                <input type="hidden" name="user_id" value="<?php echo $row["id_user"] ?>" /> 
+                                <input type="hidden" name="photo_id" value="<?php echo $row["id_photo"] ?>" /> 
+                                <input type="hidden" name="photoPath" value="<?php echo $row["file_path"] ?>" /> 
+                                <input type="hidden" name="caption" value="<?php echo $row["body"] ?>" /> 
+                            </div>
+                            <button type="submit" name ="comment" class="btn btn-primary">Comment</button> 
+                                
+                        </form>   
 							</p>
 						</div>
 					</div>
