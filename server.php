@@ -50,9 +50,11 @@
             unset($_GET['id_del']);
             if($_GET['last_page']=="myProfilePage.php")
             header("location:myProfilePage.php");
-            else{
-                if($_GET['last_page']=="profile.php")
+            else if($_GET['last_page']=="profile.php"){
+                
                  header("location:profile.php?profile=".$_GET['profile']);
+            }else if($_GET['last_page']=="All_Posts.php"){
+                header("location:All_Posts.php");
             }
         }
     }  
