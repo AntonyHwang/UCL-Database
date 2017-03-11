@@ -1,7 +1,7 @@
 <?php
 
     require'includes/config.php';
-    include_once('header.php');
+    include_once('adminheader.php');
 
 ?>
 

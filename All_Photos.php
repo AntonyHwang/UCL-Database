@@ -1,11 +1,6 @@
 <?php 
-    require 'includes/config.php';
-    if ($_SESSION["user_type"] == "ADMIN") {
-        include_once('adminheader.php');
-    }
-    else {
-        include_once('header.php');
-    }
+    require 'includes/config.php'; 
+    include_once('adminheader.php');
      
 
 
