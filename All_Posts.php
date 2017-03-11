@@ -76,7 +76,7 @@ $MyPostlist = $conn->query($allposts_sql);
 
                     <h2>
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-md-6">
                             <?php 
                             echo "<img src= \"./uploads/".$postOwner."/profile.jpg\" alt=\"Profile Pic\" class=\"img-rounded\" style=\"width:60px; height 60px;\">";
                             echo "&nbsp <a href=\"./profile.php?profile=".$postOwner."\" >$username</a>\n";  
@@ -86,7 +86,7 @@ $MyPostlist = $conn->query($allposts_sql);
                             <div class="col-md-1">                       
                                                     
                             </div>
-                            <div class="col-md-8" align="right">
+                            <div class="col-md-5" align="right">
                                 <form  action = 'server.php' method="get" >     
                                     <button type="submit" class="btn btn-danger btn-sm">
                                         Delete Post
