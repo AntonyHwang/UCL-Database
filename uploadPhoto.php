@@ -83,9 +83,9 @@ if (!empty($_POST)) {
 			$date=new DateTime();
 	$result = $date->format('Y-m-d-H-i-s');
 	//$target_file = $target_dir . $_SESSION["id"]."/".basename($_FILES["fileToUpload"]["name"]);
-	$target_file = "uploads/".$_SESSION["id"]."/".$result.".".$imageFileType;
+	$target_file = $target_dir . $_SESSION["id"]."/".$result.".".$imageFileType;
 	echo $target_file;
-	
+	$path = "uploads/".$_SESSION["id"]."/".$result.".".$imageFileType;
 	    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
 	        echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
 	        $host = "eu-cdbr-azure-west-a.cloudapp.net";
@@ -109,7 +109,7 @@ if (!empty($_POST)) {
 	            $stmt = $conn->prepare($sql_insert);
                 $stmt->bindValue(1, NULL);
                 $stmt->bindValue(2, $user_id);
-                $stmt->bindValue(3, $target_file);
+                $stmt->bindValue(3, $path);
                 $stmt->bindValue(4, NULL);
                 $stmt->bindValue(5, $caption);
                 $stmt->bindValue(6, $privacy);
