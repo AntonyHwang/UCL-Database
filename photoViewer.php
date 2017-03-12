@@ -93,10 +93,14 @@ $(function () {
             <div class="col-md-4">
                 <div class="row">
                                             <div align="right">
-                            <?php 
+                            <?php                 $_photoOwner =  "SELECT id_photo, id_user FROM photo WHERE  id_photo = ".$photo_id;
+                                $ownerres = $conn->query($_photoOwner);
+                                 $row = $ownerres->fetch();
+                                 $photoOwner=$row[1];
+                             if($_SESSION["user_type"] == "ADMIN"||$photoOwner==$_SESSION["id"]){
                                     $photoDeleteLink = "photoPage.php?profile=".$user_id."&id_del=".$photo_id."&del_path=".$photoPath;
                                     echo "<a href=\"".$photoDeleteLink." \"><button class=\"btn btn-danger\" >Delete Photo</button></a><br><br>";
-                            ?>
+                            }?>
                         </div>
                     <div class="caption">
                         <h3>
