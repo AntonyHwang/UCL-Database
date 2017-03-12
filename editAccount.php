@@ -28,7 +28,7 @@
                 <div class="col-md-4">
                     <fieldset>
                         <div>
-                            <img src='/uploads/'.$_SESSION["id"].'/profile.jpg'; ?>" alt="Profile Pic" style="width:120px;height 120px;">
+                            <img src="./uploads/<?php echo $_SESSION["id"]?>/profile.jpg" alt="Profile Pic" style="width:120px;height 120px;">
                         </div>
                         <br>
                         <div align="center">

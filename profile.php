@@ -116,7 +116,7 @@
                 <div class="col-md-3">
                     <nav>
                         <ul>
-                            <img src='./uploads/'.$_GET['profile'].'/profile.jpg'; ?>" class="img-rounded" alt="Profile Pic" style="width:120px;height 120px;">
+                            <img src="./uploads/<?php echo $_GET['profile']?>/profile.jpg'" class="img-rounded" alt="Profile Pic" style="width:120px;height 120px;">
                         </ul>
                     </nav>
                 </div>
