@@ -39,9 +39,9 @@ background-color:white;
                     <nav>
                         <ul>
                         <?php if ($_SESSION["user_type"] == "ADMIN") { ?>
-                            <img src='./uploads/'<?php echo $_GET["profile"]?>'/profile.jpg' class="img-rounded" alt="Profile Pic" style="width:120px;height 120px;">
+                            <img src="./uploads/<?php echo $_GET["profile"]?>/profile.jpg" class="img-rounded" alt="Profile Pic" style="width:120px;height 120px;">
                 <?php } else { ?>
-                            <img src='./uploads/'<?php echo $_SESSION["id"]?>'/profile.jpg' class="img-rounded" alt="Profile Pic" style="width:120px;height 120px;">
+                            <img src="./uploads/<?php echo $_SESSION["id"]?>/profile.jpg" class="img-rounded" alt="Profile Pic" style="width:120px;height 120px;">
                 <?php } ?>
                         </ul>
                     </nav>
