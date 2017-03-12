@@ -307,7 +307,9 @@ foreach($result as $user){
     array_push($postlist_oneuser,$user[0]);
 }
 $post_user_allow_seen = array_intersect($postlist_oneuser,$allposts);
-
+if($_SESSION["user_type"] == "ADMIN"){
+    $post_user_allow_seen=$postlist_oneuser;
+}
 //$sortedpostlist = sortPostbytime($conn,$allposts);
 ?>
 
@@ -370,23 +372,7 @@ $username= ucfirst($namerow["first_name"])." ".ucfirst($namerow["surname"]);
 
     $res_com = $conn->query($com);
     ?>
-<!--   <div class="row">
-		<div class="col-md-1">
-			<img alt="Bootstrap Image Preview" src="http://lorempixel.com/140/140/" width = "40px"/>
-		</div>
-		<div class="col-md-11">
-			<div class="row">
-				<div class="col-md-12">
-                example user: this is a  test comment
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-12">
-                at 2010 5 7
-				</div>
-			</div>
-		</div>
-	</div> -->
+
     <?php 
 
   
@@ -462,18 +448,7 @@ echo "</br>";
     echo "</br>";
     ?>
     <!--post a comment-->
-        <form  action = 'server.php' method="get">
-            <div class="input-group">
-                <div class="input-group-btn">
-                    <button class="btn btn-default"><i class="glyphicon glyphicon-share"></i></button>
-                </div>
-                <input type="hidden" name="profile" value="<?php echo $_GET["profile"]; ?>" />  
-                <input type="hidden" name="last_page" value="profile.php" />                 
-           
-                <input type="hidden" name="postid" value="<?php echo $postid; ?>" />
-                <input type="text" name = 'comment' class="form-control" placeholder="Add a comment..">
-            </div>
-        </form>
+
     <!--end _post a comment-->    
     </div>
     <!--end of one post-->
