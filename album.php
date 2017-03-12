@@ -344,6 +344,10 @@ foreach($result as $user){
     array_push($photolist_oneuser,$user[0]);
 }
 $photo_user_allow_seen = array_intersect($photolist_oneuser,$allphotos);
+
+if($_SESSION["user_type"] == "ADMIN"){
+    $photo_user_allow_seen=$photolist_oneuser;
+}
 //$sortedpostlist = sortPostbytime($conn,$allposts);
 ?>
 
@@ -391,17 +395,57 @@ else $row=floor($number_photos/3) +1;
 								<?php echo $row["body"]?>
 							</h3>
 
-							<p>
-                        <form  action = 'photoViewer.php' method="post">
-                            <div class="input-group">
-                                <input type="hidden" name="user_id" value="<?php echo $row["id_user"] ?>" /> 
-                                <input type="hidden" name="photo_id" value="<?php echo $row["id_photo"] ?>" /> 
-                                <input type="hidden" name="photoPath" value="<?php echo $row["file_path"] ?>" /> 
-                                <input type="hidden" name="caption" value="<?php echo $row["body"] ?>" /> 
-                            </div>
-                            <button type="submit" name ="comment" class="btn btn-primary">Comment</button> 
+							<p><?php if($_SESSION["user_type"] == "ADMIN"){ ?> 
+                            <div class="col-md-12">
+                                <div class="row">
+
+                                    <div class="col-md-2">
+                                        <form  action = 'photoViewer.php' method="post">
+                                            <div class="input-group">
+                                                <input type="hidden" name="user_id" value="<?php echo $row["id_user"] ?>" /> 
+                                                <input type="hidden" name="photo_id" value="<?php echo $row["id_photo"] ?>" /> 
+                                                <input type="hidden" name="photo_path" value="<?php echo $row["file_path"] ?>" /> 
+                                                <input type="hidden" name="photo_caption" value="<?php echo $row["body"] ?>" /> 
+                                            </div>
+                                            <button type="submit" name ="comment" class="btn btn-primary">Comment</button> 
+                                                
+                                        </form>   
+                                    </div>
+
+                                    <div class="col-md-5">
+                                    </div>
+                                    <div class="col-md-5">
+                                    <?php 
+                                    $photoDeleteLink = "photoPage.php?profile=".$row["id_user"]."&id_del=".$row["id_photo"]."&del_path=".$row["file_path"];
+                                    echo "<a href=\"".$photoDeleteLink." \"><button class=\"btn btn-danger\" >Delete Photo</button></a><br><br>";
+                                                                    
+                                    ?>
+                                    </div>
+                                </div>
+                            </div>   
+
+                            
+                            </br>
+
                                 
-                        </form>   
+
+                                <?php 
+                                }else{
+                                ?>
+                                <form  action = 'photoViewer.php' method="post">
+                                    <div class="input-group">
+                                        <input type="hidden" name="user_id" value="<?php echo $row["id_user"] ?>" /> 
+                                        <input type="hidden" name="photo_id" value="<?php echo $row["id_photo"] ?>" /> 
+                                        <input type="hidden" name="photoPath" value="<?php echo $row["file_path"] ?>" /> 
+                                        <input type="hidden" name="caption" value="<?php echo $row["body"] ?>" /> 
+                                    </div>
+                                    <button type="submit" name ="comment" class="btn btn-primary">Comment</button> 
+                                        
+                                </form>  
+                                
+                                <?php 
+                                }
+                                ?>                               
 							</p>
 						</div>
 					</div>
