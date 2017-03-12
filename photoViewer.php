@@ -40,6 +40,14 @@
     } 
 ?>
 
+<script>
+$(function () {
+    var wtf = $('#scroll');
+    var height = wtf[0].scrollHeight;
+    wtf.scrollTop(height);
+});
+</script>
+
 <style>
     div.panel-body {
         text-align: center;
@@ -52,6 +60,12 @@
     }
     figcaption {
         height: auto;
+    }
+
+    #scroll {
+    height: 525px;
+    overflow-y: scroll;
+	overflow-x: hidden;
     }
 </style>
 
@@ -71,16 +85,23 @@
         </div>
 		<div class="col-md-10">	
             <div class="col-md-8">
-                <div class="thumbnail" id="scroll">
+                <div class="thumbnail">
                     <br>
                     <img class="center-block" style="max-width:100%;max-height:100%;"src="<?php echo $photoPath;?>">
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="row">
+                                            <div align="right">
+                            <?php 
+                                    $photoDeleteLink = "photoPage.php?profile=".$user_id."&id_del=".$photo_id."&del_path=".$photoPath;
+                                    echo "<a href=\"".$photoDeleteLink." \"><button class=\"btn btn-danger\" >Delete Photo</button></a><br><br>";
+                            ?>
+                        </div>
                     <div class="caption">
                         <h3>
-                            <?php echo "  ".$caption ?>
+                            &nbsp
+                            <?php echo $caption ?>
                         </h3>
                         <br>
                         <p>
@@ -89,11 +110,11 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="thumbnail" style="min-height:550px">
-                        <h3>
-                            &nbsp Comments
-                        </h3>
-                        <hr>
+                    <h3>
+                        &nbsp Comments
+                    </h3>
+                    <hr>
+                    <div style="max-height:500px;" id="scroll">
                         <?php                                  
                             $com = "SELECT id_comment, id_photo, timestamp, body, id_user FROM photo_comment WHERE id_photo = ".$photo_id.' ORDER BY timestamp';
                             $res_com = $conn->query($com);
@@ -118,16 +139,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <form action="photoViewer.php" method="post" enctype="multipart/form-data">
-                                        <input type="hidden" name="id_del" value="<?php echo $row["id_comment"]?>">
-                                        <input type="hidden" name="user_id" value="<?php echo $user_id;?>" >
-                                        <input type="hidden" name="photo_id" value="<?php echo $photo_id;?>" >
-                                        <input type="hidden" name="photoPath" value="<?php echo $photoPath;?>" >
-                                        <input type="hidden" name="caption" value="<?php echo $caption;?>" >
-                                        <p align="right"> <button class="btn btn-primary" type="submit" name="delete" value="x"/>x</button></p>
-                                    </form>
-
                                 </div>
+                                <hr>
 
                             <?php
                             }
@@ -142,12 +155,10 @@
                                         <div class="form-group">
                                         <textarea class="form-control" placeholder="Type your message here..." name="comment"></textarea>
                                         </div>
-                                        <button class="btn btn-primary" type="submit" name="addComment" value="Add Comment">Add Comment </button>
+                                        <div align="right">
+                                            <button class="btn btn-primary" type="submit" name="addComment" value="Add Comment">Add Comment </button>
+                                        </div>
                                     </form>
-                                    <?php 
-                                    $photoDeleteLink = "photoPage.php?profile=".$user_id."&id_del=".$photo_id."&del_path=".$photoPath;
-                                    echo "<a href=\"".$photoDeleteLink." \"><button class=\"btn btn-warning\" >Delete Photo</button></a><br><br>";
-                                    ?>
                 </div>
             </div>			
 		</div>

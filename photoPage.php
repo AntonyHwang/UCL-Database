@@ -28,11 +28,11 @@
 
     //delete photos
     if (isset($_GET["profile"] ) && $_GET["profile"] == $_SESSION["id"]) {
-        echo $_GET["profile"];
-        print_r($_POST);
+        //echo $_GET["profile"];
+        //print_r($_POST);
         $post_del = $_GET["id_del"];
         $sql_del = "DELETE FROM photo  WHERE id_photo = ? ";
-        echo $sql_del;
+        //echo $sql_del;
         $stmt = $conn->prepare($sql_del);  
         $stmt->bindValue(1, $post_del);
         if (!$stmt->execute()){
@@ -40,7 +40,7 @@
             die('deleting failed');
         }
         else {
-            echo " deleted photo successfully<br>";
+            //echo " deleted photo successfully<br>";
             unlink($_GET["del_path"]);
             //echo $_GET["del_path"];
             $refresh = $_GET['profile'];
@@ -55,11 +55,8 @@
         catch(Exception $e){
             die(var_dump($e));
         }
-        echo $_POST["profile"];
-        print_r($_POST);
         $post_del = $_POST["id_del"];
         $sql_del = "DELETE FROM photo  WHERE id_photo = ? ";
-        echo $sql_del;
         $stmt = $conn->prepare($sql_del);  
         $stmt->bindValue(1, $post_del);
         if (!$stmt->execute()){
@@ -67,9 +64,9 @@
             die('deleting failed');
         }
         else {
-            echo " deleted photo successfully<br>";
+            //echo " deleted photo successfully<br>";
             unlink($_GET["del_path"]);
-            echo $_GET["del_path"];
+            //echo $_GET["del_path"];
             $refresh = $_GET['profile'];
             echo "<a href=\"photoPage.php?id=".$refresh." \"><button class=\"btn btn-primary\" >Return to Photos</button></a><br><br>";
         }
@@ -175,8 +172,8 @@ $index = 0;
                                                 <div class="input-group">
                                                     <input type="hidden" name="user_id" value="<?php echo $row["id_user"] ?>" /> 
                                                     <input type="hidden" name="photo_id" value="<?php echo $row["id_photo"] ?>" /> 
-                                                    <input type="hidden" name="photo_path" value="<?php echo $row["file_path"] ?>" /> 
-                                                    <input type="hidden" name="photo_caption" value="<?php echo $row["body"] ?>" /> 
+                                                    <input type="hidden" name="photoPath" value="<?php echo $row["file_path"] ?>" /> 
+                                                    <input type="hidden" name="caption" value="<?php echo $row["body"] ?>" /> 
                                                 </div>
                                                 <button type="submit" name ="comment" class="btn btn-primary">Comment</button> 
                                                     
