@@ -39,9 +39,9 @@ background-color:white;
                     <nav>
                         <ul>
                         <?php if ($_SESSION["user_type"] == "ADMIN") { ?>
-                            <img src="<?php echo getcwd().'/uploads/'.$_GET["profile"].'/profile.jpg'; ?>" class="img-rounded" alt="Profile Pic" style="width:120px;height 120px;">
+                            <img src='./uploads/'.$_GET["profile"].'/profile.jpg'; ?>" class="img-rounded" alt="Profile Pic" style="width:120px;height 120px;">
                 <?php } else { ?>
-                            <img src="<?php echo getcwd().'/uploads/'.$_SESSION["id"].'/profile.jpg'; ?>" class="img-rounded" alt="Profile Pic" style="width:120px;height 120px;">
+                            <img src='./uploads/'.$_SESSION["id"].'/profile.jpg'; ?>" class="img-rounded" alt="Profile Pic" style="width:120px;height 120px;">
                 <?php } ?>
                         </ul>
                     </nav>
@@ -121,7 +121,7 @@ background-color:white;
                         <div class="row">
                             <div class="col-md-3">
                             <?php 
-                            echo "<img src= \"".getcwd()."/uploads/".$userid."/profile.jpg\" alt=\"Profile Pic\" class=\"img-rounded\" style=\"width:60px; height 60px;\">";
+                            echo "<img src= \"./uploads/".$userid."/profile.jpg\" alt=\"Profile Pic\" class=\"img-rounded\" style=\"width:60px; height 60px;\">";
                             echo "&nbsp <a href=\"./profile.php?profile=".$userid."\" >$username</a>\n";  
                                                
                             ?>
@@ -173,7 +173,7 @@ background-color:white;
 //picture and two rows goes here
 echo "   <div class=\"row\">\n"; 
 echo "		<div class=\"col-md-1\">\n"; 
-echo "          <img src= \"".getcwd()."/uploads/".$sqlcomment["id_user"]."/profile.jpg\" class=\"img-rounded\" alt=\"Profile Pic\" style=\"width:55px; height 55px;\">";
+echo "          <img src= \"./uploads/".$sqlcomment["id_user"]."/profile.jpg\" class=\"img-rounded\" alt=\"Profile Pic\" style=\"width:55px; height 55px;\">";
 echo "		</div>\n"; 
 
 

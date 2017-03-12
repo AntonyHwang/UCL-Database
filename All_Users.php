@@ -44,7 +44,7 @@
                         $count++;
                         $username= ucfirst($row["first_name"])." ".ucfirst($row["surname"]);
                         $user_id = $row["id_user"];
-                        $profile_img = getcwd()."/uploads/".$user_id."/profile.jpg";
+                        $profile_img = "./uploads/".$user_id."/profile.jpg";
                         $profile_link = "./profile.php?profile=".$row["id_user"];
                         if ($count % 2 != 0) {
                 ?>

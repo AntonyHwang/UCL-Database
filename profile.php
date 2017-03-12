@@ -116,7 +116,7 @@
                 <div class="col-md-3">
                     <nav>
                         <ul>
-                            <img src="<?php echo getcwd().'/uploads/'.$_GET['profile'].'/profile.jpg'; ?>" class="img-rounded" alt="Profile Pic" style="width:120px;height 120px;">
+                            <img src='./uploads/'.$_GET['profile'].'/profile.jpg'; ?>" class="img-rounded" alt="Profile Pic" style="width:120px;height 120px;">
                         </ul>
                     </nav>
                 </div>
@@ -348,7 +348,7 @@ $username= ucfirst($namerow["first_name"])." ".ucfirst($namerow["surname"]);
                 <div class="row">
                     <div class="col-md-3">
                     <?php 
-                    echo "<img src= \"".getcwd()."/uploads/".$postOwner."/profile.jpg\" alt=\"Profile Pic\" class=\"img-rounded\" style=\"width:60px; height 60px;\">";
+                    echo "<img src= \"./uploads/".$postOwner."/profile.jpg\" alt=\"Profile Pic\" class=\"img-rounded\" style=\"width:60px; height 60px;\">";
                     echo "&nbsp <a href=\"./profile.php?profile=".$postOwner."\" >$username</a>\n";  
                                         
                     ?>
@@ -400,7 +400,7 @@ $username= ucfirst($namerow["first_name"])." ".ucfirst($namerow["surname"]);
 //picture and two rows goes here
 echo "   <div class=\"row\">\n"; 
 echo "		<div class=\"col-md-1\">\n"; 
-echo "          <img src= \"".getcwd()."/uploads/".$sqlcomment["id_user"]."/profile.jpg\" class=\"img-rounded\" alt=\"Profile Pic\" style=\"width:55px; height 55px;\">";
+echo "          <img src= \"./uploads/".$sqlcomment["id_user"]."/profile.jpg\" class=\"img-rounded\" alt=\"Profile Pic\" style=\"width:55px; height 55px;\">";
 echo "		</div>\n"; 
 
 
