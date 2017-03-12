@@ -150,7 +150,7 @@
     echo "			<div class=\"row\">\n"; 
     echo "				<div class=\"col-md-6\">\n"; 
     //echo " the pic and name";
-    echo "<img src= \"./uploads/".$friend."/profile.jpg\" class=\"img-rounded\" alt=\"Profile Pic\" style=\"width:75px; height 75px;\">";
+    echo "<img src= \"".getcwd()."/uploads/".$friend."/profile.jpg\" class=\"img-rounded\" alt=\"Profile Pic\" style=\"width:75px; height 75px;\">";
     echo "<a href=\"./profile.php?profile=".$friend."\"> <b>".$name."</b></a>";
     $n= countFriends($friend,$conn);
     echo ""." $n"." friends";
@@ -188,7 +188,7 @@
     echo "			<div class=\"row\">\n"; 
     echo "				<div class=\"col-md-6\">\n"; 
     //echo " the pic and name";
-    echo "<img src= \"./uploads/".$friend."/profile.jpg\" class=\"img-rounded\" alt=\"Profile Pic\" style=\"width:75px; height 75px;\">";
+    echo "<img src= \"".getcwd()."/uploads/".$friend."/profile.jpg\" class=\"img-rounded\" alt=\"Profile Pic\" style=\"width:75px; height 75px;\">";
     echo "<a href=\"./profile.php?profile=".$friend."\"> <b>".$name."</b></a>";
     echo "				</div>\n"; 
     echo "				<div class=\"col-md-6\">\n"; 
@@ -226,7 +226,7 @@
     echo "			<div class=\"row\">\n"; 
     echo "				<div class=\"col-md-6\">\n"; 
     //echo " the pic and name";
-    echo "                 <img src= \"./uploads/".$friend."/profile.jpg\" class=\"img-rounded\" alt=\"Profile Pic\" style=\"width:75px; height 75px;\">";
+    echo "                 <img src= \"".getcwd()."/uploads/".$friend."/profile.jpg\" class=\"img-rounded\" alt=\"Profile Pic\" style=\"width:75px; height 75px;\">";
     echo "                 <a href=\"./profile.php?profile=".$friend."\"> <b>".$name."</b></a>";
     echo "				</div>\n"; 
     echo "				<div class=\"col-md-6\">\n"; 

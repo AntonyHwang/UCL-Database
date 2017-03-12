@@ -44,7 +44,7 @@
                         $count++;
                         $username= ucfirst($row["first_name"])." ".ucfirst($row["surname"]);
                         $user_id = $row["id_user"];
-                        $profile_img = "./uploads/".$user_id."/profile.jpg";
+                        $profile_img = getcwd()."/uploads/".$user_id."/profile.jpg";
                         $profile_link = "./profile.php?profile=".$row["id_user"];
                         if ($count % 2 != 0) {
                 ?>
@@ -97,9 +97,9 @@
                 echo "Return Code: " . $_FILES["file"]["error"] . "<br/><br/>";
             } else {
                 echo "<span>Your File Uploaded Succesfully...!!</span><br/>";
-                move_uploaded_file($_FILES["file"]["tmp_name"], "./xml_import/".$_SESSION["id"].".xml");
+                move_uploaded_file($_FILES["file"]["tmp_name"], getcwd()."/xml_import/".$_SESSION["id"].".xml");
                 $doc = new DOMDocument();
-                $doc=simplexml_load_file("./xml_import/".$_SESSION["id"].".xml");
+                $doc=simplexml_load_file(getcwd()."/xml_import/".$_SESSION["id"].".xml");
                 $id = $doc->id;
                 $fname = $doc->first_name;
                 $surname = $doc->surname;
@@ -140,13 +140,13 @@
                     $stmt = $conn->prepare($sql_get_id);
                     $stmt->execute();
                     $rows = $stmt->fetch();
-                    mkdir("./uploads/".$rows["id_user"]);
-                    $default_profile_pic = './uploads/default-profile.jpg';
-                    $user_profile_pic = './uploads/'.$rows["id_user"].'/profile.jpg';
+                    mkdir(getcwd()."/uploads/".$rows["id_user"]);
+                    $default_profile_pic = getcwd().'/uploads/default-profile.jpg';
+                    $user_profile_pic = getcwd().'/uploads/'.$rows["id_user"].'/profile.jpg';
                     copy($default_profile_pic, $user_profile_pic);
                     echo "<script>alert('Profile imported');</script>";
                 }
-                unlink('xml_import/'.$_SESSION["id"].'.xml');
+                unlink(getcwd().'/xml_import/'.$_SESSION["id"].'.xml');
             }   
         } else {
             echo "<script>alert('Profile XML not imported');</script>";

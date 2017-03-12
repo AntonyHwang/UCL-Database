@@ -130,8 +130,8 @@
                 $stmt->execute();
                 $rows = $stmt->fetch();
                 mkdir(getcwd()."/uploads/".$rows["id_user"]);
-                $default_profile_pic = './uploads/default-profile.jpg';
-                $user_profile_pic = './uploads/'.$rows["id_user"].'/profile.jpg';
+                $default_profile_pic = getcwd().'/uploads/default-profile.jpg';
+                $user_profile_pic = getcwd().'/uploads/'.$rows["id_user"].'/profile.jpg';
                 copy($default_profile_pic, $user_profile_pic);
                 $_SESSION["id"] = $rows["id_user"];
                 $_SESSION["logged_in"] = "YES";

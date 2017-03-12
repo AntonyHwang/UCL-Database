@@ -42,7 +42,7 @@
 
 }
 if (!empty($_POST)) {
-	$target_dir = "uploads/";
+	$target_dir = getcwd()."/uploads/";
 	print_r($_FILES["fileToUpload"]);
 	$target_file = $target_dir . $_SESSION["id"]."/".basename($_FILES["fileToUpload"]["name"]);
 	//$target_file = $target_dir . $_SESSION["id"]."/".$result;

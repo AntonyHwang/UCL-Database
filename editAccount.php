@@ -28,7 +28,7 @@
                 <div class="col-md-4">
                     <fieldset>
                         <div>
-                            <img src="<?php echo './uploads/'.$_SESSION["id"].'/profile.jpg'; ?>" alt="Profile Pic" style="width:120px;height 120px;">
+                            <img src="<?php echo getcwd().'/uploads/'.$_SESSION["id"].'/profile.jpg'; ?>" alt="Profile Pic" style="width:120px;height 120px;">
                         </div>
                         <br>
                         <div align="center">
@@ -147,7 +147,7 @@
                         if ($_FILES["file"]["error"] > 0) {
                             echo "Return Code: " . $_FILES["file"]["error"] . "<br/><br/>";
                         } else {
-                            move_uploaded_file($_FILES["file"]["tmp_name"], "/uploads/".$_SESSION["id"]."/profile.jpg");
+                            move_uploaded_file($_FILES["file"]["tmp_name"], getcwd()."/uploads/".$_SESSION["id"]."/profile.jpg");
                         }   
                     } else {
                         echo "<script>alert('Profile image not updated');</script>";

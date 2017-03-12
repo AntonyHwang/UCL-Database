@@ -145,7 +145,7 @@ $(function () {
 												<div class="col-md-2">
 													<div class="row">
 														<div class="col-md-12">
-															<?php echo "<img src= \"./uploads/".$message_info["id_user"]."/profile.jpg\" alt=\"Profile Pic\" class=\"img-rounded\" style=\"width:60px; height 60px;\">"; ?>
+															<?php echo "<img src= \"".getcwd()."/uploads/".$message_info["id_user"]."/profile.jpg\" alt=\"Profile Pic\" class=\"img-rounded\" style=\"width:60px; height 60px;\">"; ?>
 														</div>
 													</div>
 												</div>
@@ -158,7 +158,7 @@ $(function () {
 										<div class="col-md-10">
 											<div class="row">
 												<div class="col-md-2">
-													<?php echo "<img src= \"./uploads/".$message_info["id_user"]."/profile.jpg\" alt=\"Profile Pic\" class=\"img-rounded\" style=\"width:60px; height 60px;\">"; ?>
+													<?php echo "<img src= \"".getcwd()."/uploads/".$message_info["id_user"]."/profile.jpg\" alt=\"Profile Pic\" class=\"img-rounded\" style=\"width:60px; height 60px;\">"; ?>
 												</div>
 												<div class="col-md-10">
 													<div class="row" align="left">
@@ -231,7 +231,7 @@ $(function () {
 						<div class="row">
 							<div class="col-md-7">
 								&nbsp &nbsp &nbsp
-								<img src= "/uploads/<?php echo $mem_id?>/profile.jpg" alt="Profile Pic" style="width:60px; height 60px;" class="img-rounded">
+								<img src= "<?php echo getcwd()?>/uploads/<?php echo $mem_id?>/profile.jpg" alt="Profile Pic" style="width:60px; height 60px;" class="img-rounded">
 								<a href="./profile.php?profile=<?php echo $mem_id?>"> <b><?php echo " ".$mem_name?></b></a>
 							</div>
 							<div class="col-md-5" align="right">

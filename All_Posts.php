@@ -78,7 +78,7 @@ $MyPostlist = $conn->query($allposts_sql);
                         <div class="row">
                             <div class="col-md-6">
                             <?php 
-                            echo "<img src= \"./uploads/".$postOwner."/profile.jpg\" alt=\"Profile Pic\" class=\"img-rounded\" style=\"width:60px; height 60px;\">";
+                            echo "<img src= \"".getcwd()."/uploads/".$postOwner."/profile.jpg\" alt=\"Profile Pic\" class=\"img-rounded\" style=\"width:60px; height 60px;\">";
                             echo "&nbsp <a href=\"./profile.php?profile=".$postOwner."\" >$username</a>\n";  
                                                
                             ?>
@@ -124,7 +124,7 @@ $MyPostlist = $conn->query($allposts_sql);
 //picture and two rows goes here
 echo "   <div class=\"row\">\n"; 
 echo "		<div class=\"col-md-1\">\n"; 
-echo "          <img src= \"./uploads/".$sqlcomment["id_user"]."/profile.jpg\" class=\"img-rounded\" alt=\"Profile Pic\" style=\"width:40px; height 40px;\">";
+echo "          <img src= \"".getcwd()."/uploads/".$sqlcomment["id_user"]."/profile.jpg\" class=\"img-rounded\" alt=\"Profile Pic\" style=\"width:40px; height 40px;\">";
 echo "		</div>\n"; 
 echo "		<div class=\"col-md-10\">\n"; 
 echo "			<div class=\"row\">\n"; 

@@ -20,7 +20,7 @@ while($row = $result->fetch()) {
     
 <?php   
       
-        echo "<img src= \"./uploads/".$user_id."/profile.jpg\" alt=\"Profile Pic\" style=\"width:50px; height 50px;\">";
+        echo "<img src= \"".getcwd()."/uploads/".$user_id."/profile.jpg\" alt=\"Profile Pic\" style=\"width:50px; height 50px;\">";
         echo "".$username;
         echo "<a href=\"/profile.php?profile=".$row[id_user]."\" class=\"btn btn-success\">Profile Page</button></a>";
 

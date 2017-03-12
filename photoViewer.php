@@ -125,7 +125,7 @@ $(function () {
                                 <div class="row">
                                     <div class="col-md-3">
                                         &nbsp &nbsp &nbsp
-                                        <?php echo "<img src= \"./uploads/".$name["id_user"]."/profile.jpg\" alt=\"Profile Pic\" class=\"img-rounded\" style=\"width:60px; height 60px;\">"; ?>
+                                        <?php echo "<img src= \"".getcwd()."/uploads/".$name["id_user"]."/profile.jpg\" alt=\"Profile Pic\" class=\"img-rounded\" style=\"width:60px; height 60px;\">"; ?>
                                     </div>
                                     <div class="col-md-9">
                                         <div class="row">

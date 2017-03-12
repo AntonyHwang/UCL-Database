@@ -39,9 +39,9 @@ background-color:white;
                     <nav>
                         <ul>
                         <?php if ($_SESSION["user_type"] == "ADMIN") { ?>
-                            <img src="<?php echo './uploads/'.$_GET["profile"].'/profile.jpg'; ?>" class="img-rounded" alt="Profile Pic" style="width:120px;height 120px;">
+                            <img src="<?php echo getcwd().'/uploads/'.$_GET["profile"].'/profile.jpg'; ?>" class="img-rounded" alt="Profile Pic" style="width:120px;height 120px;">
                 <?php } else { ?>
-                            <img src="<?php echo './uploads/'.$_SESSION["id"].'/profile.jpg'; ?>" class="img-rounded" alt="Profile Pic" style="width:120px;height 120px;">
+                            <img src="<?php echo getcwd().'/uploads/'.$_SESSION["id"].'/profile.jpg'; ?>" class="img-rounded" alt="Profile Pic" style="width:120px;height 120px;">
                 <?php } ?>
                         </ul>
                     </nav>
@@ -121,7 +121,7 @@ background-color:white;
                         <div class="row">
                             <div class="col-md-3">
                             <?php 
-                            echo "<img src= \"./uploads/".$userid."/profile.jpg\" alt=\"Profile Pic\" class=\"img-rounded\" style=\"width:60px; height 60px;\">";
+                            echo "<img src= \"".getcwd()."/uploads/".$userid."/profile.jpg\" alt=\"Profile Pic\" class=\"img-rounded\" style=\"width:60px; height 60px;\">";
                             echo "&nbsp <a href=\"./profile.php?profile=".$userid."\" >$username</a>\n";  
                                                
                             ?>
@@ -173,7 +173,7 @@ background-color:white;
 //picture and two rows goes here
 echo "   <div class=\"row\">\n"; 
 echo "		<div class=\"col-md-1\">\n"; 
-echo "          <img src= \"./uploads/".$sqlcomment["id_user"]."/profile.jpg\" class=\"img-rounded\" alt=\"Profile Pic\" style=\"width:55px; height 55px;\">";
+echo "          <img src= \"".getcwd()."/uploads/".$sqlcomment["id_user"]."/profile.jpg\" class=\"img-rounded\" alt=\"Profile Pic\" style=\"width:55px; height 55px;\">";
 echo "		</div>\n"; 
 
 
@@ -281,7 +281,7 @@ echo "</br>";
         echo $sql_delete;
         $stmt = $conn->prepare($sql_delete);
         $stmt->execute();
-        unlink('uploads/'.$_GET['profile']);
+        unlink(getcwd().'/uploads/'.$_GET['profile']);
         header('location: All_Users.php');
     }
     else if (isset($_POST['export_account'])) {
@@ -306,7 +306,7 @@ echo "</br>";
             $element = $doc->createElement($key, $value);
             $root->appendChild($element);
         }
-        $doc->save("./xml_export/".$_GET['profile'].".xml");
+        $doc->save(getcwd()."/xml_export/".$_GET['profile'].".xml");
         header('location: download.php?profile='.$_GET['profile']);
     }
 ?>

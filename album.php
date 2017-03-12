@@ -113,7 +113,7 @@
                 <div class="col-md-3">
                     <nav>
                         <ul>
-                            <img src="<?php echo './uploads/'.$_GET['profile'].'/profile.jpg'; ?>" alt="Profile Pic" style="width:120px;height 120px;">
+                            <img src="<?php echo getcwd().'/uploads/'.$_GET['profile'].'/profile.jpg'; ?>" alt="Profile Pic" style="width:120px;height 120px;">
                         </ul>
                     </nav>
                 </div>

@@ -23,7 +23,7 @@
             $stmt->execute();
             if($stmt->rowCount() > 0){
                 while($row = $stmt->fetch()){
-                    echo "<a href=\"./profile.php?profile=".$row[id_user]."\"> <img src= \"./uploads/".$row[id_user]."/profile.jpg\" alt=\"Profile Pic\" style=\"width:75px; height 75px;\">"." ".ucfirst($row['first_name'])." ".ucfirst($row['surname'])."<br>";
+                    echo "<a href=\"./profile.php?profile=".$row[id_user]."\"> <img src= \"".getcwd()."/uploads/".$row[id_user]."/profile.jpg\" alt=\"Profile Pic\" style=\"width:75px; height 75px;\">"." ".ucfirst($row['first_name'])." ".ucfirst($row['surname'])."<br>";
                 }
             } else{
                 echo "<p>No matches found";

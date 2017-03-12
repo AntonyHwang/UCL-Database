@@ -191,7 +191,7 @@ foreach($allposts as $current_postid){
 
     <h2 class ="post_owner">    
         <?php
-        echo "<img src= \"./uploads/".$postOwner."/profile.jpg\" class=\"img-rounded\" alt=\"Profile Pic\" style=\"width:50px; height 50px;\">";
+        echo "<img src= \"".getcwd()."/uploads/".$postOwner."/profile.jpg\" class=\"img-rounded\" alt=\"Profile Pic\" style=\"width:50px; height 50px;\">";
         echo "&nbsp <a href=\"./profile.php?profile=".$postOwner."\" >$username</a>\n";   
         echo "&nbsp&nbsp&nbsp&nbsp&nbsp";
         ?>
@@ -221,7 +221,7 @@ foreach($allposts as $current_postid){
 //picture and two rows goes here
 echo "   <div class=\"row\">\n"; 
 echo "		<div class=\"col-md-1\">\n"; 
-echo "          <img src= \"./uploads/".$sqlcomment["id_user"]."/profile.jpg\" class=\"img-rounded\" alt=\"Profile Pic\" style=\"width:40px; height 40px;\">";
+echo "          <img src= \"".getcwd()."/uploads/".$sqlcomment["id_user"]."/profile.jpg\" class=\"img-rounded\" alt=\"Profile Pic\" style=\"width:40px; height 40px;\">";
 echo "		</div>\n"; 
 echo "		<div class=\"col-md-10\">\n"; 
 echo "			<div class=\"row\">\n"; 
