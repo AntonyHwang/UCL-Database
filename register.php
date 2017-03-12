@@ -129,7 +129,7 @@
                 $stmt = $conn->prepare($sql_get_id);
                 $stmt->execute();
                 $rows = $stmt->fetch();
-                mkdir("./uploads/".$rows["id_user"]);
+                mkdir(getcwd()."/uploads/".$rows["id_user"]);
                 $default_profile_pic = './uploads/default-profile.jpg';
                 $user_profile_pic = './uploads/'.$rows["id_user"].'/profile.jpg';
                 copy($default_profile_pic, $user_profile_pic);
