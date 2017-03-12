@@ -344,18 +344,33 @@ $username= ucfirst($namerow["first_name"])." ".ucfirst($namerow["surname"]);
 ?>
 
 <div class="panel-body">
-    <h2 class ="post_owner">    
-        <?php
+            <h2>
+                <div class="row">
+                    <div class="col-md-3">
+                    <?php 
+                    echo "<img src= \"./uploads/".$postOwner."/profile.jpg\" alt=\"Profile Pic\" class=\"img-rounded\" style=\"width:60px; height 60px;\">";
+                    echo "&nbsp <a href=\"./profile.php?profile=".$postOwner."\" >$username</a>\n";  
+                                        
+                    ?>
+                    </div>
+                    <div class="col-md-1">                       
+                                            
+                    </div>
+                    <div class="col-md-8" align="right">
+                         <?php if($_SESSION["user_type"] == "ADMIN"){?>
+                        <form  action = 'server.php' method="get" >     
+                            <button type="submit" class="btn btn-danger btn-sm">
+                                Delete Post
+                            </button>               
+                            <input type="hidden" name="id_del" value="<?php echo $postid; ?>" />                
+                            <input type="hidden" name="last_page" value="myProfilePage.php" />   
+                        </form>  
+                        <?php }?>
+                    </div>
+                </div>                   
 
-        echo "<img src= \"./uploads/".$postOwner."/profile.jpg\" class=\"img-rounded\" alt=\"Profile Pic\" style=\"width:60px; height 60px;\">";
-//echo "<a href=\"./profile.php?profile=".$postOwner."\"</a>";
-        echo "  <a href=\"./profile.php?profile=".$postOwner."\" >$username</a>\n";  
-    
-        //echo "".$username;
-        echo "&nbsp&nbsp&nbsp&nbsp&nbsp";
-        //echo "<a  href=\"./homepage.php?id_del=".$postid." \"><button class=\"btn btn-success\" >delete</button></a>";
-        ?>
-    </h2>
+
+            </h2>
     <paragraph>
                         <?php 
                         echo "<h3>&nbsp&nbsp&nbsp&nbsp".$row["body"]."</h3>";
@@ -414,8 +429,19 @@ echo "			</div>\n";
 
 echo "		</div>\n"; 
 //button might go here
+
+
+
+
+
+
+
+
+
+
+
 echo "		<div class=\"col-md-1\">\n"; 
-if($sqlcomment["id_user"]==$_SESSION['id']){
+if($sqlcomment["id_user"]==$_SESSION['id']||$_SESSION["user_type"] == "ADMIN"){
 ?>
 
 
