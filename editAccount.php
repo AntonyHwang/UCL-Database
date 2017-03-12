@@ -147,7 +147,7 @@
                         if ($_FILES["file"]["error"] > 0) {
                             echo "Return Code: " . $_FILES["file"]["error"] . "<br/><br/>";
                         } else {
-                            move_uploaded_file($_FILES["file"]["tmp_name"], "./uploads/".$_SESSION["id"]."/profile.jpg");
+                            move_uploaded_file($_FILES["file"]["tmp_name"], "/uploads/".$_SESSION["id"]."/profile.jpg");
                         }   
                     } else {
                         echo "<script>alert('Profile image not updated');</script>";
