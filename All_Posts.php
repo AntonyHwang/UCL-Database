@@ -156,7 +156,7 @@ echo "		<div class=\"col-md-1\">\n";
         <form  action = 'server.php' method="get">
             <div class="input-group">
                 <div class="input-group-btn">               
-                    <input type="hidden" name="last_page" value="homepage.php" /> 
+                    <input type="hidden" name="last_page" value="All_Posts.php" /> 
                     <button type="submit" class="btn btn-default btn-sm">
                     <span class="glyphicon glyphicon-remove"></span>  
                     </button>
