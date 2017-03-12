@@ -49,6 +49,7 @@
 
                             <li><a href="All_Users.php">All Users</a></li>
                              <li><a href="All_Posts.php">All Posts</a></li>
+                             <li><a href="All_Photos.php">All Photos</a></li>
                            
                                     <li><a href="login.php">Log out</a></li>
                                      <li><a href="admin_register.php">Register Admin</a></li>
