@@ -151,7 +151,7 @@ echo "			</div>\n";
 echo "		</div>\n"; 
 //button might go here
 echo "		<div class=\"col-md-1\">\n"; 
-if($sqlcomment["id_user"]==$_SESSION['id']){
+
 ?>
         <form  action = 'server.php' method="get">
             <div class="input-group">
@@ -165,7 +165,7 @@ if($sqlcomment["id_user"]==$_SESSION['id']){
             </div>
         </form>
 <?php
-}
+
 echo "		</div>\n"; 
 
 echo "	</div>\n";
