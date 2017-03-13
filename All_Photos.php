@@ -98,7 +98,7 @@ $row=0;
                             <div class="col-md-12">
                                 <div class="row">
                                     <div class="col-md-2">
-                                            <form  action = 'photoViewer.php' method="post">
+                                            <form  action = 'photoViewer.php?path=<?php echo $row["file_path"] ?>' method="post">
                                                 <div class="input-group">
                                                     <input type="hidden" name="user_id" value="<?php echo $row["id_user"] ?>" /> 
                                                     <input type="hidden" name="photo_id" value="<?php echo $row["id_photo"] ?>" /> 
