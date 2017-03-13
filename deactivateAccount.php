@@ -1,5 +1,6 @@
 <?php 
     require 'includes/config.php'; 
+    require 'includes/helpers.php'; 
     include_once('header.php');
 ?>
 
@@ -41,7 +42,7 @@
         echo $sql_delete;
         $stmt = $conn->prepare($sql_delete);
         $stmt->execute();
-        rmdir(dirname(__FILE__)."/uploads/".$_SESSION['id']);
+        delete_directory(dirname(__FILE__)."/uploads/".$_SESSION['id']);
         header('location: login.php');
     }
 ?>
