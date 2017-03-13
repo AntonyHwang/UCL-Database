@@ -115,6 +115,7 @@ $index = 0;
                 <div class="well"> 
                     <form class="form-horizontal" action="uploadPhoto.php" method="post" enctype="multipart/form-data">
                         <h4>Share a Photo</h4>
+                        echo getcwd();
                         <div class="form-group" style="padding:14px;">
                             Select Photo <input type="file" name="fileToUpload" id="fileToUpload">
                             <textarea class="form-control" placeholder="Caption" name="caption"></textarea>
