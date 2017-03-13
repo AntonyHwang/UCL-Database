@@ -50,7 +50,7 @@
             unset($_GET['id_del']);
             if($_GET['last_page']=="myProfilePage.php") {
                 if($_SESSION['user_type'] == "ADMIN") {
-                    header("location:profile.php?profile=".$_GET['profile']);
+                    header("location:myProfile.php?profile=".$_GET['profile']);
                 } else {
                     header("location:myProfilePage.php");
                 }
