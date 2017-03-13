@@ -131,7 +131,7 @@ background-color:white;
                                                     
                             </div>
                             <div class="col-md-8" align="right">
-                                <form  action = 'server.php' method="get" >     
+                                <form  action = 'server.php?profile=<?php echo $_GET['profile']?>' method="get" >     
                                     <button type="submit" class="btn btn-danger btn-sm">
                                         Delete Post
                                     </button>               
