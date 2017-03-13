@@ -115,7 +115,6 @@ $index = 0;
                 <div class="well"> 
                     <form class="form-horizontal" action="uploadPhoto.php" method="post" enctype="multipart/form-data">
                         <h4>Share a Photo</h4>
-                        echo getcwd();
                         <div class="form-group" style="padding:14px;">
                             Select Photo <input type="file" name="fileToUpload" id="fileToUpload">
                             <textarea class="form-control" placeholder="Caption" name="caption"></textarea>
@@ -184,7 +183,7 @@ $index = 0;
                                     </div>
                                     <div class="col-md-5">
                                     <?php 
-                                    $photoDeleteLink = "photoPage.php?profile=".$row["id_user"]."&id_del=".$row["id_photo"]."&del_path=".getcwd()."/".$row["file_path"];
+                                    $photoDeleteLink = "photoPage.php?profile=".$row["id_user"]."&id_del=".$row["id_photo"]."&del_path=".dirname(__FILE__)."/".$row["file_path"];
                                     echo "<a href=\"".$photoDeleteLink." \"><button class=\"btn btn-danger\" >Delete Photo</button></a><br><br>";
                                                                     
                                     ?>
