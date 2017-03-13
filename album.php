@@ -395,7 +395,7 @@ else $row=floor($number_photos/3) +1;
 			
 				<div class="col-md-4">
 					<div class="thumbnail">
-						<img class="center-block" style="max-width:100%;max-height:300px;"src="<?php echo dirname(__FILE__)."/".$row["file_path"]?>">
+						<img class="center-block" style="max-width:100%;max-height:300px;"src="<?php echo $row["file_path"]?>">
                         <div class="caption">
 							<h3>
 								<?php echo $row["body"]?>
