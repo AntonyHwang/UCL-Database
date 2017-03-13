@@ -151,6 +151,9 @@
                               ?>
                       </div>
                       <div>
+                                                          <?php
+                            if($_SESSION["user_type"] != "ADMIN"){
+                              ?>
                                       <form action="photoViewer.php" method="post">
                                           <input type="hidden" name="user_id" value="<?php echo $_SESSION["id"];?>" >
                                           <input type="hidden" name="photo_id" value="<?php echo $photo_id;?>" >
@@ -163,6 +166,9 @@
                                               <button class="btn btn-primary" type="submit" name="addComment" value="Add Comment">Add Comment </button>
                                           </div>
                                       </form>
+                                                          <?php
+                              }
+                              ?>
                   </div>
               </div>			
   		</div>
