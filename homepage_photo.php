@@ -48,7 +48,7 @@
  $allphotos = [];
 foreach ($friends as $current_id)
 {
-    $sql = "SELECT id_photo, id_user FROM photo WHERE privacy_setting  = '0' AND id_user = ".$current_id.' ORDER BY timestamp DESC';
+    $sql = "SELECT id_photo, id_user FROM photo WHERE (privacy_setting  = '0' OR privacy_setting  = '2') AND id_user = ".$current_id.' ORDER BY timestamp DESC';
     $result = $conn->query($sql);
     while($row = $result->fetch()) {
         $postid = $row["id_photo"];
