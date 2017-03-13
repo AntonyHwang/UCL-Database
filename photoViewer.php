@@ -1,12 +1,10 @@
 <?php 
     require'includes/config.php';
     include_once('header.php');
-
     $user_id = $_POST['user_id'];
     $photo_id = $_POST['photo_id'];
     $photoPath = $_POST['photoPath'];
     $caption = $_POST['caption'];
-
     if (!empty($_POST) && !empty($_POST["addComment"])) {
         $user_id = $_POST['user_id'];
         $photo_id = $_POST['photo_id'];
@@ -61,7 +59,6 @@ $(function () {
     figcaption {
         height: auto;
     }
-
     #scroll {
     height: 525px;
     overflow-y: scroll;
@@ -98,7 +95,7 @@ $(function () {
                                  $row = $ownerres->fetch();
                                  $photoOwner=$row[1];
                              if($_SESSION["user_type"] == "ADMIN"||$photoOwner==$_SESSION["id"]){
-                                    $photoDeleteLink = "photoPage.php?profile=".$user_id."&id_del=".$photo_id."&del_path=".$photoPath;
+                                    $photoDeleteLink = "photoPage.php?profile=".$user_id."&id_del=".$photo_id."&del_path=".getcwd()."/".$photoPath;
                                     echo "<a href=\"".$photoDeleteLink." \"><button class=\"btn btn-danger\" >Delete Photo</button></a><br><br>";
                             }?>
                         </div>
@@ -170,5 +167,3 @@ $(function () {
         </div>
 	</div>
 </div>
-
-
