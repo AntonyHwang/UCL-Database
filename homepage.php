@@ -2,6 +2,12 @@
 
     require'includes/config.php';
     include_once('header.php');
+    include_once('circleTool.php');
+
+   $allMembers=allCircleMember($_SESSION["id"],$conn);
+   $CirclePosts = posts($allMembers,$conn);
+   $CirclePhotos = photos($allMembers , $conn);
+   //print_r($allMembers);
     function sortPostbytime($connect,$posts) {
         $newlist = [];
         foreach($posts as $postid){
@@ -112,6 +118,8 @@ while($row = $MyPostlist->fetch()) {
 $usersseen=array_merge($remm,$friends);
 sort($allposts);
 $my_other_posts=array_merge($allposts,$myposts);
+$my_other_posts=array_merge($my_other_posts,$CirclePosts);
+
 $allposts = $my_other_posts;
 sort($allposts);
 //$sortedpostlist = sortPostbytime($conn,$allposts);
