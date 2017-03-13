@@ -364,7 +364,7 @@ $username= ucfirst($namerow["first_name"])." ".ucfirst($namerow["surname"]);
                     </div>
                     <div class="col-md-8" align="right">
                          <?php if($_SESSION["user_type"] == "ADMIN"){?>
-                        <form  action = 'server.php' method="post" > 
+                        <form  action = 'server.php' method="get" > 
                             <button type="submit" class="btn btn-danger btn-sm">
                                 Delete Post
                             </button> 
