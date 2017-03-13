@@ -370,7 +370,7 @@ $username= ucfirst($namerow["first_name"])." ".ucfirst($namerow["surname"]);
                             </button> 
                             <input type="hidden" name="id_user" value="<?php echo $postOwner; ?>" />                
                             <input type="hidden" name="id_del" value="<?php echo $postid; ?>" />                
-                            <input type="hidden" name="last_page" value="myProfilePage.php" />   
+                            <input type="hidden" name="last_page" value="profile.php" />   
                         </form>  
                         <?php }?>
                     </div>
