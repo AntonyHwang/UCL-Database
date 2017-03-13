@@ -59,7 +59,7 @@
                                         <?php echo "   ".$username ?>
                                     </div>
                                     <div class="col-md-8">  
-                                        <a href="./myProfilePage.php?profile=<?php echo $row["id_user"]?>" class="btn btn-success">Profile Page</button></a>
+                                        <a href="./Profile.php?profile=<?php echo $row["id_user"]?>" class="btn btn-success">Profile Page</button></a>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
