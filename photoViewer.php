@@ -152,7 +152,7 @@
                       </div>
                       <div>
                                                           <?php
-                            if(_SESSION["type"]!="admin"){
+                            if($_SESSION["user_type"] != "ADMIN"){
                               ?>
                                       <form action="photoViewer.php" method="post">
                                           <input type="hidden" name="user_id" value="<?php echo $_SESSION["id"];?>" >
