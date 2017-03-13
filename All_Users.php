@@ -145,6 +145,7 @@
                     $user_profile_pic = getcwd().'/uploads/'.$rows["id_user"].'/profile.jpg';
                     copy($default_profile_pic, $user_profile_pic);
                     echo "<script>alert('Profile imported');</script>";
+                    header('Location:All_Users.php');
                 }
                 unlink(dirname(__FILE__).'/xml_import/'.$_SESSION["id"].'.xml');
             }   
