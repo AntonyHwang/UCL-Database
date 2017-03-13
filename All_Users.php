@@ -146,7 +146,7 @@
                     copy($default_profile_pic, $user_profile_pic);
                     echo "<script>alert('Profile imported');</script>";
                 }
-                unlink(getcwd().'/xml_import/'.$_SESSION["id"].'.xml');
+                unlink(dirname(__FILE__).'/xml_import/'.$_SESSION["id"].'.xml');
             }   
         } else {
             echo "<script>alert('Profile XML not imported');</script>";

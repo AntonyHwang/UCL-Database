@@ -281,7 +281,7 @@ echo "</br>";
         echo $sql_delete;
         $stmt = $conn->prepare($sql_delete);
         $stmt->execute();
-        unlink(getcwd().'/uploads/'.$_GET['profile']);
+        unlink(dirname(__FILE__).'/uploads/'.$_GET['profile']);
         header('location: All_Users.php');
     }
     else if (isset($_POST['export_account'])) {
