@@ -94,7 +94,7 @@ $(function () {
                 <div class="row">
                                             <div align="right">
                             <?php 
-                                    $photoDeleteLink = "photoPage.php?profile=".$user_id."&id_del=".$photo_id."&del_path=".$photoPath;
+                                    $photoDeleteLink = "photoPage.php?profile=".$user_id."&id_del=".$photo_id."&del_path=".getcwd()."/".$photoPath;
                                     echo "<a href=\"".$photoDeleteLink." \"><button class=\"btn btn-danger\" >Delete Photo</button></a><br><br>";
                             ?>
                         </div>
