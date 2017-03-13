@@ -344,6 +344,12 @@ foreach($result as $user){
     array_push($photolist_oneuser,$user[0]);
 }
 $photo_user_allow_seen = array_intersect($photolist_oneuser,$allphotos);
+include_once('circleTool.php');
+$allMembers=allCircleMember($_SESSION["id"],$conn);
+$CirclePhoto = photos($allMembers,$conn);
+$one_CirclePhoto = oneuser_photos($_GET["profile"],$conn);   
+$photo_user_allow_seen=array_merge($photo_user_allow_seen,array_intersect($CirclePhoto,$one_CirclePhoto));
+$photo_user_allow_seen =array_unique($photo_user_allow_seen);
 
 if($_SESSION["user_type"] == "ADMIN"){
     $photo_user_allow_seen=$photolist_oneuser;
