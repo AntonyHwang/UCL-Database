@@ -31,6 +31,8 @@
                  header("location:profile.php?profile=".$_GET['profile']);
             }else if($_GET['last_page']=="homepage.php"){
                  header("location:homepage.php");
+            }else if($_GET['last_page']=="All_Posts.php"){
+                header("location:All_Posts.php");
             }
         }
 

@@ -307,6 +307,12 @@ foreach($result as $user){
     array_push($postlist_oneuser,$user[0]);
 }
 $post_user_allow_seen = array_intersect($postlist_oneuser,$allposts);
+include_once('circleTool.php');
+$allMembers=allCircleMember($_SESSION["id"],$conn);
+$CirclePosts = posts($allMembers,$conn);
+$one_circlePosts = oneuser_posts($_GET["profile"],$conn);   
+$post_user_allow_seen=array_merge($post_user_allow_seen,array_intersect($CirclePosts,$one_circlePosts));
+$post_user_allow_seen =array_unique($post_user_allow_seen);
 if($_SESSION["user_type"] == "ADMIN"){
     $post_user_allow_seen=$postlist_oneuser;
 }
