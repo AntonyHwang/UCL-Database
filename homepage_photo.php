@@ -6,7 +6,11 @@
     else {
         include_once('header.php');
     }
-     
+         include_once('circleTool.php');
+
+   $allMembers=allCircleMember($_SESSION["id"],$conn);
+   $CirclePosts = posts($allMembers,$conn);
+   $CirclePhotos = photos($allMembers , $conn);    
 
 
 ?>
@@ -48,7 +52,7 @@
  $allphotos = [];
 foreach ($friends as $current_id)
 {
-    $sql = "SELECT id_photo, id_user FROM photo WHERE (privacy_setting  = '0' OR privacy_setting  = '2') AND id_user = ".$current_id.' ORDER BY timestamp DESC';
+    $sql = "SELECT id_photo, id_user FROM photo WHERE privacy_setting  = '0' AND id_user = ".$current_id.' ORDER BY timestamp DESC';
     $result = $conn->query($sql);
     while($row = $result->fetch()) {
         $postid = $row["id_photo"];
@@ -112,7 +116,9 @@ $result = $conn->query($photos_user);
 foreach($result as $user){
     array_push($photolist_oneuser,$user[0]);
 }
+
 $photo_user_allow_seen =array_merge($photo_user_allow_seen,$photolist_oneuser);
+$photo_user_allow_seen =array_merge($photo_user_allow_seen,$CirclePhotos);
 $photo_user_allow_seen=array_unique($photo_user_allow_seen);
 sort($photo_user_allow_seen);
 //$sortedpostlist = sortPostbytime($conn,$allposts);
