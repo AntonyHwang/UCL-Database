@@ -307,7 +307,7 @@ echo "</br>";
             $element = $doc->createElement($key, $value);
             $root->appendChild($element);
         }
-        $doc->save(getcwd()."/xml_export/".$_GET['profile'].".xml");
+        $doc->save(dirname(__FILE__)."/xml_export/".$_GET['profile'].".xml");
         header('location: download.php?profile='.$_GET['profile']);
     }
 ?>
