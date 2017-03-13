@@ -45,7 +45,11 @@
             //echo $_GET["del_path"];
             $refresh = $_GET['profile'];
             if ($_SESSION['user_type'] == "ADMIN"){
-                header('location:'.$_GET['return']);
+                if (!$_GET['profile']) {
+                    header('location:'.$_GET['return']);
+                } else {
+                    header('location:'.$_GET['return'].'?profile='.$_GET['profile']);
+                }
             }
             //echo "<a href=\"photoPage.php?id=".$refresh." \"><button class=\"btn btn-primary\" >Return to Photos</button></a><br><br>";
         }

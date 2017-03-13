@@ -107,7 +107,7 @@ $(function () {
                                 $row = $ownerres->fetch();
                                 $photoOwner=$row[1];
                             if($_SESSION["user_type"] == "ADMIN"||$photoOwner==$_SESSION["id"]){
-                                    $photoDeleteLink = "photoPage.php?profile=".$user_id."&id_del=".$photo_id."&del_path=".dirname(__FILE__)."/".$photoPath."&return=album.php?profile=".$row['id_user'];
+                                    $photoDeleteLink = "photoPage.php?profile=".$user_id."&id_del=".$photo_id."&del_path=".dirname(__FILE__)."/".$photoPath."&return=album.php&profile=".$row['id_user'];
                                     echo "<a href=\"".$photoDeleteLink." \"><button class=\"btn btn-danger\" >Delete Photo</button></a><br><br>";
                             }?>
                         </div>
