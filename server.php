@@ -52,14 +52,14 @@
             unset($_GET['id_del']);
             if($_GET['last_page']=="myProfilePage.php") {
                 if($_SESSION["user_type"] == "ADMIN") {
-                    header("location:myProfilePage.php?profile=".$_GET['profile']);
+                    header("location:profile.php?profile=".$_GET['id_user']);
                 } else {
                     header("location:myProfilePage.php");
                 }
             }
             else if($_GET['last_page']=="profile.php"){
                 if($_SESSION["user_type"] == "ADMIN") {
-                    header("location:myProfilePage.php?profile=".$_GET['profile']);
+                    header("location:profile.php?profile=".$_GET['id_user']);
                 } else {
                     header("location:profile.php?profile=".$_GET['profile']);
                 }

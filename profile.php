@@ -367,7 +367,8 @@ $username= ucfirst($namerow["first_name"])." ".ucfirst($namerow["surname"]);
                         <form  action = 'server.php' method="get" >     
                             <button type="submit" class="btn btn-danger btn-sm">
                                 Delete Post
-                            </button>               
+                            </button> 
+                            <input type="hidden" name="id_user" value="<?php echo $postowner; ?>" />                
                             <input type="hidden" name="id_del" value="<?php echo $postid; ?>" />                
                             <input type="hidden" name="last_page" value="myProfilePage.php" />   
                         </form>  
