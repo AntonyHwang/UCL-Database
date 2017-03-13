@@ -98,7 +98,7 @@
                                    $row = $ownerres->fetch();
                                    $photoOwner=$row[1];
                                if($_SESSION["user_type"] == "ADMIN"||$photoOwner==$_SESSION["id"]){
-                                      $photoDeleteLink = "photoPage.php?profile=".$user_id."&id_del=".$photo_id."&del_path=".getcwd()."/".$photoPath;
+                                      $photoDeleteLink = "photoPage.php?profile=".$user_id."&id_del=".$photo_id."&del_path=".dirname(__FILE__)."/".$photoPath;
                                       echo "<a href=\"".$photoDeleteLink." \"><button class=\"btn btn-danger\" >Delete Photo</button></a><br><br>";
                               }?>
                           </div>
