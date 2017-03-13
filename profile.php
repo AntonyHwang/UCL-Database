@@ -364,11 +364,11 @@ $username= ucfirst($namerow["first_name"])." ".ucfirst($namerow["surname"]);
                     </div>
                     <div class="col-md-8" align="right">
                          <?php if($_SESSION["user_type"] == "ADMIN"){?>
-                        <form  action = 'server.php' method="get" >     
+                        <form  action = 'server.php' method="post" > 
                             <button type="submit" class="btn btn-danger btn-sm">
                                 Delete Post
                             </button> 
-                            <input type="hidden" name="id_user" value="<?php echo $postowner; ?>" />                
+                            <input type="hidden" name="id_user" value="<?php echo $postOwner; ?>" />                
                             <input type="hidden" name="id_del" value="<?php echo $postid; ?>" />                
                             <input type="hidden" name="last_page" value="myProfilePage.php" />   
                         </form>  
