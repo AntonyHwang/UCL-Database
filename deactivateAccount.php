@@ -41,7 +41,7 @@
         echo $sql_delete;
         $stmt = $conn->prepare($sql_delete);
         $stmt->execute();
-        unlink(dirname(__FILE__).'/uploads/'.$_SESSION['id']);
+        rmdir(dirname(__FILE__)."/uploads/".$_SESSION['id']);
         header('location: login.php');
     }
 ?>
