@@ -406,11 +406,11 @@ else $row=floor($number_photos/3) +1;
                                 <div class="row">
 
                                     <div class="col-md-2">
-                                        <form  action = 'photoViewer.php' method="post">
+                                        <form  action = 'photoViewer.php?path=<?php echo $row["file_path"] ?>' method="post">
                                             <div class="input-group">
                                                 <input type="hidden" name="user_id" value="<?php echo $row["id_user"] ?>" /> 
                                                 <input type="hidden" name="photo_id" value="<?php echo $row["id_photo"] ?>" /> 
-                                                <input type="hidden" name="photo_path" value="<?php echo getcwd().$row["file_path"] ?>" /> 
+                                                <input type="hidden" name="photo_path" value="<?php echo $row["file_path"] ?>" /> 
                                                 <input type="hidden" name="photo_caption" value="<?php echo $row["body"] ?>" /> 
                                             </div>
                                             <button type="submit" name ="comment" class="btn btn-primary">Comment</button> 

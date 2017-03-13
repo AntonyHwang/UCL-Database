@@ -9,7 +9,11 @@
 
     $user_id = $_POST['user_id'];
     $photo_id = $_POST['photo_id'];
-    $photoPath = $_POST['photoPath'];
+    if($_SESSION["user_type"] != "ADMIN"){
+        $photoPath = $_POST['photoPath'];
+    } else {
+        $photoPath = $_GET['path'];
+    }
     $caption = $_POST['caption'];
 
     if (!empty($_POST) && !empty($_POST["addComment"])) {
