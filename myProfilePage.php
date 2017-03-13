@@ -1,5 +1,6 @@
 <?php 
     require('includes/config.php'); 
+    require 'includes/helpers.php'; 
     if ($_SESSION["user_type"] == "ADMIN") {
         include_once('adminheader.php');
     }
@@ -281,7 +282,7 @@ echo "</br>";
         echo $sql_delete;
         $stmt = $conn->prepare($sql_delete);
         $stmt->execute();
-        unlink(dirname(__FILE__).'/uploads/'.$_GET['profile']);
+        delete_directory(dirname(__FILE__).'/uploads/'.$_GET['profile']);
         header('location: All_Users.php');
     }
     else if (isset($_POST['export_account'])) {
