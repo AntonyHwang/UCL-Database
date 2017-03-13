@@ -27,7 +27,7 @@
     }
 
     //delete photos
-    if (isset($_GET["profile"] ) && $_GET["profile"] == $_SESSION["id"]) {
+    if (isset($_GET["profile"] ) && ($_GET["profile"] == $_SESSION["id"] || $_SESSION['user_type'] == "ADMIN")) {
         //echo $_GET["profile"];
         //print_r($_POST);
         $post_del = $_GET["id_del"];
@@ -44,6 +44,9 @@
             unlink($_GET["del_path"]);
             //echo $_GET["del_path"];
             $refresh = $_GET['profile'];
+            if ($_SESSION['user_type'] == "ADMIN"){
+                header('location:'.$_GET['return']);
+            }
             //echo "<a href=\"photoPage.php?id=".$refresh." \"><button class=\"btn btn-primary\" >Return to Photos</button></a><br><br>";
         }
     }
