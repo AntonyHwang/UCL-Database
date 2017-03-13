@@ -48,11 +48,15 @@
             echo " deleted successfully<br>";
             $_GET['id_del']=null;
             unset($_GET['id_del']);
-            if($_GET['last_page']=="myProfilePage.php")
-            header("location:myProfilePage.php");
+            if($_GET['last_page']=="myProfilePage.php") {
+                if($_SESSION['user_type'] == "ADMIN") {
+                    header("location:profile.php?profile=".$_GET['profile']);
+                } else {
+                    header("location:myProfilePage.php");
+                }
+            }
             else if($_GET['last_page']=="profile.php"){
-                
-                 header("location:profile.php?profile=".$_GET['profile']);
+                header("location:profile.php?profile=".$_GET['profile']);
             }else if($_GET['last_page']=="All_Posts.php"){
                 header("location:All_Posts.php");
             }
