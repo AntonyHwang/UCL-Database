@@ -81,8 +81,8 @@ if (isset($_GET['body']) and $_GET['body']!=null){
     echo"New post created successfully<br>";
     $_GET['body']=null;
     unset($_GET['body']);
-    header("location:homepage.php");
     }
+    header("location:homepage.php");
     
 }
 //insert comment
