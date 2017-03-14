@@ -75,7 +75,7 @@
                         </div>
                         <div>
                             <input type="radio" name="search_type" value="all" checked> <font color="white">All</font>
-                            <input type="radio" name="search_type" value="friends"> <font color="white">Friends</font>
+                            <input type="radio" name="search_type" value="friends"> <font color="white">Friends of Friends</font>
                         </div>
                         <div><br></div>
                     </ul>
