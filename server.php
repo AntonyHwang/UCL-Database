@@ -1,13 +1,5 @@
 <?php
     require'includes/config.php';
-    try {
-        $conn = new PDO( "mysql:host=$host;dbname=$db", $user, $pwd);
-        $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-        echo 'ok';
-    }
-    catch(Exception $e){
-        die(var_dump($e));
-    }
     
 //delete comment
     if (isset($_GET['id_del_comment']) and $_GET['id_del_comment']!=null ){
