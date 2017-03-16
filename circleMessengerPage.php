@@ -14,9 +14,9 @@
 ?>
 <script>
 $(function () {
-    var wtf = $('#scroll');
-    var height = wtf[0].scrollHeight;
-    wtf.scrollTop(height);
+    var x = $('#scroll');
+    var height = x[0].scrollHeight;
+    x.scrollTop(height);
 });
 </script>
 
